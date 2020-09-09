@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "syler.sass-indented",
+    "mrmlnc.vscode-scss",
+    "wayou.vscode-todo-highlight",
+    "clinyong.vscode-css-modules",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
