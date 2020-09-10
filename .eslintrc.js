@@ -29,5 +29,11 @@ module.exports = {
     ],
     "react/jsx-props-no-spreading": 0,
     "import/prefer-default-export": 0,
+    "no-restricted-imports": [
+      "error",
+      {
+        patterns: ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"],
+      },
+    ],
   },
 };
