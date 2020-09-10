@@ -1,7 +1,12 @@
 import React, { FC, memo } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { iRootState, Dispatch } from "store/store";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 import styles from "./Navbar.module.scss";
 
 const Navbar: FC = () => {
@@ -13,25 +18,24 @@ const Navbar: FC = () => {
   };
 
   return (
-    <nav>
-      <ul className={styles.navbarList}>
-        <li className={styles.navbarListItem}>
-          <Link to="/">Home</Link>
-        </li>
-        <li className={styles.navbarListItem}>
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li className={styles.navbarListItem}>
+    <AppBar position="fixed">
+      <Toolbar>
+        <Typography variant="h6" className={styles.title}>
+          Home
+        </Typography>
+        <div>
           {auth.accessToken ? (
-            <button type="button" onClick={signOut}>
+            <Button color="inherit" onClick={signOut}>
               Sign out
-            </button>
+            </Button>
           ) : (
-            <Link to="/sign-in">Sign In</Link>
+            <Link color="inherit" component={RouterLink} to="/sign-in">
+              Sign In
+            </Link>
           )}
-        </li>
-      </ul>
-    </nav>
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 };
 
