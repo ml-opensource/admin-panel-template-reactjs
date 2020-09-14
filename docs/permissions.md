@@ -38,7 +38,6 @@ As an alternative, we can use the function `hasPermission`, so we can disable th
 >
   {t("users.buttonCreateUser")}
 </Button>
-}
 ```
 
 ## Example of guarding a screen
@@ -46,7 +45,6 @@ As an alternative, we can use the function `hasPermission`, so we can disable th
 Each screen can have an optional permissions prop, which holds a list of different permissions required to view that screen.
 
 ```jsx
-// Home screen route
 const homeScreen: RouteItemDef = {
   path: "/",
   component: HomeScreen,
