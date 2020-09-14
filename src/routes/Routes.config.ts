@@ -3,6 +3,9 @@ import userRoutes from "features/users/routes.user";
 import homeRoutes from "features/home/routes.home";
 import { RouteItemDef } from "types/route";
 
+export const ROOT_ROUTE = "/";
+export const AUTH_ROUTE = "/sign-in";
+
 const routeList: RouteItemDef[] = [...authRoutes, ...userRoutes, ...homeRoutes];
 
 export default routeList;
