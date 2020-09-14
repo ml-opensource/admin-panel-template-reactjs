@@ -19,6 +19,6 @@ export type RouteItemDef = {
    * This route can not be access after logging in
    */
   isAuthRoute?: boolean;
-  /** The required permissions to view this route */
+  /** The required permissions to view this route (optional) */
   permissions?: string[];
 };

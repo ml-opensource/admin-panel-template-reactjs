@@ -40,3 +40,29 @@ As an alternative, we can use the function `hasPermission`, so we can disable th
 </Button>
 }
 ```
+
+## Example of guarding a screen
+
+Each screen can have an optional permissions prop, which holds a list of different permissions required to view that screen.
+
+```jsx
+// Home screen route
+const homeScreen: RouteItemDef = {
+  path: "/",
+  component: HomeScreen,
+  permissions: [PermissionEnum.DASHBOARD],
+};
+```
+
+If the user has just one of the permissions, the path will be shown, otherwise a fallback will be shown, for example that the screen has restricted access. Alternatively, the user could be redirected to the root route, or to a "no access" screen.
+
+```jsx
+// RouteWrapper
+<Permission
+  requiredPermissions={homeScreen.permissions}
+  fallback={<div>Restricted</div>}
+  //redirect={ROOT_ROUTE}
+>
+  <homeScreen.component />
+</Permission>
+```
