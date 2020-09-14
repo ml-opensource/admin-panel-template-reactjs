@@ -1,40 +1,42 @@
 # Permissions
 
-In many admin panels, there will be different user roles, so instead of wrapping components, actions and screens in specific user roles, we are using permission scopes to guard different parts of the application.
+In many admin panels, there will be different user roles, so instead of wrapping components, actions and screens in specific user roles, we are using permission scopes to guard different parts of the application. This allows the backend to modify existing user roles to limit or get access to more parts without having to make any changes in the frontend.
 
 ## Example of setting permissions
 
-When the user is fetched from the API, the user object should contain a list of its permissions, which we will set via the permission component:
+When the user is fetched from the API, the user object should contain a list of permission scopes. These will be set with a function from the permission component:
 
 ```jsx
 import { setPermissions } from "components/Permissions/Permissions";
+
+// Get current user
 const response = await axios.get("/me");
 const user = response.data;
+
+// Set user's permissions
 setPermissions(user.permissions ?? []);
 ```
 
-And now the Permission component, will have access to the permission scopes.
+Now the Permission component, will have access to the user's permission scopes, and can therefore show/hide components.
 
-## Example of guarding feature
+## Example of guarding a feature
 
-Let's say we have screen where only administrators should be able to create new users. To solve this, we can wrap the button in the Permission component and pass in the specific permission scope that is required, so if the current user doesn't meet the requirement then nothing will be shown.
+Let's say we have screen where only administrators should be able to create new users. To solve this, we can wrap the button in the Permission component and pass in the specific permission scope that is required to create new users, so if the current user doesn't meet the requirement then the button will not be shown.
 
 ```jsx
-<Permission
-  requiredPermissions={[PermissionEnum.USERS_WRITE]}
-  // fallback={<NoAccess />}
-  // redirect="/forbidden"
->
+<Permission requiredPermissions={[PermissionEnum.USERS_WRITE]}>
   <Button onClick={createUser}>{t("users.buttonCreateUser")}</Button>
 </Permission>
 ```
 
-As an alternative, we can use the function `hasPermission`, but you will have to manually handle redirect and fallback.
+As an alternative, we can use the function `hasPermission`, so we can disable the button, if that is the case:
 
 ```jsx
-{
-  hasPermission([PermissionEnum.USERS_WRITE]) && (
-    <Button onClick={createUser}>{t("users.buttonCreateUser")}</Button>
-  );
+<Button
+  onClick={createUser}
+  disabled={!hasPermission([PermissionEnum.USERS_WRITE])}
+>
+  {t("users.buttonCreateUser")}
+</Button>
 }
 ```
