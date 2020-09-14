@@ -17,6 +17,11 @@ export const hasPermission = (
   const permissions = getPermissions();
   let allowed = false;
 
+  if (!requiredPermissions) {
+    // eslint-disable-next-line no-console
+    console.warn("No required permissions passed in. Was this on purpose?");
+  }
+
   if (permissions) {
     if (hasAll) {
       allowed = requiredPermissions.every(permission =>
