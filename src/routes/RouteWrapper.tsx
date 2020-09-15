@@ -1,12 +1,13 @@
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { Route, Redirect } from "react-router-dom";
 import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import { iRootState } from "store/store";
 import { useSelector } from "react-redux";
 import Permission from "components/Permission/Permission";
+import { RouteItemDef } from "types/route";
 import { AUTH_ROUTE, ROOT_ROUTE } from "./Routes.config";
 
-const RouteWrapper: React.ElementType = ({
+const RouteWrapper: FC<RouteItemDef> = ({
   component: Component,
   isPrivateRoute,
   isAuthRoute,
@@ -16,7 +17,7 @@ const RouteWrapper: React.ElementType = ({
 }) => {
   const isPrivate = isPrivateRoute || false;
   const isAuth = isAuthRoute || false;
-  const RouteLayout = layout || DefaultLayout;
+  const RouteLayout: FC = layout || DefaultLayout;
 
   const auth = useSelector((state: iRootState) => state.auth);
   const signed = !!auth.accessToken;
