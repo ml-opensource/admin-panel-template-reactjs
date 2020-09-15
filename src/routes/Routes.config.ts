@@ -1,6 +1,6 @@
-import authRoutes from "features/auth/routes.auth";
-import userRoutes from "features/users/routes.user";
-import homeRoutes from "features/home/routes.home";
+import authRoutes from "features/auth/auth.routes";
+import userRoutes from "features/users/user.routes";
+import homeRoutes from "features/home/home.routes";
 import { RouteItemDef } from "types/route";
 
 export const ROOT_ROUTE = "/";
