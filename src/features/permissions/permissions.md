@@ -7,7 +7,7 @@ In many admin panels, there will be different user roles, such as admins, and di
 When the user is fetched from the API, the user object should contain a list of permission scopes. These will be set with a function from the permission component:
 
 ```jsx
-import { setPermissions } from "components/Permissions/Permissions";
+import { setPermissions } from "features/permissions/permissions";
 
 // Get current user
 const response = await axios.get("/me");
@@ -24,20 +24,27 @@ The Permission component will now have access to the user's permission scopes an
 Let's say we have screen where only administrators should be able to create new users. To solve this, we can wrap the button in the Permission component and pass in the specific permission scope that is required to create new users, so if the current user doesn't meet the requirement then the button will not be shown.
 
 ```jsx
+import { Permission, PermissionEnum } from "features/permissions/permissions";
+
 <Permission requiredPermissions={[PermissionEnum.USERS_CREATE]}>
   <Button onClick={createUser}>{t("users.buttonCreateUser")}</Button>
-</Permission>
+</Permission>;
 ```
 
 As an alternative, we can use the function `hasPermission`, so we can disable the button, if that is the case:
 
 ```jsx
+import {
+  hasPermission,
+  PermissionEnum,
+} from "features/permissions/permissions";
+
 <Button
   onClick={createUser}
   disabled={!hasPermission([PermissionEnum.USERS_CREATE])}
 >
   {t("users.buttonCreateUser")}
-</Button>
+</Button>;
 ```
 
 ## Example of guarding a screen
@@ -45,6 +52,8 @@ As an alternative, we can use the function `hasPermission`, so we can disable th
 Each screen can have an optional permissions prop, which holds a list of different permissions required to view that screen.
 
 ```jsx
+import { PermissionEnum } from "features/permissions/permissions";
+
 const homeScreen: RouteItemDef = {
   path: "/",
   component: HomeScreen,
@@ -55,12 +64,13 @@ const homeScreen: RouteItemDef = {
 If the user has just one of the permissions, the path will be shown, otherwise a fallback will be shown, for example that the screen has restricted access. Alternatively, the user could be redirected to the root route, or to a "no access" screen.
 
 ```jsx
-// RouteWrapper
+import { Permission } from "features/permissions/permissions";
+
 <Permission
   requiredPermissions={homeScreen.permissions}
   fallback={<div>Restricted</div>}
   //redirect={ROOT_ROUTE}
 >
   <homeScreen.component />
-</Permission>
+</Permission>;
 ```

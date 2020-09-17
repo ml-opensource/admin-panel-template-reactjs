@@ -1,10 +1,6 @@
 import React, { memo, FC } from "react";
 import { Redirect } from "react-router-dom";
-import {
-  hasPermission,
-  clearPermissions,
-  setPermissions,
-} from "./Permission.logic";
+import { hasPermission } from "../../logics/permissionLogic";
 
 interface PermissionProps {
   /**
@@ -62,4 +58,3 @@ const Permission: FC<PermissionProps> = ({
 };
 
 export default memo(Permission);
-export { hasPermission, clearPermissions, setPermissions };

@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import { iRootState } from "store/store";
 import { useSelector } from "react-redux";
-import Permission from "components/Permission/Permission";
+import { Permission } from "features/permissions/permissions";
 import { RouteItemDef } from "types/route";
 import { AUTH_ROUTE, ROOT_ROUTE } from "./Routes.config";
 

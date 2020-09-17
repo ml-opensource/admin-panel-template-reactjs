@@ -1,5 +1,5 @@
 import { RouteItemDef } from "types/route";
-import { PermissionEnum } from "constants/permissionScopes";
+import { PermissionEnum } from "features/permissions/permissions";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 
 const homeScreen: RouteItemDef = {
