@@ -1,6 +1,7 @@
 import React, { memo, FC } from "react";
 import { Redirect } from "react-router-dom";
-import { hasPermission } from "../../logics/permissionLogic";
+import { PermissionEnum } from "../../constants/permissions.scopes";
+import usePermissions from "../../hooks/permissions.hooks";
 
 interface PermissionProps {
   /**
@@ -27,7 +28,7 @@ interface PermissionProps {
   /**
    * An array of required permissions
    */
-  requiredPermissions: string[];
+  requiredPermissions: PermissionEnum[];
 }
 
 /**
@@ -45,13 +46,13 @@ const Permission: FC<PermissionProps> = ({
   redirect,
   requiredPermissions,
 }) => {
-  const allowed = hasPermission(requiredPermissions, hasAll);
+  const { hasPermission } = usePermissions(requiredPermissions, hasAll);
 
   /**
    * In case there is more than one child element, we need
    * to wrap the whole thing in a fragment.
    */
-  if (allowed) return <>{children}</>;
+  if (hasPermission) return <>{children}</>;
   if (redirect) return <Redirect to={redirect} />;
   if (fallback) return <>{fallback}</>;
   return null;

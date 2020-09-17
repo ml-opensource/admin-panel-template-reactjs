@@ -1,5 +1,6 @@
 import { FC, ComponentType } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { PermissionEnum } from "features/permissions/permissions";
 
 export type RouteItemDef = {
   /**
@@ -23,5 +24,5 @@ export type RouteItemDef = {
    */
   isAuthRoute?: boolean;
   /** The required permissions to view this route (optional) */
-  permissions?: string[];
+  permissions?: PermissionEnum[];
 };
