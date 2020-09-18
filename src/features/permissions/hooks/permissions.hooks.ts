@@ -6,11 +6,11 @@ function usePermissions(
   requiredPermissions: PermissionEnum[],
   hasAll?: boolean
 ) {
-  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  const [allowed, setAllowed] = useState<boolean>(false);
 
   useEffect(() => {
     const permissions = getPermissions();
-    let allowed = false;
+    let hasPermission = false;
 
     if (!requiredPermissions) {
       // eslint-disable-next-line no-console
@@ -19,15 +19,15 @@ function usePermissions(
 
     if (permissions) {
       if (hasAll) {
-        allowed = requiredPermissions.every(permission =>
+        hasPermission = requiredPermissions.every(permission =>
           permissions.includes(permission)
         );
       } else {
-        allowed = requiredPermissions.some(permission =>
+        hasPermission = requiredPermissions.some(permission =>
           permissions.includes(permission)
         );
       }
-      setHasPermission(allowed);
+      setAllowed(hasPermission);
     } else {
       // eslint-disable-next-line no-console
       console.warn(
@@ -37,7 +37,7 @@ function usePermissions(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requiredPermissions, hasAll]);
 
-  return { hasPermission };
+  return { allowed };
 }
 
 export default usePermissions;

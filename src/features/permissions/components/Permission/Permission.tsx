@@ -46,13 +46,13 @@ const Permission: FC<PermissionProps> = ({
   redirect,
   requiredPermissions,
 }) => {
-  const { hasPermission } = usePermissions(requiredPermissions, hasAll);
+  const { allowed } = usePermissions(requiredPermissions, hasAll);
 
   /**
    * In case there is more than one child element, we need
    * to wrap the whole thing in a fragment.
    */
-  if (hasPermission) return <>{children}</>;
+  if (allowed) return <>{children}</>;
   if (redirect) return <Redirect to={redirect} />;
   if (fallback) return <>{fallback}</>;
   return null;
