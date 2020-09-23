@@ -1,9 +1,9 @@
 import React, { FC, memo } from "react";
-
-import styles from "./AppFooter.module.scss";
+import { useStyles } from "./AppFooter.styles";
 
 const AppFooter: FC = () => {
-  return <div className={styles.appFooter}>ML ReactJS Template.</div>;
+  const classes = useStyles();
+  return <div className={classes.appFooter}>ML ReactJS Template.</div>;
 };
 
 export default memo(AppFooter);

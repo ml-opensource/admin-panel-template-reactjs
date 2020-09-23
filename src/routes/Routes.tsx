@@ -1,22 +1,24 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, Suspense } from "react";
 import { Switch } from "react-router-dom";
 import {
   setPermissions,
   PermissionEnum,
 } from "features/permissions/permissions";
 import RouteWrapper from "./RouteWrapper";
-import routeList from "./Routes.config";
+import { ROUTE_LIST } from "./Routes.config";
 
 const Routes: FC = () => {
   // Set user's permission scope
   setPermissions([PermissionEnum.DASHBOARD]);
 
   return (
-    <Switch>
-      {routeList.map(route => (
-        <RouteWrapper key={route.path} {...route} />
-      ))}
-    </Switch>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        {ROUTE_LIST.map(route => (
+          <RouteWrapper key={route.path} {...route} />
+        ))}
+      </Switch>
+    </Suspense>
   );
 };
 

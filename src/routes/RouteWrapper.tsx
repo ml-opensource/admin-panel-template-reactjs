@@ -1,10 +1,8 @@
 import React, { FC, memo } from "react";
 import { Route, Redirect } from "react-router-dom";
 import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
-import { iRootState } from "store/store";
-import { useSelector } from "react-redux";
 import { Permission } from "features/permissions/permissions";
-import { RouteItemDef } from "types/route";
+import { RouteItemDef } from "types/routeDef";
 import { AUTH_ROUTE, ROOT_ROUTE } from "./Routes.config";
 
 const RouteWrapper: FC<RouteItemDef> = ({
@@ -19,8 +17,9 @@ const RouteWrapper: FC<RouteItemDef> = ({
   const isAuth = isAuthRoute || false;
   const RouteLayout: FC = layout || DefaultLayout;
 
-  const auth = useSelector((state: iRootState) => state.auth);
-  const signed = !!auth.accessToken;
+  const accessToken = false;
+
+  const signed = !!accessToken;
 
   /**
    * Redirect user to SignIn page if he tries to access a private route

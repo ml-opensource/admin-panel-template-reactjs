@@ -1,11 +1,12 @@
 import React, { FC, memo } from "react";
 import AppFooter from "components/AppFooter/AppFooter";
-import styles from "./AuthLayout.module.scss";
+import { useStyles } from "./AuthLayout.styles";
 
 const AuthLayout: FC = ({ children }) => {
+  const classes = useStyles();
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>{children}</div>
+    <div className={classes.container}>
+      <div className={classes.content}>{children}</div>
       <AppFooter />
     </div>
   );
