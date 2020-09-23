@@ -1,36 +1,32 @@
-import axios from "axios";
-import { store } from "store/store";
+import axios, { AxiosRequestConfig, AxiosError } from "axios";
 
-const apiHelper = axios.create({
+/**
+ * Adds authorization headers to API calls
+ * @param {AxiosRequestConfig} request
+ */
+const authInterceptor = (request: AxiosRequestConfig) => {
+  const requestConfig = request;
+
+  return requestConfig;
+};
+
+/**
+ * Axios error interceptor
+ * @param {AxiosError} axiosError
+ */
+const errorInterceptor = (axiosError: AxiosError) => {
+  if (axiosError && axiosError.response) {
+    // Handle error here
+  }
+  return Promise.reject(axiosError);
+};
+
+/** Setup an API instance */
+export const api = axios.create({
   baseURL: process.env.REACT_APP_HOST,
   headers: { "Content-Type": "application/json" },
 });
 
-apiHelper.interceptors.request.use(config => {
-  const requestConfig = config;
-
-  const { auth } = store.getState();
-  const token = auth.accessToken;
-
-  if (token) {
-    requestConfig.headers.Authorization = `Bearer ${token}`;
-  } else {
-    requestConfig.headers.Authorization = null;
-  }
-
-  return requestConfig;
-});
-
-apiHelper.interceptors.response.use(
-  response => {
-    return response;
-  },
-  error => {
-    if (error.response) {
-      // Handle error here
-    }
-    return Promise.reject(error);
-  }
-);
-
-export default apiHelper;
+/** Add interceptor */
+api.interceptors.request.use(authInterceptor);
+api.interceptors.response.use(res => res, errorInterceptor);
