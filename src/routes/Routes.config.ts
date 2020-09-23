@@ -1,8 +1,5 @@
-import authRoutes from "features/auth/routes.auth";
-import userRoutes from "features/users/routes.user";
-import homeRoutes from "features/home/routes.home";
-import { RouteItemDef } from "types/route";
+import { AUTH_ROUTES } from "features/auth/auth";
+import { USER_ROUTES } from "features/users/users";
+import { HOME_ROUTES } from "features/home/home";
 
-const routeList: RouteItemDef[] = [...authRoutes, ...userRoutes, ...homeRoutes];
-
-export default routeList;
+export const ROUTE_LIST = [...AUTH_ROUTES, ...USER_ROUTES, ...HOME_ROUTES];

@@ -1,31 +1,29 @@
 import React, { FC, memo } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { iRootState, Dispatch } from "store/store";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
-import styles from "./Navbar.module.scss";
+import { useStyles } from "./Navbar.styles";
 
 const Navbar: FC = () => {
-  const auth = useSelector((state: iRootState) => state.auth);
-  const dispatch = useDispatch<Dispatch>();
+  const classes = useStyles();
+  const accessToken = false;
 
-  const signOut = (): void => {
-    dispatch.auth.signOut();
+  const handleSignOut = (): void => {
+    // do something
   };
 
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <Typography variant="h6" className={styles.title}>
+        <Typography variant="h6" className={classes.title}>
           Home
         </Typography>
         <div>
-          {auth.accessToken ? (
-            <Button color="inherit" onClick={signOut}>
+          {accessToken ? (
+            <Button color="inherit" onClick={handleSignOut}>
               Sign out
             </Button>
           ) : (
