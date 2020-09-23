@@ -1,14 +1,18 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
-  container: {
-    width: "1000px",
-    margin: "0 auto",
+  root: {
     display: "flex",
-    flexDirection: "column",
     minHeight: "100vh",
   },
   content: {
-    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    padding: "64px 20px 0 20px",
+    position: "relative",
+  },
+  container: {
+    flex: "1 1 0%",
   },
 });

@@ -5,9 +5,14 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
 import { useStyles } from "./Navbar.styles";
 
-const Navbar: FC = () => {
+interface NavbarProps {
+  sideNavToggle: () => void;
+}
+const Navbar: FC<NavbarProps> = ({ sideNavToggle }) => {
   const classes = useStyles();
   const accessToken = false;
 
@@ -16,8 +21,17 @@ const Navbar: FC = () => {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" className={classes.root}>
       <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={sideNavToggle}
+          className={classes.menuButton}
+        >
+          <MenuIcon />
+        </IconButton>
         <Typography variant="h6" className={classes.title}>
           Home
         </Typography>
