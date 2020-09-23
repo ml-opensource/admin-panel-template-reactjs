@@ -2,8 +2,8 @@ import React from "react";
 import { RouteItemDef } from "types/routeDef";
 import { UserPathsEnum } from "../constants/users.paths";
 
-const ProfileScreen = React.lazy(() =>
-  import("../screens/ProfileScreen/ProfileScreen")
+const ProfileScreen = React.lazy(
+  () => import("../screens/ProfileScreen/ProfileScreen")
 );
 
 const PROFILE_SCREEN: RouteItemDef = {
