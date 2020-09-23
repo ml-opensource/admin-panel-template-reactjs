@@ -20,7 +20,5 @@
   "files.eol": "\n",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "javascript.preferences.importModuleSpecifier": "non-relative"
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

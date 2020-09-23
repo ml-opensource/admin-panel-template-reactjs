@@ -60,9 +60,6 @@
     "format": "prettier 'src/**/*.{ts,tsx,json,scss}' --write",
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix --quiet"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
