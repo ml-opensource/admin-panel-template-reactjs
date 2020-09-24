@@ -1,5 +1,4 @@
 import React, { FC, memo, useState } from "react";
-// import AppHeader from "components/AppHeader/AppHeader";
 import Navbar from "components/Navbar/Navbar";
 import AppFooter from "components/AppFooter/AppFooter";
 import SideNav from "components/SideNav/SideNav";
