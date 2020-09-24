@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -21,8 +21,11 @@ const Navbar: FC<NavbarProps> = ({ sideNavToggle }) => {
   const classes = useStyles();
   const accessToken = true; // TODO: Need to Implement the Authorised user state
   const location: RouterLocation = useLocation();
-  const pageTitle = ROUTE_LIST.find(route => route.path === location.pathname)
-    ?.pageTitle;
+
+  const pageTitle = useMemo(
+    () => ROUTE_LIST.find(route => route.path === location.pathname)?.pageTitle,
+    [location]
+  );
 
   const handleSignOut = (): void => {
     // do something
