@@ -9,8 +9,9 @@ export const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
-    padding: "64px 20px 0 20px",
+    padding: "64px 24px 0 24px",
     position: "relative",
+    zIndex: 1,
   },
   container: {
     flex: "1 1 0%",

@@ -1,31 +1,51 @@
 import React, { FC, memo } from "react";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import logo from "assets/images/logo.svg";
+import Typography from "@material-ui/core/Typography";
+import { useLocation } from "react-router-dom";
+import { ROUTE_LIST } from "routes/Routes.config";
+import { RouteItemDef, RouterLocation } from "types/routeDef";
+import NavListItem from "../NavListItem/NavListItem";
+import NestedListItem from "../NestedListItem/NestedListItem";
 import { useStyles } from "./NavContent.styles";
 
-const NavContent: FC = () => {
+interface NavContentProps {
+  sideNavToggle?: () => void;
+}
+const NavContent: FC<NavContentProps> = ({ sideNavToggle }) => {
   const classes = useStyles();
+
+  const navLinks: RouteItemDef[] = ROUTE_LIST.filter(
+    route => !route.isAuthRoute
+  );
+
+  const location: RouterLocation = useLocation();
 
   return (
     <div>
       <div className={classes.toolbar}>
-        <img src={logo} alt="App logo" />
+        <img src={logo} className={classes.logo} alt="App logo" />
+        <Typography variant="h6">Admin Panel</Typography>
       </div>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {navLinks.map(navItem => (
+          <React.Fragment key={navItem.navigationTitle}>
+            {navItem.subMenuItems ? (
+              <NestedListItem
+                item={navItem}
+                location={location}
+                sideNavToggle={sideNavToggle}
+              />
+            ) : (
+              <NavListItem
+                item={navItem}
+                location={location}
+                sideNavToggle={sideNavToggle}
+              />
+            )}
+          </React.Fragment>
         ))}
       </List>
       <Divider />

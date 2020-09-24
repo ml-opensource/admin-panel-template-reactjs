@@ -15,4 +15,10 @@ export const useStyles = makeStyles(theme => ({
       display: "none",
     },
   },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
 }));

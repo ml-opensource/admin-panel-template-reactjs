@@ -19,4 +19,19 @@ export type RouteItemDef = {
    * This route can not be access after logging in
    */
   isAuthRoute?: boolean;
+  /** Navigation title of menu item for navbar or sidebar */
+  navigationTitle?: string;
+  /** Page title of the screen to be shown on the header */
+  pageTitle?: string;
+  /** Icon of menu item for sidebar using https://material.io/resources/icons */
+  icon?: string;
+  /** Submenu items (max level 1) */
+  subMenuItems?: RouteItemDef[];
+};
+
+export type RouterLocation = {
+  hash?: string;
+  key?: string;
+  pathname: string;
+  search: string;
 };

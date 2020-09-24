@@ -9,7 +9,7 @@ const DefaultLayout: FC = ({ children }) => {
   const classes = useStyles();
   const [sideNavOpen, setSideNavOpen] = useState(false);
 
-  const onToggleSideNav = () => {
+  const onToggleSideNav = (): void => {
     setSideNavOpen(!sideNavOpen);
   };
   return (
