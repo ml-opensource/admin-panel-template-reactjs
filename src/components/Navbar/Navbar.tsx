@@ -19,7 +19,7 @@ interface NavbarProps {
 }
 const Navbar: FC<NavbarProps> = ({ sideNavToggle }) => {
   const classes = useStyles();
-  const accessToken = true;
+  const accessToken = true; // TODO: Need to Implement the Authorised user state
   const location: RouterLocation = useLocation();
   const pageTitle = ROUTE_LIST.find(route => route.path === location.pathname)
     ?.pageTitle;
