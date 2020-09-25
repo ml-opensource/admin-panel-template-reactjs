@@ -72,16 +72,32 @@ const homeScreen: RouteItemDef = {
 };
 ```
 
-If the user has just one of the permissions, the path will be shown, otherwise a fallback will be shown, for example that the screen has restricted access. Alternatively, the user could be redirected to the root route, or to a "no access" screen.
+### Fallback component
+
+If the user doesn't have any of the required permissions, then a fallback component can be shown, for example that the screen has restricted access:
 
 ```jsx
 import { Permission } from "features/permissions/permissions";
 
 <Permission
   requiredPermissions={homeScreen.permissions}
-  fallback={<div>Restricted</div>}
-  //redirect={ROOT_ROUTE}
+  fallback={<div>Restricted Access</div>}
 >
-  <homeScreen.component />
+  <HomeScreen />
+</Permission>;
+```
+
+### Redirect
+
+We can also redirect the user to a different route when lacking the required permissions, for example to a "restricted access" screen:
+
+```jsx
+import { Permission } from "features/permissions/permissions";
+
+<Permission
+  requiredPermissions={homeScreen.permissions}
+  redirectTo="/restricted-access"
+>
+  <HomeScreen />
 </Permission>;
 ```
