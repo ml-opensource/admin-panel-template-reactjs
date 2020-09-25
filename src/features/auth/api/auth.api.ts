@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { api } from "api/apiHelper";
+import { api } from "api/api";
 
 import { LoginDataDef } from "../types/auth.loginDataDef";
 import { AuthEndpointsEnum } from "../constants/auth.endpoints";
