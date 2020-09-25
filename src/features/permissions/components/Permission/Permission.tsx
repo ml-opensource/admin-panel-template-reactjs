@@ -24,7 +24,7 @@ interface PermissionProps {
    * aren't met. If no path is supplied, the user will
    * not be redirected.
    */
-  redirect?: string;
+  redirectTo?: string;
   /**
    * An array of required permissions
    */
@@ -43,7 +43,7 @@ const Permission: FC<PermissionProps> = ({
   children,
   fallback,
   hasAll,
-  redirect,
+  redirectTo,
   requiredPermissions,
 }) => {
   const { allowed } = usePermissions(requiredPermissions, hasAll);
@@ -53,7 +53,7 @@ const Permission: FC<PermissionProps> = ({
    * to wrap the whole thing in a fragment.
    */
   if (allowed) return <>{children}</>;
-  if (redirect) return <Redirect to={redirect} />;
+  if (redirectTo) return <Redirect to={redirectTo} />;
   if (fallback) return <>{fallback}</>;
   return null;
 };
