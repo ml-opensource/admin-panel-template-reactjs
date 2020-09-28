@@ -1,17 +1,21 @@
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { Route, Redirect } from "react-router-dom";
 import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
+import { Permission } from "features/permissions/permissions";
+import { RouteItemDef } from "types/routeDef";
+import { AUTH_ROUTE, ROOT_ROUTE } from "./Routes.config";
 
-const RouteWrapper: React.ElementType = ({
-  component,
+const RouteWrapper: FC<RouteItemDef> = ({
+  component: Component,
   isPrivateRoute,
   isAuthRoute,
   layout,
+  permissions,
   ...rest
 }) => {
   const isPrivate = isPrivateRoute || false;
   const isAuth = isAuthRoute || false;
-  const routeLayout = layout || DefaultLayout;
+  const RouteLayout: FC = layout || DefaultLayout;
 
   const accessToken = false;
 
@@ -22,15 +26,15 @@ const RouteWrapper: React.ElementType = ({
    * without authentication.
    */
   if (isPrivate && !signed) {
-    return <Redirect to="/sign-in" />;
+    return <Redirect to={AUTH_ROUTE} />;
   }
 
   /**
-   * Redirect user to Main page if he tries to access an auth route
+   * Redirect user to Main page if trying to access an auth route
    * (SignIn or SignUp) after being authenticated.
    */
   if (isAuth && signed) {
-    return <Redirect to="/" />;
+    return <Redirect to={ROOT_ROUTE} />;
   }
 
   /**
@@ -40,10 +44,21 @@ const RouteWrapper: React.ElementType = ({
     <Route
       {...rest}
       render={(props): React.ReactElement => {
-        return React.createElement(
-          routeLayout!,
-          props as React.Attributes,
-          React.createElement(component!, props)
+        const Content = (): JSX.Element => (
+          <RouteLayout>
+            <Component {...props} />
+          </RouteLayout>
+        );
+
+        return (
+          (permissions && (
+            <Permission
+              fallback={<div>Restricted</div>}
+              requiredPermissions={permissions}
+            >
+              <Content />
+            </Permission>
+          )) || <Content />
         );
       }}
     />
