@@ -58,6 +58,7 @@ const SignInScreen: FC = () => {
   const resetPassword = async (
     forgetPassEmail: string
   ): Promise<void | AxiosResponse> => {
+    // TODO: import and start loader after basic layout feature is merged
     try {
       const res = await authApi.forgetPassword({
         email: forgetPassEmail,
@@ -66,7 +67,10 @@ const SignInScreen: FC = () => {
         // reset the field and close the dialog
         setEmail("");
         setFPDialog(false);
-        // TODO: Implement redirect to the required page
+        setErrorBar(true);
+        setErrorMessage(
+          "Password reset successfully. Please check your email."
+        );
       }
     } catch (error) {
       // TODO: Handle errors
@@ -82,7 +86,6 @@ const SignInScreen: FC = () => {
       {!authenticated && (
         <Paper elevation={3} className={classes.paper}>
           <img src={logo} alt="App logo" className={classes.logo} />
-
           <Box mb={3}>
             <Typography
               variant="h4"
