@@ -28,7 +28,7 @@ export type RouteItemDef = {
   /** Page title of the screen to be shown on the header */
   pageTitle?: string;
   /** Icon of menu item for sidebar using https://material.io/resources/icons */
-  icon?: string;
+  icon?: any; // TODO: add the correct Type for the material icon
   /** Submenu items (max level 1) */
   subMenuItems?: RouteItemDef[];
   /** The required permissions to view this route (optional) */

@@ -43,6 +43,7 @@ const NavContent: FC<NavContentProps> = ({ sideNavToggle }) => {
                 item={navItem}
                 location={location}
                 sideNavToggle={sideNavToggle}
+                nested={false}
               />
             )}
           </React.Fragment>

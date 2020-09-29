@@ -13,7 +13,7 @@ const Routes: FC = () => {
   setPermissions([PermissionEnum.DASHBOARD]);
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader isFullScreen />}>
       <Switch>
         {ROUTE_LIST.map(route => (
           <RouteWrapper key={route.path} {...route} />
