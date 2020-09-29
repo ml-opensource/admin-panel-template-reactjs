@@ -18,7 +18,6 @@ import { setAuthentication, isAuthenticated } from "../../logic/auth.logic";
 
 const SignInScreen: FC = () => {
   const history = useHistory();
-
   const classes = useStyles();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -56,10 +55,12 @@ const SignInScreen: FC = () => {
     }
   };
 
-  const resetPassword = async (): Promise<void | AxiosResponse> => {
+  const resetPassword = async (
+    forgetPassEmail: string
+  ): Promise<void | AxiosResponse> => {
     try {
       const res = await authApi.forgetPassword({
-        email,
+        email: forgetPassEmail,
       });
       if (res.status === 200) {
         // reset the field and close the dialog

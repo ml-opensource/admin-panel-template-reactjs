@@ -10,7 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 interface ForgotPasswordProps {
   open: boolean;
   handleClose: () => void;
-  resetPassword: () => void;
+  resetPassword: (email: string) => void;
 }
 
 const ForgotPassword: FC<ForgotPasswordProps> = ({
@@ -49,7 +49,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={resetPassword} color="primary">
+        <Button onClick={() => resetPassword(email)} color="primary">
           Reset password
         </Button>
       </DialogActions>
