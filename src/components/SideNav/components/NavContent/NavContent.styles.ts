@@ -5,7 +5,8 @@ export const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
     display: "flex",
     alignItems: "center",
-    padding: "0 14px",
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
   logo: {
     maxHeight: 36,
