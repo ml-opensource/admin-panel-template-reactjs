@@ -4,6 +4,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link as RouterLink } from "react-router-dom";
 import { RouteItemDef, RouterLocation } from "types/routeDef";
+import DashboardIcon from "@material-ui/icons/Dashboard";
 import objstr from "obj-str";
 
 import { useStyles } from "./NavListItem.styles";
@@ -23,7 +24,8 @@ const NavListItem: FC<NavListItemProps> = ({
 }) => {
   const classes = useStyles();
 
-  const NavIcon = item.icon as React.ElementType;
+  // Using Dashboard Icon as a fallback icon
+  const NavIcon = (item.icon || DashboardIcon) as React.ElementType;
 
   return (
     <ListItem
