@@ -23,7 +23,7 @@ const NavListItem: FC<NavListItemProps> = ({
 }) => {
   const classes = useStyles();
 
-  const NavIcon = item.icon;
+  const NavIcon = item.icon as React.ElementType;
 
   return (
     <ListItem
