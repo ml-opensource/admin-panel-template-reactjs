@@ -1,5 +1,6 @@
 import React, { FC, memo, Suspense } from "react";
 import { Switch } from "react-router-dom";
+import Loader from "components/Loader/Loader";
 import {
   setPermissions,
   PermissionEnum,
@@ -12,7 +13,7 @@ const Routes: FC = () => {
   setPermissions([PermissionEnum.DASHBOARD]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader isFullScreen />}>
       <Switch>
         {ROUTE_LIST.map(route => (
           <RouteWrapper key={route.path} {...route} />

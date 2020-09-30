@@ -1,6 +1,8 @@
 import { FC, ComponentType } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { PermissionEnum } from "features/permissions/permissions";
+import { OverridableComponent } from "@material-ui/core/OverridableComponent";
+import { SvgIconTypeMap } from "@material-ui/core/SvgIcon";
 
 export type RouteItemDef = {
   /**
@@ -23,6 +25,23 @@ export type RouteItemDef = {
    * This route can not be access after logging in
    */
   isAuthRoute?: boolean;
+  /** Navigation title of menu item for navbar or sidebar */
+  navigationTitle?: string;
+  /** Page title of the screen to be shown on the header */
+  pageTitle?: string;
+  /** Icon of menu item for sidebar using https://material.io/resources/icons
+   * We are only allowed to use Material UI SVG icons
+   */
+  icon?: OverridableComponent<SvgIconTypeMap>;
+  /** Sub menu items (max level 1) */
+  subMenuItems?: RouteItemDef[];
   /** The required permissions to view this route (optional) */
   permissions?: PermissionEnum[];
+};
+
+export type RouterLocation = {
+  hash?: string;
+  key?: string;
+  pathname: string;
+  search: string;
 };

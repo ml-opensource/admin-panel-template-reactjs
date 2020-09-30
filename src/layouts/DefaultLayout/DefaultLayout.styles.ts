@@ -1,14 +1,22 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
-  container: {
-    width: "1000px",
-    margin: "0 auto",
+export const useStyles = makeStyles(theme => ({
+  root: {
     display: "flex",
-    flexDirection: "column",
     minHeight: "100vh",
   },
   content: {
-    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    paddingTop: theme.spacing(8),
+    paddingRight: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    position: "relative",
+    zIndex: 1,
+    background: theme.palette.grey[200],
   },
-});
+  container: {
+    flex: "1 1 0%",
+  },
+}));
