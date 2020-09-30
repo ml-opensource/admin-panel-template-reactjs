@@ -13,3 +13,7 @@ As this repo will be used for different clients, we need to be able to easily th
 ## Roadmap
 
 The roadmap in the [project tab](https://github.com/monstar-lab-group/admin-panel-template-reactjs/projects/1) will contain all the features that we need to implement, so you can pick up a task from there or ask @Themi Tsiotas von Pfaler to assign you a task.
+
+## How We Work
+
+This template follows **syntax**, **semantics**, and **folder structure** defined in the [web-frontend repo](https://github.com/monstar-lab-group/web-frontend).
