@@ -5,6 +5,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "routes/Routes";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "styles/theme";
+import {
+  Localization,
+  LanguagesEnum,
+} from "features/localization/localization";
 import * as serviceWorker from "./serviceWorker";
 
 const App: FC = () => {
@@ -19,7 +23,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <Localization defaultLanguage={LanguagesEnum.ENGLISH}>
+        <App />
+      </Localization>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

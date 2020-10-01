@@ -1,7 +1,10 @@
 import React, { FC, memo } from "react";
+import { useTranslation } from "features/localization/localization";
 
 const HomeScreen: FC = () => {
-  return <h1>Home Screen</h1>;
+  const { t } = useTranslation();
+
+  return <h1>{t("Homepage")}</h1>;
 };
 
 export default memo(HomeScreen);

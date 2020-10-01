@@ -12,6 +12,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import Tooltip from "@material-ui/core/Tooltip";
 import { RouterLocation } from "types/routeDef";
 import { ROUTE_LIST } from "routes/Routes.config";
+import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import { useStyles } from "./Navbar.styles";
 
 interface NavbarProps {
@@ -54,11 +55,15 @@ const Navbar: FC<NavbarProps> = ({ sideNavToggle }) => {
               </Badge>
             </IconButton>
           </Tooltip>
+
           <Tooltip title="My Profile">
             <IconButton aria-label="account of current user" color="inherit">
               <AccountCircle />
             </IconButton>
           </Tooltip>
+
+          <LanguageSwitcher />
+
           {accessToken && (
             <Tooltip title="Sign Out">
               <IconButton
