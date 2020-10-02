@@ -34,6 +34,9 @@ The `ThemeProvider` sets the theme based on our desired `theme` object by passin
 Lets have a look at how to set a theme for our general application.
 
 ```jsx
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "styles/theme";
+
 ReactDOM.render(
   <React.StrictMode>
     // Themprovider wrapped outside of App component
@@ -46,7 +49,7 @@ ReactDOM.render(
 );
 ```
 
-## How to style material ui components
+## Accesing theme in a component
 
 If you wish to style material UI components from the theme, you can do so by using the `useTheme` hook. This hook gives you access to the application's theme and allows you to use the theme variables inside your components.
 
