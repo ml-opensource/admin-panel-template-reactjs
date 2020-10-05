@@ -6,7 +6,7 @@ import { en } from "../lang/en";
 import { fr } from "../lang/fr";
 
 const INITIAL_LANG = LanguagesEnum.ENGLISH;
-const DEFAULT_NS = "translation";
+export const DEFAULT_NS = "translation";
 
 i18n.use(initReactI18next).init({
   fallbackLng: INITIAL_LANG,

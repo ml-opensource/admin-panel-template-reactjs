@@ -4,7 +4,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { useLanguages, i18n } from "features/localization/localization";
+import useLanguages from "../../hooks/languages.hooks";
+import i18n from "../../logic/localization.logic";
 import { useStyles } from "./LanguageSwitcher.styles";
 
 const LanguageSwitcher = () => {
