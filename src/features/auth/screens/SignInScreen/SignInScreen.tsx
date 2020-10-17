@@ -1,28 +1,103 @@
+import { Formik, Field } from "formik";
 import React, { FC, memo } from "react";
-import { AxiosResponse } from "axios";
-import { authApi } from "../../api/auth.api";
+import { Link } from "react-router-dom";
+import { TextField } from "formik-material-ui";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
+import {
+  Avatar,
+  Typography,
+  Button,
+  Grid,
+  Link as MatLink,
+  LinearProgress,
+} from "@material-ui/core";
+
+import { useStyles } from "./SignInScreenStyle";
+import { initFormValue, schema } from "./SignInForm";
+
+/**
+ * SignIn Screen
+ */
 const SignInScreen: FC = () => {
-  const signIn = async (): Promise<void | AxiosResponse> => {
-    try {
-      const res = await authApi.signIn({
-        email: "eve.holt@reqres.in",
-        password: "cityslicka",
-      });
-      if (res.status === 200) {
-        // let's direct
-      }
-    } catch (error) {
-      // something went wrong
-    }
+  const classes = useStyles();
+
+  /**
+   * Login handler with user credentials
+   * @param values
+   * @param setSubmitting
+   */
+  const loginHandler = (values: any, { setSubmitting }: any) => {
+    // To see the linear loading component
+    setTimeout(() => {
+      setSubmitting(false);
+    }, 3000);
   };
 
   return (
-    <div>
-      <h1>SignIn Screen</h1>
-      <button type="button" onClick={signIn}>
-        Sign in
-      </button>
+    <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        SignIn Screen
+      </Typography>
+      <Formik
+        initialValues={initFormValue}
+        validationSchema={schema}
+        onSubmit={loginHandler}
+      >
+        {({ handleSubmit, dirty, isValid, isSubmitting }) => {
+          return (
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
+              <Field
+                component={TextField}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoFocus
+              />
+              <Field
+                component={TextField}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+              />
+              {isSubmitting && <LinearProgress />}
+              <Button
+                disabled={!(dirty && isValid) || isSubmitting}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                SignIn
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <MatLink
+                    component={Link}
+                    to="/forget-password"
+                    variant="body2"
+                  >
+                    Forget Password
+                  </MatLink>
+                </Grid>
+              </Grid>
+            </form>
+          );
+        }}
+      </Formik>
     </div>
   );
 };
