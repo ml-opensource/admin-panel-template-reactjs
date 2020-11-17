@@ -1,5 +1,14 @@
 # Admin Panel Template ReactJS
 
+## Live Playground
+
+**You’ll need to have Node 10.x or Node 12.x on your local development machine**. You can use [nvm](https://github.com/nvm-sh/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
+
+- Clone this repository
+- `yarn install`
+- `yarn start`
+- Visit http://localhost:3000/
+
 ## Mission
 
 The purpose of this repo is to create a React JS template so we can standardize how we implement Admin Panels with the basic things such as auth, navigation, tables, forms, etc.
