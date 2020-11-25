@@ -1,4 +1,7 @@
-import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+} from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
   root: {
