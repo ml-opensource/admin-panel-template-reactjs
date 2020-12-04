@@ -1,7 +1,13 @@
 import React, { FC, memo } from "react";
+import TableView from "components/TableView/TableView";
 
 const HomeScreen: FC = () => {
-  return <h1>Home Screen</h1>;
+  return (
+    <div>
+      <h1>Home Screen</h1>
+      <TableView />
+    </div>
+  );
 };
 
 export default memo(HomeScreen);
