@@ -20,6 +20,17 @@ const NavContent: FC<NavContentProps> = ({ sideNavToggle }) => {
     route => !route.isAuthRoute
   );
 
+  // Making default path "/" to be placed in top of navBar
+  navLinks.sort((x, y) => {
+    if (x.path === "/") {
+      return -1;
+    }
+    if (y.path === "/") {
+      return 1;
+    }
+    return 0;
+  });
+
   const location: RouterLocation = useLocation();
 
   return (
