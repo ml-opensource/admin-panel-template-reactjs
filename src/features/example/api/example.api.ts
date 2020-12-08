@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios";
 import { api } from "api/api";
-import { HomeEndpointsEnum } from "../constants/home.endpoints";
+import { ExampleEndpointsEnum } from "../constants/example.endpoints";
 
 const list = (): Promise<AxiosResponse> => {
-  return api.get(HomeEndpointsEnum.USERS);
+  return api.get(ExampleEndpointsEnum.USERS);
 };
 
 export const userApi = {
