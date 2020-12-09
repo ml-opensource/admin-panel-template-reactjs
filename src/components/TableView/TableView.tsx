@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import Table from "@material-ui/core/Table";
+import Table, { TableProps } from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -17,15 +17,20 @@ interface Data {
 }
 
 interface TableViewProps {
+  tableProps: TableProps;
   data: Data[];
 }
 
-const TableView: FC<TableViewProps> = ({ data = [] }) => {
+const TableView: FC<TableViewProps> = ({ data = [], tableProps }) => {
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table
+        className={classes.table}
+        aria-label="simple table"
+        {...tableProps}
+      >
         <TableHead>
           <TableRow>
             <TableCell>id</TableCell>
