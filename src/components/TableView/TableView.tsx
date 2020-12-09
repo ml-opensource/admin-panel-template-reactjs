@@ -22,6 +22,7 @@ interface TableViewProps {
   tableProps?: TableProps;
   rows: Data[];
   pagination?: boolean;
+  sorting?: boolean;
 }
 
 // order function starts here
@@ -89,6 +90,7 @@ interface TableHeadViewProps {
     event: React.MouseEvent<unknown>,
     property: keyof Data
   ) => void;
+  sorting?: boolean;
 }
 
 const TableHeadView: FC<TableHeadViewProps> = ({
@@ -96,6 +98,7 @@ const TableHeadView: FC<TableHeadViewProps> = ({
   order,
   orderBy,
   onRequestSort,
+  sorting = false,
 }) => {
   const createSortHandler = (property: keyof Data) => (
     event: React.MouseEvent<unknown>
@@ -114,18 +117,24 @@ const TableHeadView: FC<TableHeadViewProps> = ({
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </span>
-              ) : null}
-            </TableSortLabel>
+            {sorting ? (
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <span className={classes.visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            ) : (
+              headCell.label
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -138,6 +147,7 @@ const TableView: FC<TableViewProps> = ({
   rows = [],
   tableProps,
   pagination = false,
+  sorting = false,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState<Order>("asc");
@@ -182,6 +192,7 @@ const TableView: FC<TableViewProps> = ({
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
+              sorting={sorting}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
