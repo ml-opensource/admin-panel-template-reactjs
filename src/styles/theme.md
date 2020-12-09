@@ -154,3 +154,6 @@ In the example below, `getThemeBasedOnUserRole()` method returns the `theme` bas
 ```jsx
 <ThemeProvider theme={getThemeBasedOnUserRole(user.role)}>
 ```
+
+## References
+[Material-UI Official Document](https://material-ui.com/)
