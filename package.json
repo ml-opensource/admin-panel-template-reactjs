@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.6",
     "@types/yup": "^0.29.8",
     "axios": "^0.20.0",
+    "clsx": "^1.1.1",
     "formik": "^2.2.0",
     "formik-material-ui": "^3.0.0",
     "history": "^5.0.0",
