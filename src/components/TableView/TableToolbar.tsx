@@ -20,9 +20,9 @@ const TableToolbar: FC<TableToolbarProps> = ({
 
   return (
     <Toolbar
-      className={objstr(classes.root, {
+      className={`${classes.root} ${objstr({
         [classes.highlight]: numSelected > 0,
-      })}
+      })}`}
     >
       {numSelected > 0 ? (
         <Typography
