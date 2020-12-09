@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import clsx from "clsx";
+import objstr from "obj-str";
 import { IconButton, Toolbar, Tooltip, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
@@ -20,7 +20,7 @@ const TableToolbar: FC<TableToolbarProps> = ({
 
   return (
     <Toolbar
-      className={clsx(classes.root, {
+      className={objstr(classes.root, {
         [classes.highlight]: numSelected > 0,
       })}
     >
