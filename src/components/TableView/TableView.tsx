@@ -25,6 +25,7 @@ interface TableViewProps {
   pagination?: boolean;
   sorting?: boolean;
   title?: string;
+  filter?: boolean;
 }
 
 // order function starts here
@@ -151,6 +152,7 @@ const TableView: FC<TableViewProps> = ({
   pagination = false,
   sorting = false,
   title = "Sample Title",
+  filter = false,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState<Order>("asc");
@@ -219,6 +221,7 @@ const TableView: FC<TableViewProps> = ({
         <TableToolbar
           // numSelected={selected.length}
           title={title}
+          filter={filter}
         />
         <TableContainer>
           <Table
