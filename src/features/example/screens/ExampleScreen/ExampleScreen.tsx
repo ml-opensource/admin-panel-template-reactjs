@@ -18,7 +18,7 @@ const ExampleScreen: FC = () => {
   return (
     <div>
       <h1>Example Screen</h1>
-      <TableView rows={users} tableProps={{}} />
+      <TableView rows={users} pagination />
     </div>
   );
 };
