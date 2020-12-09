@@ -147,13 +147,10 @@ const darkTheme = createMuiTheme({
 
 ## Themes based on user role
 
-Themes can be rendered based on different user roles. In the example below, we use the `Permission` component and provide a theme only to users that have the role to create (for instance an admin).
+Themes can be rendered based on different user roles.  
+
+In the example below, `getThemeBasedOnUserRole()` method returns the `theme` based on the user role.
 
 ```jsx
-import { Permission, PermissionEnum } from "features/permissions/permissions";
-import theme from "styles/theme";
-
-<Permission requiredPermissions={[PermissionEnum.USERS_CREATE]}>
-  <ThemeProvider theme={theme}>{/* your code here*/}</ThemeProvider>
-</Permission>;
+<ThemeProvider theme={getThemeBasedOnUserRole(user.role)}>
 ```
