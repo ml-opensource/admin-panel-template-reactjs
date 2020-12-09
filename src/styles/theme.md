@@ -73,12 +73,8 @@ import green from "@material-ui/core/colors/green";
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      main: blue
-    },
-    secondary: {
-      main: green
-    },
+    primary:  blue,
+    secondary: green
   },
 });
 ```
