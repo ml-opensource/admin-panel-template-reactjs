@@ -25,6 +25,8 @@ interface Data {
 interface TableViewProps {
   tableProps?: TableProps;
   rows: Data[];
+  onPaginationChange: (newPage: number) => void;
+  rowsPerPage: number;
   withPagination?: boolean;
   withSorting?: boolean;
   title?: string;
@@ -194,6 +196,8 @@ const TableHeadView: FC<TableHeadViewProps> = ({
 const TableView: FC<TableViewProps> = ({
   rows = [],
   tableProps,
+  onPaginationChange,
+  rowsPerPage,
   withPagination = false,
   withSorting = false,
   title = "Sample Title",
@@ -206,7 +210,7 @@ const TableView: FC<TableViewProps> = ({
   const [orderBy, setOrderBy] = useState<keyof Data>("id");
   const [selected, setSelected] = useState<string[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  // const [rowsPerPage, setRowsPerPage] = useState(6);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -248,19 +252,20 @@ const TableView: FC<TableViewProps> = ({
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+    onPaginationChange(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  // const handleChangeRowsPerPage = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  // const emptyRows =
+  //   rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -290,12 +295,12 @@ const TableView: FC<TableViewProps> = ({
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(
-                  withPagination ? page * rowsPerPage : 0,
-                  withPagination
-                    ? page * rowsPerPage + rowsPerPage
-                    : rows.length
-                )
+                // .slice(
+                //   withPagination ? page * rowsPerPage : 0,
+                //   withPagination
+                //     ? page * rowsPerPage + rowsPerPage
+                //     : rows.length
+                // )
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -326,23 +331,23 @@ const TableView: FC<TableViewProps> = ({
                     </TableRow>
                   );
                 })}
-              {withPagination && emptyRows > 0 && (
+              {/* {withPagination && emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
-              )}
+              )} */}
             </TableBody>
           </Table>
         </TableContainer>
         {withPagination && (
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
+            // onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         )}
       </Paper>
