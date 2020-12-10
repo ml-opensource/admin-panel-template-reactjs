@@ -14,13 +14,6 @@ import { InputAdornment, TextField } from "@material-ui/core";
 import { useStyles } from "./TableView.styles";
 import TableToolbar from "./TableToolbar";
 
-interface UserData {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: Array<any>;
-}
 interface Data {
   id: number;
   name: string;
