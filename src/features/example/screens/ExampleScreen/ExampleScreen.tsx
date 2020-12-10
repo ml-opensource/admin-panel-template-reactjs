@@ -4,9 +4,9 @@ import { userApi } from "../../api/example.api";
 
 const ExampleScreen: FC = () => {
   const [users, setUsers] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(0);
   const [page, setPage] = useState(1);
-
+  const [count, setCount] = useState(0);
   interface UserData {
     page: number;
     per_page: number;
@@ -20,6 +20,7 @@ const ExampleScreen: FC = () => {
 
     setRowsPerPage(userData.per_page);
     setUsers(userData.data);
+    setCount(userData.total);
   };
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const ExampleScreen: FC = () => {
         tableProps={{ size: "medium", stickyHeader: false, padding: "default" }}
         onPaginationChange={handlePaginationChange}
         rowsPerPage={rowsPerPage}
+        count={count}
         withPagination
         // withSorting
 

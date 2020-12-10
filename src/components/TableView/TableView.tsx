@@ -14,6 +14,13 @@ import { InputAdornment, TextField } from "@material-ui/core";
 import { useStyles } from "./TableView.styles";
 import TableToolbar from "./TableToolbar";
 
+interface UserData {
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+  data: Array<any>;
+}
 interface Data {
   id: number;
   name: string;
@@ -27,6 +34,7 @@ interface TableViewProps {
   rows: Data[];
   onPaginationChange: (newPage: number) => void;
   rowsPerPage: number;
+  count: number;
   withPagination?: boolean;
   withSorting?: boolean;
   title?: string;
@@ -198,6 +206,7 @@ const TableView: FC<TableViewProps> = ({
   tableProps,
   onPaginationChange,
   rowsPerPage,
+  count,
   withPagination = false,
   withSorting = false,
   title = "Sample Title",
@@ -343,7 +352,7 @@ const TableView: FC<TableViewProps> = ({
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={rows.length}
+            count={count}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
