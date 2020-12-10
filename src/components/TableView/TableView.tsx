@@ -102,6 +102,7 @@ interface TableHeadViewProps {
   rowCount: number;
   withSorting: boolean;
   withCheckbox: boolean;
+  withFilter: boolean;
 }
 
 const TableHeadView: FC<TableHeadViewProps> = ({
@@ -114,6 +115,7 @@ const TableHeadView: FC<TableHeadViewProps> = ({
   onRequestSort,
   withSorting,
   withCheckbox,
+  withFilter,
 }) => {
   const createSortHandler = (property: keyof Data) => (
     event: React.MouseEvent<unknown>
@@ -163,6 +165,26 @@ const TableHeadView: FC<TableHeadViewProps> = ({
           </TableCell>
         ))}
       </TableRow>
+      {withFilter && (
+        <TableRow>
+          {withCheckbox && <TableCell padding="checkbox" />}
+          {headCells.map(headCell => (
+            <TableCell key={headCell.id}>
+              <TextField
+                className={classes.margin}
+                id={headCell.id}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FilterListIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </TableCell>
+          ))}
+        </TableRow>
+      )}
     </TableHead>
   );
 };
@@ -258,27 +280,8 @@ const TableView: FC<TableViewProps> = ({
               rowCount={rows.length}
               withSorting={withSorting}
               withCheckbox={withCheckbox}
+              withFilter={withFilter}
             />
-            {withFilter && (
-              <TableRow>
-                <TableCell padding="checkbox" />
-                {headCells.map(() => (
-                  <TableCell>
-                    <TextField
-                      className={classes.margin}
-                      id="input-with-icon-textfield"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <FilterListIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </TableCell>
-                ))}
-              </TableRow>
-            )}
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(
