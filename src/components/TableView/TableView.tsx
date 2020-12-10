@@ -26,9 +26,9 @@ interface TableViewProps {
   tableProps?: TableProps;
   rows: Data[];
   withPagination?: boolean;
-  onPaginationChange: (newPage: number) => void;
-  rowsPerPage: number;
-  count: number;
+  onPaginationChange?: (newPage: number) => void;
+  rowsPerPage?: number;
+  count?: number;
   withSorting?: boolean;
   title?: string;
   withFilter?: boolean;
@@ -198,9 +198,11 @@ const TableView: FC<TableViewProps> = ({
   rows = [],
   tableProps,
   withPagination = false,
-  onPaginationChange,
-  rowsPerPage,
-  count,
+  onPaginationChange = () => {
+    return null;
+  },
+  rowsPerPage = 0,
+  count = 0,
   withSorting = false,
   title = "Sample Title",
   withFilter = false,

@@ -48,7 +48,7 @@ const ExampleScreen: FC = () => {
         count={count}
         // pagination props ends here
 
-        // withSorting
+        withSorting
 
         // withFilter
         // withCheckbox
