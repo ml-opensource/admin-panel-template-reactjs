@@ -23,10 +23,11 @@ interface Data {
 interface TableViewProps {
   tableProps?: TableProps;
   rows: Data[];
-  pagination?: boolean;
-  sorting?: boolean;
+  withPagination?: boolean;
+  withSorting?: boolean;
   title?: string;
-  filter?: boolean;
+  withFilter?: boolean;
+  withCheckbox?: boolean;
 }
 
 // order function starts here
@@ -97,7 +98,8 @@ interface TableHeadViewProps {
   order: Order;
   orderBy: string;
   rowCount: number;
-  sorting?: boolean;
+  withSorting: boolean;
+  withCheckbox: boolean;
 }
 
 const TableHeadView: FC<TableHeadViewProps> = ({
@@ -108,7 +110,8 @@ const TableHeadView: FC<TableHeadViewProps> = ({
   numSelected,
   rowCount,
   onRequestSort,
-  sorting = false,
+  withSorting,
+  withCheckbox,
 }) => {
   const createSortHandler = (property: keyof Data) => (
     event: React.MouseEvent<unknown>
@@ -119,14 +122,16 @@ const TableHeadView: FC<TableHeadViewProps> = ({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
-          />
-        </TableCell>
+        {withCheckbox && (
+          <TableCell padding="checkbox">
+            <Checkbox
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={rowCount > 0 && numSelected === rowCount}
+              onChange={onSelectAllClick}
+              inputProps={{ "aria-label": "select all desserts" }}
+            />
+          </TableCell>
+        )}
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -135,7 +140,7 @@ const TableHeadView: FC<TableHeadViewProps> = ({
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            {sorting ? (
+            {withSorting ? (
               <TableSortLabel
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
@@ -164,10 +169,11 @@ const TableHeadView: FC<TableHeadViewProps> = ({
 const TableView: FC<TableViewProps> = ({
   rows = [],
   tableProps,
-  pagination = false,
-  sorting = false,
+  withPagination = false,
+  withSorting = false,
   title = "Sample Title",
-  filter = false,
+  withFilter = false,
+  withCheckbox = false,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState<Order>("asc");
@@ -236,7 +242,7 @@ const TableView: FC<TableViewProps> = ({
         <TableToolbar
           numSelected={selected.length}
           title={title}
-          filter={filter}
+          withFilter={withFilter}
         />
         <TableContainer>
           <Table
@@ -252,13 +258,16 @@ const TableView: FC<TableViewProps> = ({
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
-              sorting={sorting}
+              withSorting={withSorting}
+              withCheckbox={withCheckbox}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(
-                  pagination ? page * rowsPerPage : 0,
-                  pagination ? page * rowsPerPage + rowsPerPage : rows.length
+                  withPagination ? page * rowsPerPage : 0,
+                  withPagination
+                    ? page * rowsPerPage + rowsPerPage
+                    : rows.length
                 )
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
@@ -274,12 +283,14 @@ const TableView: FC<TableViewProps> = ({
                       key={row.name}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </TableCell>
+                      {withCheckbox && (
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        </TableCell>
+                      )}
                       {Object.keys(row).map(key => (
                         <TableCell key={key} align="center">
                           {row[key as keyof Data]}
@@ -288,7 +299,7 @@ const TableView: FC<TableViewProps> = ({
                     </TableRow>
                   );
                 })}
-              {pagination && emptyRows > 0 && (
+              {withPagination && emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
@@ -296,7 +307,7 @@ const TableView: FC<TableViewProps> = ({
             </TableBody>
           </Table>
         </TableContainer>
-        {pagination && (
+        {withPagination && (
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"

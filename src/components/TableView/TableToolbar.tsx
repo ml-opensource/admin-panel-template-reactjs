@@ -8,13 +8,13 @@ import { useStyles } from "./TableToolbar.styles";
 interface TableToolbarProps {
   numSelected: number;
   title: string;
-  filter: boolean;
+  withFilter: boolean;
 }
 
 const TableToolbar: FC<TableToolbarProps> = ({
   numSelected,
   title,
-  filter,
+  withFilter,
 }) => {
   const classes = useStyles();
 
@@ -43,7 +43,7 @@ const TableToolbar: FC<TableToolbarProps> = ({
           {title}
         </Typography>
       )}
-      {filter &&
+      {withFilter &&
         (numSelected > 0 ? (
           <Tooltip title="Delete">
             <IconButton aria-label="delete">

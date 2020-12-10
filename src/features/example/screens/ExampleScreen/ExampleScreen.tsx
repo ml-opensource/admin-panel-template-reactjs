@@ -18,7 +18,14 @@ const ExampleScreen: FC = () => {
   return (
     <div>
       <h1>Example Screen</h1>
-      <TableView rows={users} pagination sorting filter />
+      <TableView
+        rows={users}
+        title="Table Example"
+        withPagination
+        withSorting
+        withFilter
+        withCheckbox
+      />
     </div>
   );
 };
