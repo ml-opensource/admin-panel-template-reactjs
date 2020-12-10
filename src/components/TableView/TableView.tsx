@@ -8,6 +8,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import { useStyles } from "./TableView.styles";
 import TableToolbar from "./TableToolbar";
 
@@ -87,19 +88,25 @@ const headCells: HeadCell[] = [
 
 interface TableHeadViewProps {
   classes: ReturnType<typeof useStyles>;
-  order: Order;
-  orderBy: string;
+  numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
     property: keyof Data
   ) => void;
+  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  order: Order;
+  orderBy: string;
+  rowCount: number;
   sorting?: boolean;
 }
 
 const TableHeadView: FC<TableHeadViewProps> = ({
   classes,
+  onSelectAllClick,
   order,
   orderBy,
+  numSelected,
+  rowCount,
   onRequestSort,
   sorting = false,
 }) => {
@@ -112,6 +119,14 @@ const TableHeadView: FC<TableHeadViewProps> = ({
   return (
     <TableHead>
       <TableRow>
+        <TableCell padding="checkbox">
+          <Checkbox
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{ "aria-label": "select all desserts" }}
+          />
+        </TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -157,7 +172,7 @@ const TableView: FC<TableViewProps> = ({
   const classes = useStyles();
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Data>("id");
-  // const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -170,34 +185,34 @@ const TableView: FC<TableViewProps> = ({
     setOrderBy(property);
   };
 
-  // const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.checked) {
-  //     const newSelecteds = rows.map(n => n.name);
-  //     setSelected(newSelecteds);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelecteds = rows.map(n => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
 
-  // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   let newSelected: string[] = [];
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected: string[] = [];
 
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
 
-  //   setSelected(newSelected);
-  // };
+    setSelected(newSelected);
+  };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -210,7 +225,7 @@ const TableView: FC<TableViewProps> = ({
     setPage(0);
   };
 
-  // const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -219,7 +234,7 @@ const TableView: FC<TableViewProps> = ({
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <TableToolbar
-          // numSelected={selected.length}
+          numSelected={selected.length}
           title={title}
           filter={filter}
         />
@@ -231,9 +246,12 @@ const TableView: FC<TableViewProps> = ({
           >
             <TableHeadView
               classes={classes}
+              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
+              rowCount={rows.length}
               sorting={sorting}
             />
             <TableBody>
@@ -242,15 +260,34 @@ const TableView: FC<TableViewProps> = ({
                   pagination ? page * rowsPerPage : 0,
                   pagination ? page * rowsPerPage + rowsPerPage : rows.length
                 )
-                .map(row => (
-                  <TableRow hover key={row.name}>
-                    {Object.keys(row).map(key => (
-                      <TableCell key={key} align="center">
-                        {row[key as keyof Data]}
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.name);
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => handleClick(event, row.name)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.name}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ "aria-labelledby": labelId }}
+                        />
                       </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
+                      {Object.keys(row).map(key => (
+                        <TableCell key={key} align="center">
+                          {row[key as keyof Data]}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })}
               {pagination && emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={6} />

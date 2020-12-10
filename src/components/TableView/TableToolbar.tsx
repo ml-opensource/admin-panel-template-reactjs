@@ -6,13 +6,13 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import { useStyles } from "./TableToolbar.styles";
 
 interface TableToolbarProps {
-  numSelected?: number;
+  numSelected: number;
   title: string;
   filter: boolean;
 }
 
 const TableToolbar: FC<TableToolbarProps> = ({
-  numSelected = 0,
+  numSelected,
   title,
   filter,
 }) => {
