@@ -21,6 +21,7 @@ const ExampleScreen: FC = () => {
       <TableView
         rows={users}
         title="Table Example"
+        tableProps={{ size: "medium", stickyHeader: false, padding: "default" }}
         withPagination
         withSorting
         withFilter
