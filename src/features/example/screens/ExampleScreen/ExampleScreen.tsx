@@ -38,10 +38,16 @@ const ExampleScreen: FC = () => {
         rows={users}
         title="Basic Table"
         tableProps={{ size: "medium", stickyHeader: false, padding: "default" }}
+        /* 
+          pagination props starts here
+          material-ui's TablePaginationProps has problem: https://github.com/mui-org/material-ui/issues/15959
+        */
+        withPagination
         onPaginationChange={handlePaginationChange}
         rowsPerPage={rowsPerPage}
         count={count}
-        withPagination
+        // pagination props ends here
+
         // withSorting
 
         // withFilter

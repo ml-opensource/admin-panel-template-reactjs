@@ -25,10 +25,10 @@ interface Data {
 interface TableViewProps {
   tableProps?: TableProps;
   rows: Data[];
+  withPagination?: boolean;
   onPaginationChange: (newPage: number) => void;
   rowsPerPage: number;
   count: number;
-  withPagination?: boolean;
   withSorting?: boolean;
   title?: string;
   withFilter?: boolean;
@@ -197,10 +197,10 @@ const TableHeadView: FC<TableHeadViewProps> = ({
 const TableView: FC<TableViewProps> = ({
   rows = [],
   tableProps,
+  withPagination = false,
   onPaginationChange,
   rowsPerPage,
   count,
-  withPagination = false,
   withSorting = false,
   title = "Sample Title",
   withFilter = false,
