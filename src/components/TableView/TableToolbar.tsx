@@ -8,9 +8,14 @@ import { useStyles } from "./TableToolbar.styles";
 interface TableToolbarProps {
   numSelected: number;
   title: string;
+  withSearch: boolean;
 }
 
-const TableToolbar: FC<TableToolbarProps> = ({ numSelected, title }) => {
+const TableToolbar: FC<TableToolbarProps> = ({
+  numSelected,
+  title,
+  withSearch,
+}) => {
   const classes = useStyles();
 
   return (
@@ -45,11 +50,13 @@ const TableToolbar: FC<TableToolbarProps> = ({ numSelected, title }) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Search list">
-          <IconButton aria-label="search list">
-            <SearchIcon />
-          </IconButton>
-        </Tooltip>
+        withSearch && (
+          <Tooltip title="Search list">
+            <IconButton aria-label="search list">
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+        )
       )}
     </Toolbar>
   );

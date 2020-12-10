@@ -30,6 +30,7 @@ interface TableViewProps {
   title?: string;
   withFilter?: boolean;
   withCheckbox?: boolean;
+  withSearch?: boolean;
 }
 
 // order function starts here
@@ -198,6 +199,7 @@ const TableView: FC<TableViewProps> = ({
   title = "Sample Title",
   withFilter = false,
   withCheckbox = false,
+  withSearch = false,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState<Order>("asc");
@@ -263,7 +265,11 @@ const TableView: FC<TableViewProps> = ({
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableToolbar numSelected={selected.length} title={title} />
+        <TableToolbar
+          numSelected={selected.length}
+          title={title}
+          withSearch={withSearch}
+        />
         <TableContainer>
           <Table
             className={classes.table}

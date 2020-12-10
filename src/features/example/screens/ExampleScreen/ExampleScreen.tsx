@@ -25,6 +25,7 @@ const ExampleScreen: FC = () => {
         withSorting
         withFilter
         withCheckbox
+        withSearch
       />
     </div>
   );
