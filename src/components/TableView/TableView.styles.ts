@@ -23,5 +23,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
+    margin: {
+      margin: theme.spacing(1),
+    },
   })
 );

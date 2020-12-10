@@ -2,20 +2,15 @@ import React, { FC, memo } from "react";
 import objstr from "obj-str";
 import { IconButton, Toolbar, Tooltip, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import SearchIcon from "@material-ui/icons/Search";
 import { useStyles } from "./TableToolbar.styles";
 
 interface TableToolbarProps {
   numSelected: number;
   title: string;
-  withFilter: boolean;
 }
 
-const TableToolbar: FC<TableToolbarProps> = ({
-  numSelected,
-  title,
-  withFilter,
-}) => {
+const TableToolbar: FC<TableToolbarProps> = ({ numSelected, title }) => {
   const classes = useStyles();
 
   return (
@@ -43,20 +38,19 @@ const TableToolbar: FC<TableToolbarProps> = ({
           {title}
         </Typography>
       )}
-      {withFilter &&
-        (numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        ))}
+      {numSelected > 0 ? (
+        <Tooltip title="Delete">
+          <IconButton aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title="Search list">
+          <IconButton aria-label="search list">
+            <SearchIcon />
+          </IconButton>
+        </Tooltip>
+      )}
     </Toolbar>
   );
 };

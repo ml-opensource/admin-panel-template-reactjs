@@ -9,6 +9,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import { InputAdornment, TextField } from "@material-ui/core";
 import { useStyles } from "./TableView.styles";
 import TableToolbar from "./TableToolbar";
 
@@ -239,11 +241,7 @@ const TableView: FC<TableViewProps> = ({
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableToolbar
-          numSelected={selected.length}
-          title={title}
-          withFilter={withFilter}
-        />
+        <TableToolbar numSelected={selected.length} title={title} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -261,6 +259,26 @@ const TableView: FC<TableViewProps> = ({
               withSorting={withSorting}
               withCheckbox={withCheckbox}
             />
+            {withFilter && (
+              <TableRow>
+                <TableCell padding="checkbox" />
+                {headCells.map(() => (
+                  <TableCell>
+                    <TextField
+                      className={classes.margin}
+                      id="input-with-icon-textfield"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <FilterListIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+            )}
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(
