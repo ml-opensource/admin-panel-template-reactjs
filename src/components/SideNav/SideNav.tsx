@@ -1,7 +1,7 @@
 import React, { FC, memo } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import { useTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { useTheme, ThemeProvider } from "@material-ui/core/styles";
 import NavContent from "./components/NavContent/NavContent";
 import { useStyles, darkTheme } from "./SideNav.styles";
 
@@ -15,7 +15,7 @@ const SideNav: FC<SideNavProps> = ({ sideNavOpen, sideNavToggle }) => {
 
   return (
     <div className={classes.root}>
-      <MuiThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={darkTheme}>
         <Hidden mdUp implementation="css">
           <Drawer
             classes={{
@@ -43,7 +43,7 @@ const SideNav: FC<SideNavProps> = ({ sideNavOpen, sideNavToggle }) => {
             <NavContent />
           </Drawer>
         </Hidden>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </div>
   );
 };
