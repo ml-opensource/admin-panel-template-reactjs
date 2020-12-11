@@ -259,17 +259,7 @@ const TableView: FC<TableViewProps> = ({
     onPaginationChange(newPage);
   };
 
-  // const handleChangeRowsPerPage = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
-
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  // const emptyRows =
-  //   rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -298,14 +288,8 @@ const TableView: FC<TableViewProps> = ({
               withFilter={withFilter}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                // .slice(
-                //   withPagination ? page * rowsPerPage : 0,
-                //   withPagination
-                //     ? page * rowsPerPage + rowsPerPage
-                //     : rows.length
-                // )
-                .map((row, index) => {
+              {stableSort(rows, getComparator(order, orderBy)).map(
+                (row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -334,12 +318,8 @@ const TableView: FC<TableViewProps> = ({
                       ))}
                     </TableRow>
                   );
-                })}
-              {/* {withPagination && emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )} */}
+                }
+              )}
             </TableBody>
           </Table>
         </TableContainer>
@@ -351,7 +331,6 @@ const TableView: FC<TableViewProps> = ({
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
-            // onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         )}
       </Paper>
