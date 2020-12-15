@@ -50,7 +50,7 @@ const ExampleScreen: FC = () => {
 
         withSorting
         // withFilter
-        withCheckbox
+        // withCheckbox
         // withSearch
       />
     </div>
