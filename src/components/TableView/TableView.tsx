@@ -1,5 +1,5 @@
 import React, { FC, memo, useState } from "react";
-import Table, { TableProps } from "@material-ui/core/Table";
+import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -13,28 +13,13 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import { InputAdornment, TextField } from "@material-ui/core";
 import { useStyles } from "./TableView.styles";
 import TableToolbar from "./TableToolbar";
-
-interface Data {
-  id: number;
-  name: string;
-  year: number;
-  color: string;
-  pantone_value: string;
-}
-
-interface TableViewProps {
-  tableProps?: TableProps;
-  rows: Data[];
-  withPagination?: boolean;
-  onPaginationChange?: (newPage: number) => void;
-  rowsPerPage?: number;
-  count?: number;
-  withSorting?: boolean;
-  title?: string;
-  withFilter?: boolean;
-  withCheckbox?: boolean;
-  withSearch?: boolean;
-}
+import {
+  Data,
+  TableViewProps,
+  Order,
+  HeadCell,
+  TableHeadViewProps,
+} from "./TableView.types.example";
 
 // order function starts here
 const descendingComparator = <T,>(a: T, b: T, orderBy: keyof T) => {
@@ -46,8 +31,6 @@ const descendingComparator = <T,>(a: T, b: T, orderBy: keyof T) => {
   }
   return 0;
 };
-
-type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -73,13 +56,6 @@ const stableSort = <T,>(array: T[], comparator: (a: T, b: T) => number) => {
 // order function ends here
 
 // header starts here
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
-
 const headCells: HeadCell[] = [
   { id: "id", numeric: true, disablePadding: false, label: "ID" },
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
@@ -92,22 +68,6 @@ const headCells: HeadCell[] = [
     label: "Pantone Value",
   },
 ];
-
-interface TableHeadViewProps {
-  classes: ReturnType<typeof useStyles>;
-  numSelected: number;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-  withSorting: boolean;
-  withCheckbox: boolean;
-  withFilter: boolean;
-}
 
 const TableHeadView: FC<TableHeadViewProps> = ({
   classes,
@@ -296,7 +256,6 @@ const TableView: FC<TableViewProps> = ({
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -306,6 +265,7 @@ const TableView: FC<TableViewProps> = ({
                       {withCheckbox && (
                         <TableCell padding="checkbox">
                           <Checkbox
+                            onClick={event => handleClick(event, row.name)}
                             checked={isItemSelected}
                             inputProps={{ "aria-labelledby": labelId }}
                           />

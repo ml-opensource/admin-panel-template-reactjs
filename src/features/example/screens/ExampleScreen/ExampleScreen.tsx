@@ -49,9 +49,8 @@ const ExampleScreen: FC = () => {
         // pagination props ends here
 
         withSorting
-
         // withFilter
-        // withCheckbox
+        withCheckbox
         // withSearch
       />
     </div>
