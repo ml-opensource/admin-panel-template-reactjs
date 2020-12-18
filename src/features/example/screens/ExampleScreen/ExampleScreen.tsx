@@ -12,16 +12,46 @@ interface UserData {
 
 const ExampleScreen: FC = () => {
   const [rows, setRows] = useState<Rows[]>([]);
-  const [rowsPerPage, setRowsPerPage] = useState(0);
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
 
   const columns = [
-    "id",
-    "name",
-    { id: "color", disablePadding: false, label: "color", numeric: false },
-    "pantone_value",
-    "year",
+    {
+      id: "id",
+      disablePadding: false,
+      label: "ID",
+      numeric: false,
+      isImage: false,
+    },
+    {
+      id: "email",
+      disablePadding: false,
+      label: "Email",
+      numeric: false,
+      isImage: false,
+    },
+    {
+      id: "first_name",
+      disablePadding: false,
+      label: "First Name",
+      numeric: false,
+      isImage: false,
+    },
+    {
+      id: "last_name",
+      disablePadding: false,
+      label: "Last Name",
+      numeric: false,
+      isImage: false,
+    },
+    {
+      id: "avatar",
+      disablePadding: false,
+      label: "Avatar",
+      numeric: false,
+      isImage: true,
+    },
   ];
 
   const getUsers = async (newPage: number) => {

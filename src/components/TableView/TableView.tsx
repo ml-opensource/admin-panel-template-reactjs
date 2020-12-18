@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TablePagination } from "@material-ui/core";
 import qs from "query-string";
+import Avatar from "@material-ui/core/Avatar";
 import { useStyles } from "./TableView.styles";
 import { Rows } from "./TableView.types.example";
 import { ColumnsOptionProps } from "./TableView.types";
@@ -52,7 +53,9 @@ const TableView: FC<TableViewProps> = ({
     const values = {
       ...currentSearch,
       page: newPage + 1,
-      orderBy: undefined,
+      orderBy: "name-asc",
+      name: "a",
+      id: "0",
     };
 
     history.push({
@@ -87,11 +90,11 @@ const TableView: FC<TableViewProps> = ({
             <TableRow>
               {columns.map(column =>
                 typeof column === "string" ? (
-                  <TableCell align="center" key={column}>
+                  <TableCell align="left" key={column}>
                     {column}
                   </TableCell>
                 ) : (
-                  <TableCell align="center" key={column.id}>
+                  <TableCell align="left" key={column.id}>
                     {column.label}
                   </TableCell>
                 )
@@ -103,12 +106,19 @@ const TableView: FC<TableViewProps> = ({
               <TableRow key={row.id}>
                 {columns.map(column =>
                   typeof column === "string" ? (
-                    <TableCell key={column} align="center">
+                    <TableCell key={column} align="left">
                       {row[column as keyof Rows]}
                     </TableCell>
                   ) : (
-                    <TableCell key={column.id} align="center">
-                      {row[column.id as keyof Rows]}
+                    <TableCell key={column.id} align="left">
+                      {column.isImage ? (
+                        <Avatar
+                          src={`${row[column.id as keyof Rows]}`}
+                          alt={column.label}
+                        />
+                      ) : (
+                        row[column.id as keyof Rows]
+                      )}
                     </TableCell>
                   )
                 )}

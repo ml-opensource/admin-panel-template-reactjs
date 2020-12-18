@@ -1,7 +1,7 @@
 export interface Rows {
   id: number;
-  name: string;
-  color: string;
-  pantone_value: string;
-  year: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
 }

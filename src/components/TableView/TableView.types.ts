@@ -3,4 +3,5 @@ export type ColumnsOptionProps = {
   disablePadding: boolean;
   label: string;
   numeric: boolean;
+  isImage: boolean;
 };
