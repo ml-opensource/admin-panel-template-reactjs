@@ -20,7 +20,7 @@ interface TableViewProps {
   rows: Rows[];
   tableProps?: TableProps;
   // paginationProps starts here
-  withPagination: boolean;
+  withPagination?: boolean;
   onPaginationChange?: (newPage: number) => void;
   rowsPerPage?: number;
   count?: number;
