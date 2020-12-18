@@ -1,5 +1,5 @@
 import React, { FC, useState, memo } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+// import { useLocation, useHistory } from "react-router-dom";
 import Table, { TableProps } from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TablePagination } from "@material-ui/core";
-import qs from "query-string";
+// import qs from "query-string";
 import Avatar from "@material-ui/core/Avatar";
 import { useStyles } from "./TableView.styles";
 import { Rows } from "./TableView.types.example";
@@ -45,30 +45,30 @@ const TableView: FC<TableViewProps> = ({
   const [page, setPage] = useState(0);
   // const [selected, setSelected] = useState<string[]>([]);
 
-  const location = useLocation();
-  const history = useHistory();
+  // const location = useLocation();
+  // const history = useHistory();
 
-  const handleTableChange = (newPage: number) => {
-    const currentSearch = qs.parse(location.search);
-    const values = {
-      ...currentSearch,
-      page: newPage + 1,
-      orderBy: "name-asc",
-      name: "a",
-      id: "0",
-    };
+  // const handleTableChange = (newPage: number) => {
+  //   const currentSearch = qs.parse(location.search);
+  //   const values = {
+  //     ...currentSearch,
+  //     page: newPage + 1,
+  //     orderBy: "name-asc",
+  //     name: "a",
+  //     id: "0",
+  //   };
 
-    history.push({
-      pathname: location.pathname,
-      search: qs.stringify(values, { arrayFormat: "comma" }),
-    });
-  };
+  //   history.push({
+  //     pathname: location.pathname,
+  //     search: qs.stringify(values, { arrayFormat: "comma" }),
+  //   });
+  // };
 
   const classes = useStyles();
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    handleTableChange(newPage);
+    // handleTableChange(newPage);
     onPaginationChange(newPage);
   };
 
