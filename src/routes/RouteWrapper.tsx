@@ -6,7 +6,7 @@ import { Permission } from "features/permissions/permissions";
 import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import { RouteItemDef } from "types/routes.types";
 
-import { AUTH_ROUTE, ROOT_ROUTE } from "./routes.c";
+import { AUTH_ROUTE, ROOT_ROUTE } from "./routes.config";
 
 const RouteWrapper: FC<RouteItemDef> = ({
   component: Component,

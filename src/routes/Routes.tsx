@@ -9,7 +9,7 @@ import {
 } from "features/permissions/permissions";
 
 import RouteWrapper from "./RouteWrapper";
-import { ROUTE_LIST } from "./routes.c";
+import { ROUTE_LIST } from "./routes.config";
 
 const Routes: FC = () => {
   // Set user's permission scope

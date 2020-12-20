@@ -12,7 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { useLocation } from "react-router-dom";
 
-import { ROUTE_LIST } from "routes/routes.c";
+import { ROUTE_LIST } from "routes/routes.config";
 import { RouterLocation } from "types/routes.types";
 
 import { useStyles } from "./Navbar.styles";

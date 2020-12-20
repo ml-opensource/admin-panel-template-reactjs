@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { useLocation } from "react-router-dom";
 
 import logo from "assets/images/logo.svg";
-import { ROUTE_LIST } from "routes/routes.c";
+import { ROUTE_LIST } from "routes/routes.config";
 import { RouteItemDef, RouterLocation } from "types/routes.types";
 
 import NavListItem from "../NavListItem/NavListItem";
