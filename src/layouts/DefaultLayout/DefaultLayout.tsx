@@ -1,7 +1,9 @@
 import React, { FC, memo, useState } from "react";
-import Navbar from "components/Navbar/Navbar";
+
 import AppFooter from "components/AppFooter/AppFooter";
+import Navbar from "components/Navbar/Navbar";
 import SideNav from "components/SideNav/SideNav";
+
 import { useStyles } from "./DefaultLayout.styles";
 
 const DefaultLayout: FC = ({ children }) => {

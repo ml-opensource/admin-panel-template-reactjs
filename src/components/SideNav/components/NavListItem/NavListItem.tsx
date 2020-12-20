@@ -1,11 +1,13 @@
 import React, { FC, memo } from "react";
+
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link as RouterLink } from "react-router-dom";
-import { RouteItemDef, RouterLocation } from "types/routeDef";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import objstr from "obj-str";
+import { Link as RouterLink } from "react-router-dom";
+
+import { RouteItemDef, RouterLocation } from "types/routes.types";
 
 import { useStyles } from "./NavListItem.styles";
 

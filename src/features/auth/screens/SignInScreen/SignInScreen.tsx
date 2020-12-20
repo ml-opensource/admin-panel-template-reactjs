@@ -1,8 +1,4 @@
-import { Formik, Field } from "formik";
 import React, { FC, memo } from "react";
-import { Link } from "react-router-dom";
-import { TextField } from "formik-material-ui";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import {
   Avatar,
@@ -12,9 +8,13 @@ import {
   Link as MatLink,
   LinearProgress,
 } from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { Formik, Field } from "formik";
+import { TextField } from "formik-material-ui";
+import { Link } from "react-router-dom";
 
-import { useStyles } from "./SignInScreenStyle";
-import { initFormValue, schema } from "./SignInForm";
+import { initFormValue, schema } from "../../helpers/sign-in.helpers";
+import { useStyles } from "./SignInScreen.styles";
 
 /**
  * SignIn Screen

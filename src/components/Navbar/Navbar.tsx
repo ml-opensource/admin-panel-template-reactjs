@@ -1,17 +1,20 @@
 import React, { FC, memo, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
-import { RouterLocation } from "types/routeDef";
-import { ROUTE_LIST } from "routes/Routes.config";
+import Typography from "@material-ui/core/Typography";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import MenuIcon from "@material-ui/icons/Menu";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import { useLocation } from "react-router-dom";
+
+import { ROUTE_LIST } from "routes/routes.c";
+import { RouterLocation } from "types/routes.types";
+
 import { useStyles } from "./Navbar.styles";
 
 interface NavbarProps {

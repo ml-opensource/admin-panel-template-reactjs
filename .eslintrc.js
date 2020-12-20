@@ -8,6 +8,7 @@ module.exports = {
       typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
     },
   },
+  plugins: ["filenames"],
   rules: {
     "prettier/prettier": [
       "error",
@@ -41,5 +42,47 @@ module.exports = {
         ],
       },
     ],
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        groups: [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling", "index"],
+          "unknown",
+        ],
+        alphabetize: { order: "asc" },
+        pathGroups: [
+          {
+            pattern: "styles/**",
+            group: "internal",
+            position: "after",
+          },
+          { group: "builtin", pattern: "react", position: "before" },
+        ],
+        pathGroupsExcludedImportTypes: ["builtin"],
+      },
+    ],
   },
+  overrides: [
+    {
+      files: ["*.ts"],
+      rules: {
+        "filenames/match-regex": [2, "^[a-z-.]+$", true],
+      },
+    },
+    {
+      files: ["*.styles.ts", "*.tsx"],
+      rules: {
+        "filenames/match-regex": [2, "^[A-Z][a-z].+(?:[A-Z][a-z].+)*$", true],
+      },
+    },
+    {
+      files: ["src/index.tsx", "src/serviceWorker.ts", "src/setupTests.ts"],
+      rules: {
+        "filenames/match-regex": "off",
+      },
+    },
+  ],
 };

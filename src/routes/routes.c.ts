@@ -1,6 +1,6 @@
 import { AUTH_ROUTES } from "features/auth/auth";
-import { USER_ROUTES } from "features/users/users";
 import { HOME_ROUTES } from "features/home/home";
+import { USER_ROUTES } from "features/users/users";
 
 export const ROOT_ROUTE = "/";
 export const AUTH_ROUTE = "/sign-in";

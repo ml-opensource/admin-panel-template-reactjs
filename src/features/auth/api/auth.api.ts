@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios";
+
 import { api } from "api/api";
 
-import { LoginDataDef } from "../types/auth.loginDataDef";
 import { AuthEndpointsEnum } from "../constants/auth.endpoints";
+import { LoginDataDef } from "../types/auth.types";
 
 const signIn = (data: LoginDataDef): Promise<AxiosResponse> => {
   return api.post(AuthEndpointsEnum.LOGIN, data);

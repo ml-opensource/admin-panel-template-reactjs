@@ -1,9 +1,11 @@
 import React, { FC, memo } from "react";
+
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import { useTheme, ThemeProvider } from "@material-ui/core/styles";
-import NavContent from "./components/NavContent/NavContent";
+
 import { useStyles, darkTheme } from "./SideNav.styles";
+import NavContent from "./components/NavContent/NavContent";
 
 interface SideNavProps {
   sideNavOpen: boolean;

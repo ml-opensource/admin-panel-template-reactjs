@@ -1,10 +1,12 @@
 import React from "react";
-import { RouteItemDef } from "types/routeDef";
+
+import { RouteItemDef } from "types/routes.types";
+
 import { AuthPathsEnum } from "../constants/auth.paths";
 
 const AuthLayout = React.lazy(() => import("../layouts/AuthLayout/AuthLayout"));
-const SignInScreen = React.lazy(() =>
-  import("../screens/SignInScreen/SignInScreen")
+const SignInScreen = React.lazy(
+  () => import("../screens/SignInScreen/SignInScreen")
 );
 
 const SIGN_IN_SCREEN: RouteItemDef = {
