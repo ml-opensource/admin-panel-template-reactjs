@@ -11,7 +11,6 @@ const list = (
   return api.get(
     // `${ExampleEndpointsEnum.USERS}?page=${page}&orderBy=${orderBy}&id=${id}&name=${name}`
     `${ExampleEndpointsEnum.USERS}?page=${page}`
-    // https://reqres.in/api/users?page=1&id=3&email=%22tra%22&first_name=a&last_name=o
   );
 };
 
