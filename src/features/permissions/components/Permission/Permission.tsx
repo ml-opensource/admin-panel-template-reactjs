@@ -1,5 +1,7 @@
 import React, { memo, FC } from "react";
+
 import { Redirect } from "react-router-dom";
+
 import { PermissionEnum } from "../../constants/permissions.scopes";
 import usePermissions from "../../hooks/permissions.hooks";
 

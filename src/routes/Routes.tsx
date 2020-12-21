@@ -1,12 +1,15 @@
 import React, { FC, memo, Suspense } from "react";
+
 import { Switch } from "react-router-dom";
+
 import Loader from "components/Loader/Loader";
 import {
-  setPermissions,
   PermissionEnum,
+  setPermissions,
 } from "features/permissions/permissions";
+
 import RouteWrapper from "./RouteWrapper";
-import { ROUTE_LIST } from "./Routes.config";
+import { ROUTE_LIST } from "./routes.config";
 
 const Routes: FC = () => {
   // Set user's permission scope

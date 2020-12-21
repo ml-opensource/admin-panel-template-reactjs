@@ -1,4 +1,4 @@
-import { formValidators } from "types/formValidators";
+import { formValidators } from "types/form.types";
 
 /**
  * Get appropriate error message

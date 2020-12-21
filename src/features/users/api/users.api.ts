@@ -1,5 +1,7 @@
 import { AxiosResponse } from "axios";
+
 import { api } from "api/api";
+
 import { UsersEndpointsEnum } from "../constants/users.endpoints";
 
 const list = (): Promise<AxiosResponse> => {

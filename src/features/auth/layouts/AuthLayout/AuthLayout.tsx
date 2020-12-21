@@ -1,5 +1,7 @@
 import React, { FC, memo } from "react";
+
 import AppFooter from "components/AppFooter/AppFooter";
+
 import { useStyles } from "./AuthLayout.styles";
 
 const AuthLayout: FC = ({ children }) => {
