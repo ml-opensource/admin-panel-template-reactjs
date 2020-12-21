@@ -89,9 +89,6 @@ const ExampleScreen: FC = () => {
         // pagination props starts here
         {...paginationProps}
         // pagination props ends here
-
-        // withSorting
-        // withFilter
         withCheckbox
         withSearch
       />
