@@ -26,6 +26,7 @@ interface TableViewProps {
   count?: number;
   // paginationProps ends here
   withSearch?: boolean;
+  withCheckbox?: boolean;
 }
 
 const TableView: FC<TableViewProps> = ({
@@ -40,6 +41,7 @@ const TableView: FC<TableViewProps> = ({
   rowsPerPage = 0,
   count = 0,
   withSearch = false,
+  withCheckbox = false,
 }) => {
   const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -97,16 +99,18 @@ const TableView: FC<TableViewProps> = ({
         >
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox">
-                <Checkbox
-                  indeterminate={
-                    selected.length > 0 && selected.length < rows.length
-                  }
-                  checked={rows.length > 0 && selected.length === rows.length}
-                  onChange={handleSelectAllClick}
-                  inputProps={{ "aria-label": "select all desserts" }}
-                />
-              </TableCell>
+              {withCheckbox && (
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    indeterminate={
+                      selected.length > 0 && selected.length < rows.length
+                    }
+                    checked={rows.length > 0 && selected.length === rows.length}
+                    onChange={handleSelectAllClick}
+                    inputProps={{ "aria-label": "select all desserts" }}
+                  />
+                </TableCell>
+              )}
               {columns.map(column =>
                 typeof column === "string" ? (
                   <TableCell align="left" key={column}>
@@ -126,13 +130,15 @@ const TableView: FC<TableViewProps> = ({
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
                 <TableRow key={row.id}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      onClick={event => handleClick(event, row.email)}
-                      checked={isItemSelected}
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
-                  </TableCell>
+                  {withCheckbox && (
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        onClick={event => handleClick(event, row.email)}
+                        checked={isItemSelected}
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </TableCell>
+                  )}
                   {columns.map(column =>
                     typeof column === "string" ? (
                       <TableCell key={column} align="left">
