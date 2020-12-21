@@ -1,3 +1,3 @@
 export enum ExampleEndpointsEnum {
-  USERS = "USERS",
+  USERS = "users",
 }

@@ -1,161 +1,38 @@
-import React, { FC, memo, useState } from "react";
-import Table from "@material-ui/core/Table";
+import React, { FC, useState, memo } from "react";
+import Table, { TableProps } from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import { InputAdornment, TextField } from "@material-ui/core";
+import TablePagination from "@material-ui/core/TablePagination";
+import Avatar from "@material-ui/core/Avatar";
 import { useStyles } from "./TableView.styles";
+import { Rows } from "./TableView.types.example";
+import { ColumnsOptionProps } from "./TableView.types";
 import TableToolbar from "./TableToolbar";
-import {
-  Data,
-  TableViewProps,
-  Order,
-  HeadCell,
-  TableHeadViewProps,
-} from "./TableView.types.example";
 
-// order function starts here
-const descendingComparator = <T,>(a: T, b: T, orderBy: keyof T) => {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-};
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+interface TableViewProps {
+  title?: string;
+  columns: (string | ColumnsOptionProps)[];
+  rows: Rows[];
+  tableProps?: TableProps;
+  // paginationProps starts here
+  withPagination?: boolean;
+  onPaginationChange?: (newPage: number) => void;
+  rowsPerPage?: number;
+  count?: number;
+  // paginationProps ends here
+  withSearch?: boolean;
+  withCheckbox?: boolean;
 }
 
-const stableSort = <T,>(array: T[], comparator: (a: T, b: T) => number) => {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-};
-// order function ends here
-
-// header starts here
-const headCells: HeadCell[] = [
-  { id: "id", numeric: true, disablePadding: false, label: "ID" },
-  { id: "name", numeric: false, disablePadding: false, label: "Name" },
-  { id: "year", numeric: true, disablePadding: false, label: "Year" },
-  { id: "color", numeric: false, disablePadding: false, label: "color" },
-  {
-    id: "pantone_value",
-    numeric: false,
-    disablePadding: false,
-    label: "Pantone Value",
-  },
-];
-
-const TableHeadView: FC<TableHeadViewProps> = ({
-  classes,
-  onSelectAllClick,
-  order,
-  orderBy,
-  numSelected,
-  rowCount,
-  onRequestSort,
-  withSorting,
-  withCheckbox,
-  withFilter,
-}) => {
-  const createSortHandler = (property: keyof Data) => (
-    event: React.MouseEvent<unknown>
-  ) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {withCheckbox && (
-          <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{ "aria-label": "select all desserts" }}
-            />
-          </TableCell>
-        )}
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            // align={headCell.numeric ? "right" : "left"}
-            align="center"
-            padding={headCell.disablePadding ? "none" : "default"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            {withSorting ? (
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={createSortHandler(headCell.id)}
-              >
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <span className={classes.visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </span>
-                ) : null}
-              </TableSortLabel>
-            ) : (
-              headCell.label
-            )}
-          </TableCell>
-        ))}
-      </TableRow>
-      {withFilter && (
-        <TableRow>
-          {withCheckbox && <TableCell padding="checkbox" />}
-          {headCells.map(headCell => (
-            <TableCell key={headCell.id}>
-              <TextField
-                className={classes.margin}
-                id={headCell.id}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <FilterListIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </TableCell>
-          ))}
-        </TableRow>
-      )}
-    </TableHead>
-  );
-};
-// header ends here
-
 const TableView: FC<TableViewProps> = ({
-  rows = [],
+  title = "Table Example",
+  columns,
+  rows,
   tableProps,
   withPagination = false,
   onPaginationChange = () => {
@@ -163,31 +40,17 @@ const TableView: FC<TableViewProps> = ({
   },
   rowsPerPage = 0,
   count = 0,
-  withSorting = false,
-  title = "Sample Title",
-  withFilter = false,
-  withCheckbox = false,
   withSearch = false,
+  withCheckbox = false,
 }) => {
-  const classes = useStyles();
-  const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof Data>("id");
-  const [selected, setSelected] = useState<string[]>([]);
   const [page, setPage] = useState(0);
-  // const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [selected, setSelected] = useState<string[]>([]);
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+  const classes = useStyles();
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name);
+      const newSelecteds = rows.map(n => n.email);
       setSelected(newSelecteds);
       return;
     }
@@ -214,87 +77,103 @@ const TableView: FC<TableViewProps> = ({
     setSelected(newSelected);
   };
 
+  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
     onPaginationChange(newPage);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <TableToolbar
-          numSelected={selected.length}
-          title={title}
-          withSearch={withSearch}
-        />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-label="simple table"
-            {...tableProps}
-          >
-            <TableHeadView
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-              withSorting={withSorting}
-              withCheckbox={withCheckbox}
-              withFilter={withFilter}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy)).map(
-                (row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      {withCheckbox && (
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            onClick={event => handleClick(event, row.name)}
-                            checked={isItemSelected}
-                            inputProps={{ "aria-labelledby": labelId }}
-                          />
-                        </TableCell>
-                      )}
-                      {Object.keys(row).map(key => (
-                        <TableCell key={key} align="center">
-                          {row[key as keyof Data]}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  );
-                }
+    <Paper className={classes.paper}>
+      <TableToolbar
+        title={title}
+        numSelected={selected.length}
+        withSearch={withSearch}
+      />
+      <TableContainer>
+        <Table
+          className={classes.table}
+          aria-label="simple table"
+          {...tableProps}
+        >
+          <TableHead>
+            <TableRow>
+              {withCheckbox && (
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    indeterminate={
+                      selected.length > 0 && selected.length < rows.length
+                    }
+                    checked={rows.length > 0 && selected.length === rows.length}
+                    onChange={handleSelectAllClick}
+                    inputProps={{ "aria-label": "select all desserts" }}
+                  />
+                </TableCell>
               )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {withPagination && (
-          <TablePagination
-            rowsPerPageOptions={[]}
-            component="div"
-            count={count}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-          />
-        )}
-      </Paper>
-    </div>
+              {columns.map(column =>
+                typeof column === "string" ? (
+                  <TableCell align="left" key={column}>
+                    {column}
+                  </TableCell>
+                ) : (
+                  <TableCell align="left" key={column.id}>
+                    {column.label}
+                  </TableCell>
+                )
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => {
+              const isItemSelected = isSelected(row.email);
+              const labelId = `enhanced-table-checkbox-${index}`;
+              return (
+                <TableRow key={row.id}>
+                  {withCheckbox && (
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        onClick={event => handleClick(event, row.email)}
+                        checked={isItemSelected}
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </TableCell>
+                  )}
+                  {columns.map(column =>
+                    typeof column === "string" ? (
+                      <TableCell key={column} align="left">
+                        {row[column as keyof Rows]}
+                      </TableCell>
+                    ) : (
+                      <TableCell key={column.id} align="left">
+                        {column.isImage ? (
+                          <Avatar
+                            src={`${row[column.id as keyof Rows]}`}
+                            alt={column.label}
+                          />
+                        ) : (
+                          row[column.id as keyof Rows]
+                        )}
+                      </TableCell>
+                    )
+                  )}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {withPagination && (
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={count}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+        />
+      )}
+    </Paper>
   );
 };
 
