@@ -1412,6 +1412,16 @@
     native-url "^0.2.6"
     schema-utils "^2.6.5"
 
+"@rematch/core@^2.0.0-next.10":
+  version "2.0.0-next.10"
+  resolved "https://registry.yarnpkg.com/@rematch/core/-/core-2.0.0-next.10.tgz#24fa2fbc3a906bd63cc7ee3600d03d95c1ec6723"
+  integrity sha512-jDD524T/CxCYGzKci6KtNn9SGHfZaUnwPtJsC0KIGlY9Js7IfqDnMJ+0O047oiM3RhsuFne8f4Zjhv1LWKRwPg==
+
+"@rematch/loading@^2.0.0-next.11":
+  version "2.0.0-next.11"
+  resolved "https://registry.yarnpkg.com/@rematch/loading/-/loading-2.0.0-next.11.tgz#46c2bd97d2a801c94ad9262de92b6210c76796d6"
+  integrity sha512-yKTK89kcii3ekkXe8wjOhdO6pQHbKV9hNt7G+i+3Lw1bVmTS9WSkUbB5U2WbLnytesSUdn1fZDbgg34joHSk1w==
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
