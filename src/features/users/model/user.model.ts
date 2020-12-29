@@ -3,23 +3,33 @@ import { createModel } from "@rematch/core";
 import { api } from "api/api";
 import { RootModel } from "store/root.model";
 
-import { UpdateUserInput, UserInfo } from "../types/user.types";
+import {
+  UpdateUserInput,
+  UpdateUserResponse,
+  UserInfo,
+} from "../types/user.types";
 
 export type UserModelState = {
-  user: UserInfo | null;
+  info: UserInfo | null;
   error: Error | null;
 };
 
-export const UserModel = createModel<RootModel>()({
+const UserModel = createModel<RootModel>()({
   state: {
-    user: null,
+    info: {
+      id: 1,
+      firstName: "John",
+      lastName: "Doe",
+      email: "john@doe.com",
+      avatar: "http://via.placeholder.com/50",
+    },
     error: null,
   } as UserModelState,
   reducers: {
-    updateCurrentUser: (state, user: UserInfo) => ({
+    updateCurrentUser: (state, user: Partial<UserInfo>) => ({
       ...state,
       user: {
-        ...state.user,
+        ...state.info,
         ...user,
       },
     }),
@@ -33,13 +43,23 @@ export const UserModel = createModel<RootModel>()({
     }),
   },
   effects: dispatch => ({
+    async getUserInfo() {
+      try {
+        const result = await api.get<UserInfo>("/user/1");
+        dispatch.user.setCurrentUser(result.data);
+      } catch (error) {
+        dispatch.user.setAuthError(error);
+      }
+    },
     async updateUserInfo(payload: UpdateUserInput) {
       try {
-        const result = await api.put("/user/1", payload);
-        dispatch.user.setCurrentUser(result.data);
+        const result = await api.put<UpdateUserResponse>("/user/1", payload);
+        dispatch.user.updateCurrentUser(result.data);
       } catch (error) {
         dispatch.user.setAuthError(error);
       }
     },
   }),
 });
+
+export default UserModel;

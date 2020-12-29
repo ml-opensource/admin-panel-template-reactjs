@@ -7,3 +7,5 @@ export type UserInfo = {
 };
 
 export type UpdateUserInput = Partial<Omit<UserInfo, "id">>;
+
+export type UpdateUserResponse = Partial<UserInfo>;

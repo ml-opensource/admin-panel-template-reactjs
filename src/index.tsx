@@ -3,9 +3,11 @@ import React, { FC } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Routes from "routes/Routes";
+import { store } from "store/store";
 
 import theme from "styles/theme";
 
@@ -13,9 +15,11 @@ import * as serviceWorker from "./serviceWorker";
 
 const App: FC = () => {
   return (
-    <Router>
-      <Routes />
-    </Router>
+    <Provider store={store} key="provider">
+      <Router>
+        <Routes />
+      </Router>
+    </Provider>
   );
 };
 
