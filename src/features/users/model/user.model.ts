@@ -16,26 +16,20 @@ export type UserModelState = {
 
 const UserModel = createModel<RootModel>()({
   state: {
-    info: {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "john@doe.com",
-      avatar: "http://via.placeholder.com/50",
-    },
+    info: null,
     error: null,
   } as UserModelState,
   reducers: {
     updateCurrentUser: (state, user: Partial<UserInfo>) => ({
       ...state,
-      user: {
+      info: {
         ...state.info,
         ...user,
-      },
+      } as UserInfo,
     }),
     setCurrentUser: (state, user: UserInfo) => ({
       ...state,
-      user,
+      info: user,
     }),
     setAuthError: (state, error: Error) => ({
       ...state,
@@ -45,8 +39,8 @@ const UserModel = createModel<RootModel>()({
   effects: dispatch => ({
     async getUserInfo() {
       try {
-        const result = await api.get<UserInfo>("/user/1");
-        dispatch.user.setCurrentUser(result.data);
+        const result = await api.get<{ data: UserInfo }>("/user/1");
+        dispatch.user.setCurrentUser(result.data.data);
       } catch (error) {
         dispatch.user.setAuthError(error);
       }

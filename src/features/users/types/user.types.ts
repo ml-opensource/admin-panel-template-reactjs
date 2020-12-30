@@ -1,9 +1,9 @@
 export type UserInfo = {
   id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  avatar: string;
+  color: string;
+  name: string;
+  pantone_value: string;
+  year: number;
 };
 
 export type UpdateUserInput = Partial<Omit<UserInfo, "id">>;

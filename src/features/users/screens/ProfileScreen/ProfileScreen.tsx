@@ -11,18 +11,21 @@ const ProfileScreen: FC = () => {
 
   return (
     <div>
-      <h1>Profile Screen</h1>
+      <h1>Current user</h1>
 
       {user.info && (
         <div>
-          Name: {user.info.firstName} {user.info.lastName}
+          Name: {user.info.name}
           <br />
-          Email: {user.info.email}
+          Color: {user.info.color}
           <br />
-          <img src={user.info.avatar} alt="avatar" />
+          Pantone: {user.info.pantone_value}
+          <br />
+          Year: {user.info.year}
+          <br />
         </div>
       )}
-      <UpdateProfileForm endpoint="" />
+      <UpdateProfileForm />
     </div>
   );
 };

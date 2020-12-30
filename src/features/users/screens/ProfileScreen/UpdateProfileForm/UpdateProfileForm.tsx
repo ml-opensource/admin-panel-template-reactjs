@@ -1,33 +1,49 @@
 import * as React from "react";
 
-import {
-  Typography,
-  TextField,
-  LinearProgress,
-  Button,
-} from "@material-ui/core";
-import { Formik, Field, FormikHelpers } from "formik";
+import { Typography, LinearProgress, Button } from "@material-ui/core";
+import { Form, Formik, FormikHelpers } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 
-import { schema } from "features/users/helpers/update-profile.helper";
-import { UpdateUserInput } from "features/users/types/user.types";
+import { api } from "api/api";
+import FormikTextField from "components/FormElements/FormikTextField/FormikTextField";
+import {
+  defaultUserInfo,
+  schema,
+} from "features/users/helpers/update-profile.helper";
+import { UpdateUserInput, UserInfo } from "features/users/types/user.types";
+import { Dispatch, RootState } from "store/store";
 
 import { useStyles } from "./UpdateProfile.styles";
 
-type UpdateProfileFormProps = {
-  endpoint: string;
-};
+const UpdateProfileForm: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<Dispatch>();
+  const [initialUserInfo, setInitialUserInfo] = React.useState<UserInfo>(
+    user.info || defaultUserInfo
+  );
 
-const UpdateProfileForm: React.FC<UpdateProfileFormProps> = () => {
   const classes = useStyles();
 
-  const updateProfileHandler = (
+  React.useEffect(() => {
+    const getUserInfo = async () => {
+      const result = await api.get<{ data: UserInfo }>("/user/1");
+      dispatch.user.setCurrentUser(result.data.data);
+      setInitialUserInfo(result.data.data);
+    };
+    getUserInfo();
+  }, [dispatch.user]);
+
+  const updateProfileHandler = async (
     values: UpdateUserInput,
     { setSubmitting }: FormikHelpers<UpdateUserInput>
   ) => {
-    // To see the linear loading component
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 3000);
+    setSubmitting(true);
+    await dispatch.user.updateUserInfo(values);
+    setInitialUserInfo({
+      ...initialUserInfo,
+      ...values,
+    });
+    setSubmitting(false);
   };
 
   return (
@@ -36,56 +52,64 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = () => {
         Update Profile
       </Typography>
       <Formik<UpdateUserInput>
-        initialValues={{}}
+        initialValues={initialUserInfo}
+        enableReinitialize
+        validateOnMount
         validationSchema={schema}
         onSubmit={updateProfileHandler}
       >
-        {({ handleSubmit, dirty, isValid, isSubmitting, errors }) => {
-          console.log({ errors });
+        {({ dirty, isValid, isSubmitting, submitForm, resetForm }) => {
           return (
-            <form onSubmit={handleSubmit} className={classes.form} noValidate>
-              <Field
-                component={TextField}
+            <Form noValidate className={classes.form}>
+              <FormikTextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
+                id="color"
+                label="Color"
+                name="color"
                 autoFocus
               />
-              <Field
-                component={TextField}
+              <FormikTextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                name="firstName"
-                label="First name"
-                id="firstName"
+                name="name"
+                label="Name"
+                id="name"
               />
-              <Field
-                component={TextField}
+              <FormikTextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                name="lastName"
-                label="Last name"
-                id="lastName"
+                name="pantone_value"
+                label="Pantone value"
+                id="pantone_value"
               />
-              <Field
-                component={TextField}
+              <FormikTextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                name="avatar"
-                label="Avatar"
-                id="avatar"
+                name="year"
+                label="Year"
+                id="year"
+                type="number"
               />
               {isSubmitting && <LinearProgress />}
+              <Button
+                disabled={!(dirty && isValid) || isSubmitting}
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() => resetForm()}
+              >
+                Discard
+              </Button>
               <Button
                 disabled={!(dirty && isValid) || isSubmitting}
                 type="submit"
@@ -93,10 +117,11 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = () => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={submitForm}
               >
                 Save
               </Button>
-            </form>
+            </Form>
           );
         }}
       </Formik>
