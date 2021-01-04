@@ -1,28 +1,15 @@
-import React, { FC, memo, useState } from "react";
+import React, { FC, memo } from "react";
 
-import AppFooter from "components/AppFooter/AppFooter";
-import Navbar from "components/Navbar/Navbar";
-import SideNav from "components/SideNav/SideNav";
+import { Layout } from "antd";
 
-import { useStyles } from "./DefaultLayout.styles";
+const { Content } = Layout;
 
-const DefaultLayout: FC = ({ children }) => {
-  const classes = useStyles();
-  const [sideNavOpen, setSideNavOpen] = useState(false);
-
-  const onToggleSideNav = (): void => {
-    setSideNavOpen(!sideNavOpen);
-  };
+const DefaultLayout: FC = memo(({ children }) => {
   return (
-    <div className={classes.root}>
-      <SideNav sideNavOpen={sideNavOpen} sideNavToggle={onToggleSideNav} />
-      <div className={classes.content}>
-        <Navbar sideNavToggle={onToggleSideNav} />
-        <div className={classes.container}>{children}</div>
-        <AppFooter />
-      </div>
-    </div>
+    <Layout>
+      <Content>{children}</Content>
+    </Layout>
   );
-};
+});
 
-export default memo(DefaultLayout);
+export default DefaultLayout;

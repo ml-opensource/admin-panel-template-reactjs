@@ -20,10 +20,5 @@
   "files.eol": "\n",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "cSpell.words": [
-    "Overridable",
-    "mixins",
-    "objstr"
-  ]
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

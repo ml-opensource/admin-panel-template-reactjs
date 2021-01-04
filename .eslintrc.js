@@ -30,16 +30,24 @@ module.exports = {
     ],
     "react/jsx-props-no-spreading": 0,
     "import/prefer-default-export": 0,
+    "no-unused-expressions": "off",
+    // disabling circular dependency, as it is causing issues
+    "import/no-cycle": 0,
+    // allow param reassign for redux-toolkit
+    "no-param-reassign": ["error", { props: false }],
     // no return types needed if it can be inferred. useful for react components and sagas so it's less to worry about
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "react/button-has-type": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      { devDependencies: ["**/*.stories.tsx"] },
+    ],
     "no-restricted-imports": [
       "error",
       {
-        patterns: [
-          "@material-ui/*/*/*",
-          "!@material-ui/core/test-utils/*",
-          "features/*/*/*",
-        ],
+        patterns: ["@app/features/*/*/*"],
       },
     ],
     "import/order": [
@@ -73,13 +81,13 @@ module.exports = {
       },
     },
     {
-      files: ["*.styles.ts", "*.tsx"],
+      files: ["*.tsx"],
       rules: {
         "filenames/match-regex": [2, "^[A-Z][a-z].+(?:[A-Z][a-z].+)*$", true],
       },
     },
     {
-      files: ["src/index.tsx", "src/serviceWorker.ts", "src/setupTests.ts"],
+      files: ["src/index.tsx", "src/reportWebVitals.ts", "src/setupTests.ts"],
       rules: {
         "filenames/match-regex": "off",
       },
