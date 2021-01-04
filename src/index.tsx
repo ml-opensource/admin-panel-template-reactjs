@@ -1,10 +1,14 @@
 import React, { FC } from "react";
-import ReactDOM from "react-dom";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { BrowserRouter as Router } from "react-router-dom";
-import Routes from "routes/Routes";
 import { ThemeProvider } from "@material-ui/core/styles";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+
+import Routes from "routes/Routes";
+
 import theme from "styles/theme";
+
 import * as serviceWorker from "./serviceWorker";
 
 const App: FC = () => {

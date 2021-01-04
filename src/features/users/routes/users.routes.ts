@@ -1,6 +1,9 @@
 import React from "react";
-import { RouteItemDef } from "types/routeDef";
+
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+
+import { RouteItemDef } from "types/routes.types";
+
 import { UserPathsEnum } from "../constants/users.paths";
 
 const ProfileScreen = React.lazy(

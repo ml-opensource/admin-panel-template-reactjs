@@ -1,4 +1,5 @@
 import React, { FC, memo } from "react";
+
 import { useStyles } from "./AppFooter.styles";
 
 const AppFooter: FC = () => {

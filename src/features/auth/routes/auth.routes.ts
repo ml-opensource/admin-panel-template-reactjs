@@ -1,5 +1,7 @@
 import React from "react";
-import { RouteItemDef } from "types/routeDef";
+
+import { RouteItemDef } from "types/routes.types";
+
 import { AuthPathsEnum } from "../constants/auth.paths";
 
 const AuthLayout = React.lazy(() => import("../layouts/AuthLayout/AuthLayout"));

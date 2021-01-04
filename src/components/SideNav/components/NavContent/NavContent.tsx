@@ -1,11 +1,14 @@
 import React, { FC, memo } from "react";
+
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
-import logo from "assets/images/logo.svg";
 import Typography from "@material-ui/core/Typography";
 import { useLocation } from "react-router-dom";
-import { ROUTE_LIST } from "routes/Routes.config";
-import { RouteItemDef, RouterLocation } from "types/routeDef";
+
+import logo from "assets/images/logo.svg";
+import { ROUTE_LIST } from "routes/routes.config";
+import { RouteItemDef, RouterLocation } from "types/routes.types";
+
 import NavListItem from "../NavListItem/NavListItem";
 import NestedListItem from "../NestedListItem/NestedListItem";
 import { useStyles } from "./NavContent.styles";

@@ -1,6 +1,8 @@
 import React, { FC, memo } from "react";
+
 import CircularProgress from "@material-ui/core/CircularProgress";
 import objstr from "obj-str";
+
 import { useStyles } from "./Loader.styles";
 
 interface LoaderProps {

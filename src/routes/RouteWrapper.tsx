@@ -1,9 +1,12 @@
 import React, { FC, memo } from "react";
+
 import { Route, Redirect } from "react-router-dom";
-import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
+
 import { Permission } from "features/permissions/permissions";
-import { RouteItemDef } from "types/routeDef";
-import { AUTH_ROUTE, ROOT_ROUTE } from "./Routes.config";
+import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
+import { RouteItemDef } from "types/routes.types";
+
+import { AUTH_ROUTE, ROOT_ROUTE } from "./routes.config";
 
 const RouteWrapper: FC<RouteItemDef> = ({
   component: Component,
