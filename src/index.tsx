@@ -4,11 +4,11 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
 import "./index.scss";
-import Router from "routers/Router";
+import Router from "@app/routers/Router";
 
 import reportWebVitals from "./reportWebVitals";
 
-import "localization/localization";
+import "@app/localization/localization";
 
 const app = (
   <React.StrictMode>

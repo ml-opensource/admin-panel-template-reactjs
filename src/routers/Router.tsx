@@ -2,10 +2,10 @@ import React, { FC, memo } from "react";
 
 import { Route, Switch } from "react-router-dom";
 
-import { ClientErrors } from "constants/error.constants";
-import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
-import ErrorScreen from "screens/ErrorScreen/ErrorScreen";
-import HomeScreen from "screens/HomeScreen/HomeScreen";
+import { ClientErrors } from "@app/constants/error.constants";
+import DefaultLayout from "@app/layouts/DefaultLayout/DefaultLayout";
+import ErrorScreen from "@app/screens/ErrorScreen/ErrorScreen";
+import HomeScreen from "@app/screens/HomeScreen/HomeScreen";
 
 const Router: FC = () => {
   return (

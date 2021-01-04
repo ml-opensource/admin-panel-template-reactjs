@@ -29,3 +29,5 @@ logs
 **/*.backup.*
 **/*.back.*
 
+# cache
+.eslintcache

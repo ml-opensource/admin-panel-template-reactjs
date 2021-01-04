@@ -4,7 +4,7 @@ import { LockFilled, QuestionCircleOutlined } from "@ant-design/icons";
 import { Result } from "antd";
 import { useTranslation } from "react-i18next";
 
-import { ClientErrors } from "constants/error.constants";
+import { ClientErrors } from "@app/constants/error.constants";
 
 interface ErrorScreenProps {
   status: ClientErrors;
