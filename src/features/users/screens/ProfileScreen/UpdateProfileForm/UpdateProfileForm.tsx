@@ -4,45 +4,34 @@ import { Typography, LinearProgress, Button } from "@material-ui/core";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
-import { api } from "api/api";
 import FormikTextField from "components/FormElements/FormikTextField/FormikTextField";
 import {
   defaultUserInfo,
   schema,
 } from "features/users/helpers/update-profile.helper";
-import { UpdateUserInput, UserInfo } from "features/users/types/user.types";
-import { Dispatch, RootState } from "store/store";
+import { fetchUser, updateUser } from "features/users/redux/user.slice";
+import { UpdateUserInput } from "features/users/types/user.types";
+import { RootState } from "redux/rootReducer";
+import { AppDispatch } from "redux/store";
 
 import { useStyles } from "./UpdateProfile.styles";
 
 const UpdateProfileForm: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch<Dispatch>();
-  const [initialUserInfo, setInitialUserInfo] = React.useState<UserInfo>(
-    user.info || defaultUserInfo
-  );
+  const dispatch = useDispatch<AppDispatch>();
 
   const classes = useStyles();
 
   React.useEffect(() => {
-    const getUserInfo = async () => {
-      const result = await api.get<{ data: UserInfo }>("/user/1");
-      dispatch.user.setCurrentUser(result.data.data);
-      setInitialUserInfo(result.data.data);
-    };
-    getUserInfo();
-  }, [dispatch.user]);
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   const updateProfileHandler = async (
     values: UpdateUserInput,
     { setSubmitting }: FormikHelpers<UpdateUserInput>
   ) => {
     setSubmitting(true);
-    await dispatch.user.updateUserInfo(values);
-    setInitialUserInfo({
-      ...initialUserInfo,
-      ...values,
-    });
+    dispatch(updateUser(values));
     setSubmitting(false);
   };
 
@@ -52,7 +41,7 @@ const UpdateProfileForm: React.FC = () => {
         Update Profile
       </Typography>
       <Formik<UpdateUserInput>
-        initialValues={initialUserInfo}
+        initialValues={user.info || defaultUserInfo}
         enableReinitialize
         validateOnMount
         validationSchema={schema}

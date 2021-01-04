@@ -2,7 +2,7 @@ import React, { FC, memo } from "react";
 
 import { useSelector } from "react-redux";
 
-import { RootState } from "store/store";
+import { RootState } from "redux/rootReducer";
 
 import UpdateProfileForm from "./UpdateProfileForm/UpdateProfileForm";
 
