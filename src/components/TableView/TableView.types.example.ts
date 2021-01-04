@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-regex */
 export interface Rows {
   id: number;
   email: string;

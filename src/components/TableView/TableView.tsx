@@ -1,18 +1,20 @@
 import React, { FC, useState, memo } from "react";
+
+import Avatar from "@material-ui/core/Avatar";
+import Checkbox from "@material-ui/core/Checkbox";
+import Paper from "@material-ui/core/Paper";
 import Table, { TableProps } from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import TablePagination from "@material-ui/core/TablePagination";
-import Avatar from "@material-ui/core/Avatar";
-import { useStyles } from "./TableView.styles";
-import { Rows } from "./TableView.types.example";
-import { ColumnsOptionProps } from "./TableView.types";
+import TableRow from "@material-ui/core/TableRow";
+
 import TableToolbar from "./TableToolbar";
+import { useStyles } from "./TableView.styles";
+import { ColumnsOptionProps } from "./TableView.types";
+import { Rows } from "./TableView.types.example";
 
 interface TableViewProps {
   title?: string;

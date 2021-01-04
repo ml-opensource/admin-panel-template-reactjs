@@ -1,8 +1,10 @@
 import React, { FC, memo } from "react";
-import objstr from "obj-str";
+
 import { IconButton, Toolbar, Tooltip, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
+import objstr from "obj-str";
+
 import { useStyles } from "./TableToolbar.styles";
 
 interface TableToolbarProps {

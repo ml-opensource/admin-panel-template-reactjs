@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-regex */
 export type ColumnsOptionProps = {
   id: string;
   disablePadding: boolean;

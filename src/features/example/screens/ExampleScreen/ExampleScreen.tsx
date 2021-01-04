@@ -1,6 +1,8 @@
-import { Rows } from "components/TableView/TableView.types.example";
 import React, { FC, memo, useEffect, useState } from "react";
+
 import TableView from "components/TableView/TableView";
+import { Rows } from "components/TableView/TableView.types.example";
+
 import { userApi } from "../../api/example.api";
 
 interface UserData {

@@ -1,7 +1,10 @@
 import React from "react";
-import { RouteItemDef } from "types/routeDef";
-import { PermissionEnum } from "features/permissions/permissions";
+
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+
+import { PermissionEnum } from "features/permissions/permissions";
+import { RouteItemDef } from "types/routes.types";
+
 import { ExamplePathsEnum } from "../constants/example.paths";
 
 const ExampleScreen = React.lazy(
