@@ -1,0 +1,13 @@
+@import "styles/colors";
+@import "styles/variables";
+
+.navbar {
+  width: 100%;
+  color: $text-white;
+
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+}

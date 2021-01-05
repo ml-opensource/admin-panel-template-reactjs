@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -6,7 +6,7 @@ import Routes from "@app/routes/Routes";
 
 import { updateLocalization } from "./features/localization/localization";
 
-const App: FC = () => {
+const App = () => {
   const [loadingTranslation, setLoadingTranslation] = useState(true);
 
   useEffect(() => {

@@ -1,15 +1,26 @@
-import React, { FC, memo } from "react";
+import React, { ReactNode } from "react";
 
 import { Layout } from "antd";
 
+import Navigation from "@app/components/molecules/Navigation/Navigation";
+
+import styles from "./DefaultLayout.module.scss";
+
 const { Content } = Layout;
 
-const DefaultLayout: FC = memo(({ children }) => {
+type DefaultLayoutProps = {
+  children: ReactNode;
+};
+
+const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <Layout>
-      <Content>{children}</Content>
+      <Navigation sticky />
+      <Content className={styles.container}>
+        <div className={styles.content}>{children}</div>
+      </Content>
     </Layout>
   );
-});
+};
 
 export default DefaultLayout;

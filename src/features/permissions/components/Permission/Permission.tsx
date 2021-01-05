@@ -1,4 +1,4 @@
-import React, { memo, FC } from "react";
+import React, { memo } from "react";
 
 import { Redirect } from "react-router-dom";
 
@@ -41,13 +41,13 @@ interface PermissionProps {
  * second way, is to use the hasPermission function, to then
  * enable or disable buttons, for example.
  */
-const Permission: FC<PermissionProps> = ({
+const Permission = ({
   children,
   fallback,
   hasAll,
   redirectTo,
   requiredPermissions,
-}) => {
+}: PermissionProps) => {
   const { allowed } = usePermissions(requiredPermissions, hasAll);
 
   /**

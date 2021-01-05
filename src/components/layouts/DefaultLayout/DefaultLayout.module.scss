@@ -1,0 +1,14 @@
+@import "styles/colors";
+@import "styles/variables";
+
+$navbar-height: 64px;
+
+.container {
+  margin: $spacing-3;
+  background: $bg-white;
+  min-height: 600px;
+}
+
+.content {
+  min-height: calc(100vh - #{$spacing-3} * 2 - #{$navbar-height});
+}

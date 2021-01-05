@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 
-const HomeScreen: FC = () => {
+const HomeScreen = () => {
   const Content = () => (
     <>
       <h1>Title</h1>

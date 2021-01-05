@@ -20,6 +20,8 @@ export type RouteItemDef = {
    * when navigating to the menu item
    */
   component: ComponentType<RouteComponentProps<any>>;
+  /** Layout used for this route */
+  layout?: React.ReactNode;
   /** The required permissions to view this route (optional) */
   permissions?: PermissionEnum[];
 };
