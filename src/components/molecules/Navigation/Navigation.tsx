@@ -14,7 +14,7 @@ type NavigationProps = {
 const Navigation = memo(({ sticky = false }: NavigationProps) => {
   return (
     <Header className={cx(styles.navbar, { [styles.sticky]: sticky })}>
-      Ancotrans
+      Admin Panel Template
     </Header>
   );
 });
