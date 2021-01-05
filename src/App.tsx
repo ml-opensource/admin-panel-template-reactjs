@@ -1,13 +1,30 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Routes from "@app/routes/Routes";
 
+import { updateLocalization } from "./features/localization/localization";
+
 const App: FC = () => {
-  // Auth logic
-  // Get user logic
-  // Localization logic
+  const [loadingTranslation, setLoadingTranslation] = useState(true);
+
+  useEffect(() => {
+    const fetchTranslation = async () => {
+      try {
+        // Fetch the translations when app is started
+        await updateLocalization();
+      } finally {
+        setLoadingTranslation(false);
+      }
+    };
+
+    fetchTranslation();
+  }, []);
+
+  if (loadingTranslation) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
