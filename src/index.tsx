@@ -1,20 +1,16 @@
 import React from "react";
 
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 
-import "./index.scss";
-import Router from "@app/routers/Router";
-
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "./index.scss";
 
 import "@app/localization/localization";
 
 const app = (
   <React.StrictMode>
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
 
