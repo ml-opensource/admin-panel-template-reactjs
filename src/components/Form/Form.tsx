@@ -12,7 +12,6 @@ import {
 import { TextField, Select } from "formik-material-ui";
 import * as yup from "yup";
 import FormContainer from "components/FormContainer/FormContainer";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import {
   createStyles,
   makeStyles,
@@ -37,10 +36,6 @@ type FormCustomProps<TData> = {
   mode: "update" | "create";
   data?: TData;
 };
-
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,7 +68,6 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
     "Virginia Andrews",
     "Kelly Snyder",
   ]);
-  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const theme = useTheme();
 
@@ -101,10 +95,7 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
       validationSchema={FormSchema}
       onSubmit={(values, { setSubmitting }) => {
         // handle submit
-        setOpen(true);
-        setTimeout(() => {
-          setOpen(false);
-        }, 2000);
+        alert("Submit form success!");
       }}
       enableReinitialize={true}
       initialStatus={
@@ -161,9 +152,6 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
           >
             Cancel
           </Button>
-          <Snackbar open={open} autoHideDuration={2000}>
-            <Alert severity="success">Submit success!</Alert>
-          </Snackbar>
         </FormContainer>
       )}
     </Formik>

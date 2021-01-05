@@ -7,7 +7,7 @@ const FormContainer: React.FC = ({ children }) => {
   return (
     <Form>
       {status === "loading" && <p>Loading</p>}
-      {status !== "loading"} && {children}
+      {status !== "loading" && children}
     </Form>
   );
 };
