@@ -6,7 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 
-import "@app/localization/localization";
+import "@app/features/localization/localization";
 
 const app = (
   <React.StrictMode>
