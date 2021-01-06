@@ -1,7 +1,7 @@
 import React, { FC, memo, useEffect, useState } from "react";
 
 import TableView from "components/TableView/TableView";
-import { Rows } from "components/TableView/TableView.types.example";
+import { Rows } from "components/TableView/TableView.types";
 
 import { userApi } from "../../api/example.api";
 
@@ -87,6 +87,7 @@ const ExampleScreen: FC = () => {
         title="Basic Table"
         columns={columns}
         rows={rows}
+        rowKey="id"
         tableProps={{ size: "medium", stickyHeader: false, padding: "default" }}
         // pagination props starts here
         {...paginationProps}

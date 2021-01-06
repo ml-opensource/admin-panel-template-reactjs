@@ -13,13 +13,13 @@ import TableRow from "@material-ui/core/TableRow";
 
 import TableToolbar from "./TableToolbar";
 import { useStyles } from "./TableView.styles";
-import { ColumnsOptionProps } from "./TableView.types";
-import { Rows } from "./TableView.types.example";
+import { ColumnsOptionProps, Rows } from "./TableView.types";
 
 interface TableViewProps {
   title?: string;
   columns: (string | ColumnsOptionProps)[];
   rows: Rows[];
+  rowKey: string;
   tableProps?: TableProps;
   // paginationProps starts here
   withPagination?: boolean;
@@ -35,6 +35,7 @@ const TableView: FC<TableViewProps> = ({
   title = "Table Example",
   columns,
   rows,
+  rowKey,
   tableProps,
   withPagination = false,
   onPaginationChange = () => {
@@ -52,7 +53,7 @@ const TableView: FC<TableViewProps> = ({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.email);
+      const newSelecteds = rows.map(n => n[rowKey]);
       setSelected(newSelecteds);
       return;
     }
@@ -128,14 +129,14 @@ const TableView: FC<TableViewProps> = ({
           </TableHead>
           <TableBody>
             {rows.map((row, index) => {
-              const isItemSelected = isSelected(row.email);
+              const isItemSelected = isSelected(row[rowKey]);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
                 <TableRow key={row.id}>
                   {withCheckbox && (
                     <TableCell padding="checkbox">
                       <Checkbox
-                        onClick={event => handleClick(event, row.email)}
+                        onClick={event => handleClick(event, row[rowKey])}
                         checked={isItemSelected}
                         inputProps={{ "aria-labelledby": labelId }}
                       />

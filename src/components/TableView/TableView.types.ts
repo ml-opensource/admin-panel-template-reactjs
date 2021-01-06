@@ -6,3 +6,8 @@ export type ColumnsOptionProps = {
   numeric: boolean;
   isImage: boolean;
 };
+
+/* eslint-disable filenames/match-regex */
+export interface Rows {
+  [key: string]: string;
+}
