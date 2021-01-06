@@ -16,7 +16,6 @@ interface UserData {
 const ExampleScreen: FC = () => {
   const [rows, setRows] = useState<Rows[]>([]);
   const [data, setData] = useState<UserData>();
-  const [page, setPage] = useState<number>(1);
 
   const columns = [
     {
@@ -66,11 +65,11 @@ const ExampleScreen: FC = () => {
   };
 
   useEffect(() => {
-    getUsers(page);
-  }, [page]);
+    getUsers(1);
+  }, []);
 
   const handlePaginationChange = (newPage: number) => {
-    setPage(newPage + 1);
+    getUsers(newPage + 1);
   };
 
   return (
