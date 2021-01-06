@@ -6,6 +6,6 @@ export type UserInfo = {
   year: number;
 };
 
+export type GetUserResponse = { data: UserInfo };
 export type UpdateUserInput = Partial<Omit<UserInfo, "id">>;
-
 export type UpdateUserResponse = Partial<UserInfo>;

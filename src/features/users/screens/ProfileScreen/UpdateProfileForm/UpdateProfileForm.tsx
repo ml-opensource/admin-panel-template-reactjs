@@ -2,28 +2,28 @@ import * as React from "react";
 
 import { Typography, LinearProgress, Button } from "@material-ui/core";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import FormikTextField from "components/FormElements/FormikTextField/FormikTextField";
 import {
   defaultUserInfo,
   schema,
 } from "features/users/helpers/update-profile.helper";
-import { fetchUser, updateUser } from "features/users/redux/user.slice";
+import { getUser, updateUser } from "features/users/redux/user.slice";
 import { UpdateUserInput } from "features/users/types/user.types";
 import { RootState } from "redux/rootReducer";
-import { AppDispatch } from "redux/store";
+import { useAppDispatch } from "redux/store";
 
 import { useStyles } from "./UpdateProfile.styles";
 
 const UpdateProfileForm: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const classes = useStyles();
 
   React.useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(getUser());
   }, [dispatch]);
 
   const updateProfileHandler = async (
@@ -88,7 +88,7 @@ const UpdateProfileForm: React.FC = () => {
                 id="year"
                 type="number"
               />
-              {isSubmitting && <LinearProgress />}
+              {(isSubmitting || user.loading) && <LinearProgress />}
               <Button
                 disabled={!(dirty && isValid) || isSubmitting}
                 fullWidth
