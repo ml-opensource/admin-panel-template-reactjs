@@ -10,13 +10,13 @@ interface UserData {
   per_page: number;
   total: number;
   total_pages: number;
+  data: Rows[];
 }
 
 const ExampleScreen: FC = () => {
   const [rows, setRows] = useState<Rows[]>([]);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(0);
+  const [data, setData] = useState<UserData>();
   const [page, setPage] = useState<number>(1);
-  const [count, setCount] = useState<number>(0);
 
   const columns = [
     {
@@ -57,12 +57,12 @@ const ExampleScreen: FC = () => {
   ];
 
   const getUsers = async (newPage: number) => {
+    // eslint-disable-next-line no-shadow
     const { data } = await userApi.list(newPage);
     const userData = data;
 
-    setRowsPerPage(userData.per_page);
+    setData(userData);
     setRows(userData.data);
-    setCount(userData.total);
   };
 
   useEffect(() => {
@@ -73,28 +73,30 @@ const ExampleScreen: FC = () => {
     setPage(newPage + 1);
   };
 
-  const paginationProps = {
-    withPagination: true,
-    onPaginationChange: handlePaginationChange,
-    rowsPerPage,
-    count,
-  };
-
   return (
     <div>
       <h1>Example Screen</h1>
-      <TableView
-        title="Basic Table"
-        columns={columns}
-        rows={rows}
-        rowKey="id"
-        tableProps={{ size: "medium", stickyHeader: false, padding: "default" }}
-        // pagination props starts here
-        {...paginationProps}
-        // pagination props ends here
-        withCheckbox
-        withSearch
-      />
+      {data && (
+        <TableView
+          title="Basic Table"
+          columns={columns}
+          rows={rows}
+          rowKey="id"
+          tableProps={{
+            size: "medium",
+            stickyHeader: false,
+            padding: "default",
+          }}
+          // pagination props starts here
+          withPagination
+          onPaginationChange={handlePaginationChange}
+          rowsPerPage={data.per_page}
+          count={data.total}
+          // pagination props ends here
+          withCheckbox
+          withSearch
+        />
+      )}
     </div>
   );
 };
