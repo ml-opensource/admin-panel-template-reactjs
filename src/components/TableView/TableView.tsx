@@ -60,12 +60,12 @@ const TableView: FC<TableViewProps> = ({
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event: React.MouseEvent<unknown>, key: string) => {
+    const selectedIndex = selected.indexOf(key);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, key);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -80,7 +80,7 @@ const TableView: FC<TableViewProps> = ({
     setSelected(newSelected);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (key: string) => selected.indexOf(key) !== -1;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
