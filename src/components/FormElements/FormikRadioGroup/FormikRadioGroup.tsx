@@ -43,9 +43,7 @@ const FormikRadioGroup: React.FC<FormikRadioGroupProps> = ({
       component="fieldset"
       error={fieldIsInvalid}
     >
-      <FormLabel component="legend">
-        {label || name.charAt(0).toLocaleUpperCase() + name.substr(1)}
-      </FormLabel>
+      <FormLabel component="legend">{label ?? name}</FormLabel>
       <Field component={RadioGroup} name={name} {...rest}>
         {options.map(option => (
           <FormControlLabel
