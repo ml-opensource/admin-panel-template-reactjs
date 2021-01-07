@@ -1,7 +1,6 @@
 import { configureStore, Action, ThunkAction } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-// eslint-disable-next-line import/no-cycle
 import rootReducer, { RootState } from "./rootReducer";
 
 const store = configureStore({
