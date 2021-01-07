@@ -11,12 +11,10 @@ import { RadioGroup } from "formik-material-ui";
 
 type RadioValue = string | number;
 
-type RadioOption =
-  | {
-      label: React.ReactNode;
-      value: RadioValue;
-    }
-  | RadioValue;
+type RadioOption = {
+  label: React.ReactNode;
+  value: RadioValue;
+};
 
 type FormikRadioGroupProps = Omit<RadioGroupProps, "name"> & {
   options: RadioOption[];
@@ -49,23 +47,14 @@ const FormikRadioGroup: React.FC<FormikRadioGroupProps> = ({
         {label || name.charAt(0).toLocaleUpperCase() + name.substr(1)}
       </FormLabel>
       <Field component={RadioGroup} name={name} {...rest}>
-        {options.map(option =>
-          typeof option === "object" ? (
-            <FormControlLabel
-              value={option.value}
-              control={<Radio disabled={isSubmitting} />}
-              label={option.label}
-              disabled={isSubmitting}
-            />
-          ) : (
-            <FormControlLabel
-              value={option}
-              control={<Radio disabled={isSubmitting} />}
-              label={option}
-              disabled={isSubmitting}
-            />
-          )
-        )}
+        {options.map(option => (
+          <FormControlLabel
+            value={option.value}
+            control={<Radio disabled={isSubmitting} />}
+            label={option.label}
+            disabled={isSubmitting}
+          />
+        ))}
       </Field>
       <FormHelperText>{helperText || errors[name]}</FormHelperText>
     </FormControl>
