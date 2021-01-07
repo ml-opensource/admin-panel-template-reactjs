@@ -64,17 +64,11 @@ const TableView: FC<TableViewProps> = ({
     const selectedIndex = selected.indexOf(key);
     let newSelected: string[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, key);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+    if (selectedIndex > -1) {
+      selected.splice(selectedIndex, 1);
+      newSelected = [...selected];
+    } else {
+      newSelected = [...selected, key];
     }
 
     setSelected(newSelected);
