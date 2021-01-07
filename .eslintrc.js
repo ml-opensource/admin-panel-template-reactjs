@@ -42,7 +42,7 @@ module.exports = {
         patterns: [
           "@material-ui/*/*/*",
           "!@material-ui/core/test-utils/*",
-          // "features/*/*/*",
+          "features/*/*/*",
         ],
       },
     ],
