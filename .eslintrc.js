@@ -30,6 +30,7 @@ module.exports = {
     ],
     "react/jsx-props-no-spreading": 0,
     "import/prefer-default-export": 0,
+    // allow param reassign for redux-toolkit
     "no-param-reassign": ["error", { props: false }],
     // disabling circular dependency, as it is causing issues
     "import/no-cycle": 0,
