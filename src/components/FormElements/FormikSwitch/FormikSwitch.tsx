@@ -20,7 +20,7 @@ const FormikSwitch: React.FC<FormikSwitchProps> = ({
       control={
         <Field component={Switch} type="checkbox" name={name} {...rest} />
       }
-      label={label || name.charAt(0).toLocaleUpperCase() + name.substr(1)}
+      label={label ?? name}
     />
   );
 };
