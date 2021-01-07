@@ -61,9 +61,7 @@ const FormikSelect: React.FC<FormikSelectProps> = ({
       error={fieldIsInvalid}
       fullWidth={fullWidth}
     >
-      <InputLabel htmlFor={name}>
-        {label || name.charAt(0).toLocaleUpperCase() + name.substr(1)}
-      </InputLabel>
+      <InputLabel htmlFor={name}>{label ?? name}</InputLabel>
       <Field
         component={Select}
         {...rest}
