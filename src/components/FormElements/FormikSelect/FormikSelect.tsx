@@ -10,12 +10,10 @@ import { Select } from "formik-material-ui";
 
 type SelectOptionValue = string | number;
 
-type SelectOption =
-  | {
-      label: React.ReactNode;
-      value: SelectOptionValue;
-    }
-  | SelectOptionValue;
+type SelectOption = {
+  label: React.ReactNode;
+  value: SelectOptionValue;
+};
 
 type FormikSelectProps = Omit<SelectProps, "name"> & {
   options: SelectOption[];
@@ -76,13 +74,9 @@ const FormikSelect: React.FC<FormikSelectProps> = ({
           onScroll: handleSelectScroll,
         }}
       >
-        {options.map(option =>
-          typeof option === "object" ? (
-            <MenuItem value={option.value}>{option.label}</MenuItem>
-          ) : (
-            <MenuItem value={option}>{option}</MenuItem>
-          )
-        )}
+        {options.map(option => (
+          <MenuItem value={option.value}>{option.label}</MenuItem>
+        ))}
       </Field>
       <FormHelperText>{helperText || errors[name]}</FormHelperText>
     </FormControl>
