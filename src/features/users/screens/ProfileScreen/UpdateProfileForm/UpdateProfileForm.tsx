@@ -6,11 +6,12 @@ import { useSelector } from "react-redux";
 
 import FormikTextField from "components/FormElements/FormikTextField/FormikTextField";
 import {
+  getUser,
+  updateUser,
+  UpdateUserInput,
   defaultUserInfo,
   schema,
-} from "features/users/helpers/update-profile.helper";
-import { getUser, updateUser } from "features/users/redux/user.slice";
-import { UpdateUserInput } from "features/users/types/user.types";
+} from "features/users/users";
 import { RootState } from "redux/rootReducer";
 import { useAppDispatch } from "redux/store";
 
