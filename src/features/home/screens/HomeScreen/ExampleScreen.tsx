@@ -1,51 +1,31 @@
-/* eslint-disable */
 import React, { FC, useState } from "react";
 import { Formik, Field } from "formik";
 import {
   Button,
   LinearProgress,
   MenuItem,
-  Snackbar,
-  FormControl,
   InputLabel,
 } from "@material-ui/core";
 import { TextField, Select } from "formik-material-ui";
 import * as yup from "yup";
 import FormContainer from "components/FormContainer/FormContainer";
-import {
-  createStyles,
-  makeStyles,
-  useTheme,
-  Theme,
-} from "@material-ui/core/styles";
 
 export interface FormData {
   email?: string;
   password?: string;
   select?: string;
-  //etc...
 }
 
 const FormSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Required"),
   password: yup.string().min(8, "Password too short!").required("Required"),
-  //etc...
 });
 
-type FormCustomProps<TData> = {
+type FormProps<TData> = {
   mode: "update" | "create";
   data?: TData;
+  user: any;
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-      maxWidth: 200,
-    },
-  })
-);
 
 const MenuProps = {
   PaperProps: {
@@ -55,7 +35,7 @@ const MenuProps = {
   },
 };
 
-const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
+const ExampleScreen: FC<FormProps<FormData>> = ({ mode, data = {}, user }) => {
   const [names, setNames] = useState<string[]>([
     "Oliver Hansen",
     "Van Henry",
@@ -68,11 +48,9 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
     "Virginia Andrews",
     "Kelly Snyder",
   ]);
-  const classes = useStyles();
-  const theme = useTheme();
 
   const handleChange = (values: object) => {
-    if (values != data) {
+    if (values !== data) {
       if (!window.confirm("Confirm to discard changes?")) {
         throw new Error("Cancel reset");
       }
@@ -81,29 +59,39 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
 
   const scrollSelect = (e: any) => {
     if (e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight) {
-      //load more
+      // load more
+      setNames(
+        names.concat([
+          "Oliver Hansen 1",
+          "Van Henry 1",
+          "April Tucker 1",
+          "Ralph Hubbard 1",
+        ])
+      );
     }
   };
 
   return (
     <Formik<FormData>
-      initialValues={{
-        email: "",
-        password: "",
-        select: "",
-      }}
+      initialValues={user}
       validationSchema={FormSchema}
       onSubmit={(values, { setSubmitting }) => {
         // handle submit
-        alert("Submit form success!");
+        if (values !== "") {
+          alert("Submit form success!");
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 500);
+        }
       }}
-      enableReinitialize={true}
+      enableReinitialize
       initialStatus={
         mode === "update" && !Object.keys(data).length ? "loading" : "ready"
       }
     >
       {({ submitForm, isSubmitting, values }) => (
         <FormContainer>
+          <h3>example form</h3>
           <Field
             component={TextField}
             name="email"
@@ -118,7 +106,6 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
             label="Password"
           />
           <br />
-
           <InputLabel htmlFor="age-simple">Select</InputLabel>
           <Field
             component={Select}
@@ -133,7 +120,6 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
             ))}
           </Field>
           <br />
-
           {isSubmitting && <LinearProgress />}
           <Button
             variant="contained"
@@ -158,4 +144,4 @@ const FormCustom: FC<FormCustomProps<FormData>> = ({ mode, data = {} }) => {
   );
 };
 
-export default FormCustom;
+export default ExampleScreen;

@@ -1,5 +1,5 @@
-import FormCustom, { FormData } from "components/Form/Form";
 import React, { FC, memo } from "react";
+import ExampleScreen, { FormData } from "./ExampleScreen";
 
 enum FORM_MODE {
   CREATE = "create",
@@ -9,6 +9,7 @@ enum FORM_MODE {
 const HomeScreen: FC = () => {
   const [data, setData] = React.useState<FormData | undefined>(undefined);
   const [mode, setMode] = React.useState<FORM_MODE>(FORM_MODE.CREATE);
+  const user = { email: "", password: "", select: "" };
 
   React.useEffect(() => {
     if (mode === "update")
@@ -32,7 +33,7 @@ const HomeScreen: FC = () => {
       >
         Change to {mode === "create" ? "update" : "create"}
       </button>
-      <FormCustom mode={mode} data={data} />
+      <ExampleScreen mode={mode} data={data} user={user} />
     </>
   );
 };
