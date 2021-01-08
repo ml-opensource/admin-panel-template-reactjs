@@ -72,6 +72,13 @@ const ExampleScreen: FC = () => {
     getUsers(newPage + 1);
   };
 
+  const paginationProps = {
+    withPagination: true,
+    onPaginationChange: handlePaginationChange,
+    rowsPerPage: data ? data.per_page : 0,
+    count: data ? data.total : 0,
+  };
+
   return (
     <div>
       <h1>Example Screen</h1>
@@ -85,14 +92,11 @@ const ExampleScreen: FC = () => {
             size: "medium",
             stickyHeader: false,
             padding: "default",
+            "aria-label": "simple table",
           }}
-          // pagination props starts here
-          withPagination
-          onPaginationChange={handlePaginationChange}
-          rowsPerPage={data.per_page}
-          count={data.total}
-          // pagination props ends here
+          {...paginationProps}
           withCheckbox
+          headerCheckboxAriaLabel="select all"
           withSearch
         />
       )}

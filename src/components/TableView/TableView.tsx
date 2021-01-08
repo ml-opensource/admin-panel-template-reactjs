@@ -28,7 +28,10 @@ interface TableViewProps {
   count?: number;
   // paginationProps ends here
   withSearch?: boolean;
+  // checkboxProps starts here
   withCheckbox?: boolean;
+  headerCheckboxAriaLabel?: string;
+  // checkboxProps ends here
 }
 
 const TableView: FC<TableViewProps> = ({
@@ -37,14 +40,19 @@ const TableView: FC<TableViewProps> = ({
   rows,
   rowKey,
   tableProps,
+  // paginationProps starts here
   withPagination = false,
   onPaginationChange = () => {
     return null;
   },
   rowsPerPage = 0,
   count = 0,
+  // paginationProps ends here
   withSearch = false,
+  // checkboxProps starts here
   withCheckbox = false,
+  headerCheckboxAriaLabel,
+  // checkboxProps ends here
 }) => {
   const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -89,11 +97,7 @@ const TableView: FC<TableViewProps> = ({
         withSearch={withSearch}
       />
       <TableContainer>
-        <Table
-          className={classes.table}
-          aria-label="simple table"
-          {...tableProps}
-        >
+        <Table className={classes.table} {...tableProps}>
           <TableHead>
             <TableRow>
               {withCheckbox && (
@@ -104,7 +108,7 @@ const TableView: FC<TableViewProps> = ({
                     }
                     checked={rows.length > 0 && selected.length === rows.length}
                     onChange={handleSelectAllClick}
-                    inputProps={{ "aria-label": "select all desserts" }}
+                    inputProps={{ "aria-label": headerCheckboxAriaLabel }}
                   />
                 </TableCell>
               )}
