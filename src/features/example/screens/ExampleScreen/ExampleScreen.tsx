@@ -1,5 +1,6 @@
 import React, { FC, memo, useEffect, useState } from "react";
 
+import Loader from "components/Loader/Loader";
 import TableView from "components/TableView/TableView";
 import { Rows } from "components/TableView/TableView.types";
 
@@ -82,7 +83,7 @@ const ExampleScreen: FC = () => {
   return (
     <div>
       <h1>Example Screen</h1>
-      {data && (
+      {data ? (
         <TableView
           title="Basic Table"
           columns={columns}
@@ -99,6 +100,8 @@ const ExampleScreen: FC = () => {
           headerCheckboxAriaLabel="select all"
           withSearch
         />
+      ) : (
+        <Loader isFullScreen={false} />
       )}
     </div>
   );
