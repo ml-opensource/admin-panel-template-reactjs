@@ -10,12 +10,10 @@ import { CheckboxWithLabel } from "formik-material-ui";
 
 type CheckboxValue = string | number;
 
-type CheckboxOption =
-  | {
-      label: React.ReactNode;
-      value: CheckboxValue;
-    }
-  | CheckboxValue;
+type CheckboxOption = {
+  label: React.ReactNode;
+  value: CheckboxValue;
+};
 
 type FormikCheckboxProps = Omit<CheckboxProps, "name"> & {
   name: string;
@@ -42,9 +40,7 @@ const FormikCheckbox: React.FC<FormikCheckboxProps> = ({
       component="fieldset"
       error={fieldIsInvalid}
     >
-      <FormLabel component="legend">
-        {label || name.charAt(0).toLocaleUpperCase() + name.substr(1)}
-      </FormLabel>
+      <FormLabel component="legend">{label ?? name}</FormLabel>
       <FormGroup>
         {options.map(option =>
           typeof option === "object" ? (
