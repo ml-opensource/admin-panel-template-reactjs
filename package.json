@@ -53,8 +53,8 @@
     "test:stg": "env-cmd -f .env.stg react-app-rewired test",
     "test:prod": "env-cmd -f .env.prod react-app-rewired test",
     "eject": "react-scripts eject",
-    "format": "prettier 'src/**/*.{ts,tsx,json}' --write",
-    "lint": "eslint 'src/**/*.{ts,tsx}' --fix --quiet"
+    "format": "prettier src/**/*.{ts,tsx,json} --write",
+    "lint": "eslint src/**/*.{ts,tsx} --fix --quiet"
   },
   "browserslist": {
     "production": [
