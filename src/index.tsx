@@ -1,20 +1,34 @@
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
 
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
-import App from "./App";
+import store from "@app/redux/store";
+
+import "@app/features/localization/localization";
 import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 
-import "@app/features/localization/localization";
+const render = () => {
+  const App = require("./App").default;
 
-const app = (
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+  ReactDOM.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+};
 
-ReactDOM.render(app, document.getElementById("root"));
+render();
+
+if (process.env.NODE_ENV === "development" && module.hot) {
+  module.hot.accept("./App", render);
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
