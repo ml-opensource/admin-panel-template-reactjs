@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo, ReactNode } from "react";
 
 import { Redirect } from "react-router-dom";
 
@@ -10,12 +10,12 @@ interface PermissionProps {
    * Wrapped elements to be outputted given the required
    * permissions are met
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * Element to display in case of required permissions
    * haven't been met
    */
-  fallback?: React.ReactNode;
+  fallback?: ReactNode;
   /**
    * Toggles whether a user must have all of the required
    * permissions, or default is at least one of them

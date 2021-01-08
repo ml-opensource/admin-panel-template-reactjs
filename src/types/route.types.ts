@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import { ComponentType, ReactNode } from "react";
 
 import { RouteComponentProps } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export type RouteItemDef = {
    */
   component: ComponentType<RouteComponentProps<any>>;
   /** Layout used for this route */
-  layout?: React.ReactNode;
+  layout?: ReactNode;
   /** The required permissions to view this route (optional) */
   permissions?: PermissionEnum[];
 };

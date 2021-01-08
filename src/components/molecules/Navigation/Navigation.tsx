@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { Layout } from "antd";
 import cx from "classnames";

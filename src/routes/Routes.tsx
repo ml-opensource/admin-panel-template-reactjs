@@ -1,4 +1,4 @@
-import React, { ElementType, memo, Suspense } from "react";
+import { ElementType, memo, ReactElement, Suspense } from "react";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const Routes = () => {
         key={route.id}
         exact
         path={route.path}
-        render={(props): React.ReactElement => {
+        render={(props): ReactElement => {
           const Component = route.component;
           const Content = () => (
             <Layout>

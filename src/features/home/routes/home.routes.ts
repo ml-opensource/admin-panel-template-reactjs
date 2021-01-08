@@ -1,10 +1,10 @@
-import React from "react";
+import { lazy } from "react";
 
 import { RouteItemDef } from "@app/types/route.types";
 
 import { HomePathsEnum } from "../constants/home.paths";
 
-const HomeScreen = React.lazy(() => import("../screens/HomeScreen/HomeScreen"));
+const HomeScreen = lazy(() => import("../screens/HomeScreen/HomeScreen"));
 
 const HOME_SCREEN: RouteItemDef = {
   id: "home",
