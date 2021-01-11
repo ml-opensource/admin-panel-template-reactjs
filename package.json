@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "@testing-library/user-event": "^12.1.6",
@@ -77,6 +78,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-persist": "^4.3.1",
+    "@types/webpack-env": "^1.16.0",
     "customize-cra": "^1.0.0",
     "customize-cra-react-refresh": "^1.1.0",
     "env-cmd": "^10.1.0",
@@ -86,6 +88,6 @@
     "lint-staged": "^10.4.0",
     "prettier": "^2.1.2",
     "react-app-rewired": "^2.1.6",
-    "typescript": "~3.7.2"
+    "typescript": "3.9.7"
   }
 }

@@ -1,13 +1,15 @@
 import React, { FC, useState } from "react";
-import { Formik, Field } from "formik";
+
 import {
   Button,
   LinearProgress,
   MenuItem,
   InputLabel,
 } from "@material-ui/core";
+import { Formik, Field } from "formik";
 import { TextField, Select } from "formik-material-ui";
 import * as yup from "yup";
+
 import FormContainer from "components/FormContainer/FormContainer";
 
 export interface FormData {

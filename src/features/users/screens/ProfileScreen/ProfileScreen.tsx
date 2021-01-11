@@ -1,27 +1,31 @@
 import React, { FC, memo } from "react";
 
+import { useSelector } from "react-redux";
+
+import { RootState } from "redux/rootReducer";
+
+import UpdateProfileForm from "./UpdateProfileForm/UpdateProfileForm";
+
 const ProfileScreen: FC = () => {
-  const userData = {
-    id: 1,
-    firstName: "John",
-    lastName: "Doe",
-    email: "john@doe.com",
-    avatar: "",
-  };
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <div>
-      <h1>Profile Screen</h1>
+      <h1>Current user</h1>
 
-      {userData.id && (
+      {user.info && (
         <div>
-          Name: {userData.firstName} {userData.lastName}
+          Name: {user.info.name}
           <br />
-          Email: {userData.email}
+          Color: {user.info.color}
           <br />
-          <img src={userData.avatar} alt="avatar" />
+          Pantone: {user.info.pantone_value}
+          <br />
+          Year: {user.info.year}
+          <br />
         </div>
       )}
+      <UpdateProfileForm />
     </div>
   );
 };
