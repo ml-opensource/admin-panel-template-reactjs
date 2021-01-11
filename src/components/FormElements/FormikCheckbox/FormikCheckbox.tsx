@@ -42,27 +42,16 @@ const FormikCheckbox: React.FC<FormikCheckboxProps> = ({
     >
       <FormLabel component="legend">{label ?? name}</FormLabel>
       <FormGroup>
-        {options.map(option =>
-          typeof option === "object" ? (
-            <Field
-              component={CheckboxWithLabel}
-              {...rest}
-              name={name}
-              value={option.value}
-              type="checkbox"
-              Label={{ label: option.label }}
-            />
-          ) : (
-            <Field
-              component={CheckboxWithLabel}
-              {...rest}
-              name={name}
-              type="checkbox"
-              value={option}
-              Label={{ label: option }}
-            />
-          )
-        )}
+        {options.map(option => (
+          <Field
+            component={CheckboxWithLabel}
+            {...rest}
+            name={name}
+            value={option.value}
+            type="checkbox"
+            Label={{ label: option.label }}
+          />
+        ))}
       </FormGroup>
       <FormHelperText>{helperText || errors[name]}</FormHelperText>
     </FormControl>
