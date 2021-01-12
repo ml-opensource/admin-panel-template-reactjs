@@ -22,12 +22,14 @@ const Routes: FC = () => {
     layout,
     permissions,
     path,
+    id,
   }: RouteItemDef) => {
     const RouteLayout: FC = layout || DefaultLayout;
 
     return (
       <Route
         exact
+        key={id}
         path={path}
         render={(props): React.ReactElement => {
           const Content = (): JSX.Element => (

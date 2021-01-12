@@ -12,6 +12,7 @@ const ExampleScreen = React.lazy(
 );
 
 const EXAMPLE_SCREEN: RouteItemDef = {
+  id: "example",
   path: ExamplePathsEnum.EXAMPLE,
   component: ExampleScreen,
   icon: LibraryBooksIcon,

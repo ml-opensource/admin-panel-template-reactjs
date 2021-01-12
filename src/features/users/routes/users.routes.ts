@@ -11,6 +11,7 @@ const ProfileScreen = React.lazy(
 );
 
 const PROFILE_SCREEN: RouteItemDef = {
+  id: "users",
   path: UserPathsEnum.PROFILE,
   component: ProfileScreen,
   isPrivateRoute: true,

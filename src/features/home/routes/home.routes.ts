@@ -10,6 +10,7 @@ import { HomePathsEnum } from "../constants/home.paths";
 const HomeScreen = React.lazy(() => import("../screens/HomeScreen/HomeScreen"));
 
 const HOME_SCREEN: RouteItemDef = {
+  id: "home",
   path: HomePathsEnum.HOME,
   component: HomeScreen,
   icon: DashboardIcon,
