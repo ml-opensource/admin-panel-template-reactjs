@@ -8,6 +8,11 @@ import { PermissionEnum } from "features/permissions/permissions";
 
 export type RouteItemDef = {
   /**
+   * Unique id for the path
+   * The id should be the same for paths that are showing the same component
+   */
+  id: string;
+  /**
    * The URL path for when
    * the component should be rendered
    */

@@ -10,6 +10,7 @@ const SignInScreen = React.lazy(
 );
 
 const SIGN_IN_SCREEN: RouteItemDef = {
+  id: "auth",
   path: AuthPathsEnum.SIGN_IN,
   component: SignInScreen,
   layout: AuthLayout,
