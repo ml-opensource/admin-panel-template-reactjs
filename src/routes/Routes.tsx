@@ -28,6 +28,7 @@ const Routes: FC = () => {
     return (
       <Route
         exact
+        key={path}
         path={path}
         render={(props): React.ReactElement => {
           const Content = (): JSX.Element => (
