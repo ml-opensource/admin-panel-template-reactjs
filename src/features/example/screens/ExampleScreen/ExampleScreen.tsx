@@ -16,7 +16,7 @@ interface UserData {
 
 const ExampleScreen: FC = () => {
   const [rows, setRows] = useState<Rows[]>([]);
-  const [data, setData] = useState<UserData>();
+  const [userData, setUserData] = useState<UserData>();
 
   const columns = [
     {
@@ -56,17 +56,15 @@ const ExampleScreen: FC = () => {
     },
   ];
 
-  const getUsers = async (newPage: number) => {
-    // eslint-disable-next-line no-shadow
+  const getUsers = async (newPage = 1) => {
     const { data } = await userApi.list(newPage);
-    const userData = data;
 
-    setData(userData);
-    setRows(userData.data);
+    setUserData(data);
+    setRows(data.data);
   };
 
   useEffect(() => {
-    getUsers(1);
+    getUsers();
   }, []);
 
   const handlePaginationChange = (newPage: number) => {
@@ -76,14 +74,14 @@ const ExampleScreen: FC = () => {
   const paginationProps = {
     withPagination: true,
     onPaginationChange: handlePaginationChange,
-    rowsPerPage: data ? data.per_page : 0,
-    count: data ? data.total : 0,
+    rowsPerPage: userData ? userData.per_page : 0,
+    count: userData ? userData.total : 0,
   };
 
   return (
     <div>
       <h1>Example Screen</h1>
-      {data ? (
+      {userData ? (
         <TableView
           title="Basic Table"
           columns={columns}
