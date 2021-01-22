@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &.isFullscreen {
+    height: -webkit-fill-available;
+    height: -moz-available;
+    height: 100vh;
+    height: stretch;
+  }
+}
