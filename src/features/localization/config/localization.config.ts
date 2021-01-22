@@ -29,6 +29,12 @@ i18next.use(initReactI18next).init({
         default: {
           notFoundTitle: "404 - Not found",
           notFoundText: "The page you were looking for was not found.",
+          columnAction: "Action",
+          deleteTitle: "Delete",
+          confirmDeleteTitle: "Are you sure to delete this?",
+          confirmDeleteYes: "Yes",
+          confirmDeleteNo: "No",
+          editTitle: "Edit",
         },
         home: {
           navigationTitle: "Home",
