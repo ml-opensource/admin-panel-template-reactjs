@@ -1,3 +1,3 @@
 export enum HomePathsEnum {
-  HOME = "/",
+  HOME = "/home",
 }

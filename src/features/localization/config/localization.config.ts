@@ -22,7 +22,37 @@ i18next.use(initReactI18next).init({
     escapeValue: false,
   },
   defaultNS: DEFAULT_NS,
-  resources: {},
+  resources: {
+    // TODO: Move translation to nstack
+    "en-EN": {
+      translation: {
+        default: {
+          notFoundTitle: "404 - Not found",
+          notFoundText: "The page you were looking for was not found.",
+        },
+        home: {
+          navigationTitle: "Home",
+          title: "Home",
+          text: "Content",
+        },
+        settings: {
+          navigationTitle: "Settings",
+          groupEntityManagement: "Entity Management",
+          groupAdminSettings: "Admin Settings",
+        },
+        settingsVehicles: {
+          navigationTitle: "Vehicles",
+          title: "Vehicles",
+          text: "Content",
+        },
+        settingsUsers: {
+          navigationTitle: "Users",
+          title: "Users",
+          text: "Content",
+        },
+      },
+    },
+  },
 });
 
 export default i18next;

@@ -3,11 +3,19 @@
 
 .navbar {
   width: 100%;
-  color: $text-white;
+  padding: 0;
 
   &.sticky {
     position: sticky;
     top: 0;
     z-index: 1;
+  }
+
+  .navLeftContent {
+    display: flex;
+  }
+  .navRightContent {
+    display: flex;
+    flex-direction: row-reverse;
   }
 }

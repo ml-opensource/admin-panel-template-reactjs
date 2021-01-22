@@ -1,0 +1,14 @@
+@import "styles/colors";
+@import "styles/variables";
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 $spacing-6;
+
+  .logo {
+    width: auto;
+    height: 20px;
+  }
+}

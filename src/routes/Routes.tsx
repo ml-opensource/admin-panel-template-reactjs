@@ -1,38 +1,45 @@
-import { ElementType, memo, ReactElement, Suspense } from "react";
+import { ElementType, memo, Suspense } from "react";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import DefaultLayout from "@app/components/layouts/DefaultLayout/DefaultLayout";
 import { Permission } from "@app/features/permissions/permissions";
-import { RouteItemDef } from "@app/types/route.types";
+import { RouteComponentDef, RouteItemDef } from "@app/types/route.types";
 
+import NotFound from "./components/NotFound/NotFound";
 import { PRIVATE_LIST, ROOT_ROUTE } from "./routes.config";
 
 const Routes = () => {
-  const routeWrapper = (route: RouteItemDef) => {
-    const Layout = (route.layout ?? DefaultLayout) as ElementType;
+  const routeWrapper = ({
+    id,
+    path,
+    layout,
+    component,
+    permissions,
+  }: RouteItemDef) => {
+    const Layout = (layout ?? DefaultLayout) as ElementType;
     return (
       <Route
-        key={route.id}
-        exact
-        path={route.path}
-        render={(props): ReactElement => {
-          const Component = route.component;
-          const Content = () => (
+        key={id}
+        path={path}
+        render={routeProps => {
+          const Component = component as RouteComponentDef;
+          const renderContent = (
             <Layout>
-              <Component {...props} />
+              <Component {...routeProps} />
             </Layout>
           );
 
           return (
-            (route.permissions && (
+            (permissions && (
               <Permission
                 fallback={<Redirect to={ROOT_ROUTE} />}
-                requiredPermissions={route.permissions}
+                requiredPermissions={permissions}
               >
-                <Content />
+                {renderContent}
               </Permission>
-            )) || <Content />
+            )) ||
+            renderContent
           );
         }}
       />
@@ -41,7 +48,18 @@ const Routes = () => {
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <Switch>{PRIVATE_LIST.map(route => routeWrapper(route))}</Switch>
+      <Switch>
+        <Redirect exact from="/" to="/home" />
+        {PRIVATE_LIST.map(route => routeWrapper(route))}
+        <Route
+          path="*"
+          render={() => (
+            <DefaultLayout>
+              <NotFound />
+            </DefaultLayout>
+          )}
+        />
+      </Switch>
     </Suspense>
   );
 };
