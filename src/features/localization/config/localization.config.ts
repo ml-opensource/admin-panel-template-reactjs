@@ -55,6 +55,7 @@ i18next.use(initReactI18next).init({
           navigationTitle: "Users",
           title: "Users",
           text: "Content",
+          columnName: "Name",
         },
       },
     },

@@ -29,7 +29,7 @@ const SETTINGS_SCREEN: RouteItemDef = {
       nestedRoutes: [
         {
           id: "users",
-          path: SettingsPathsEnum.USERS,
+          path: [SettingsPathsEnum.USERS, SettingsPathsEnum.USERS_EDIT],
           navigationTitle: "settingsUsers.navigationTitle",
           component: UsersScreen,
         },

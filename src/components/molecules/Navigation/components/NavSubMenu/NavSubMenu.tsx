@@ -18,7 +18,7 @@ const NavSubMenu = ({ item, isSidebar, ...props }: NavSubMenuProps) => {
   return (
     <Menu.SubMenu
       popupOffset={[-16, 7]}
-      key={item.path}
+      key={Array.isArray(item.path) ? item.path[0] : item.path}
       title={
         <div className={styles.subMenuItem}>
           <span>
@@ -35,13 +35,21 @@ const NavSubMenu = ({ item, isSidebar, ...props }: NavSubMenuProps) => {
         "groupTitle" in subItem ? (
           <Menu.ItemGroup key={subItem.id} title={t(subItem.groupTitle)}>
             {subItem.nestedRoutes?.map(subGroupItem => (
-              <Menu.Item key={subGroupItem.path}>
+              <Menu.Item
+                key={
+                  Array.isArray(subGroupItem.path)
+                    ? subGroupItem.path[0]
+                    : subGroupItem.path
+                }
+              >
                 <NavLink navItem={subGroupItem} />
               </Menu.Item>
             ))}
           </Menu.ItemGroup>
         ) : (
-          <Menu.Item key={subItem.path}>
+          <Menu.Item
+            key={Array.isArray(subItem.path) ? subItem.path[0] : subItem.path}
+          >
             <NavLink navItem={subItem} />
           </Menu.Item>
         )

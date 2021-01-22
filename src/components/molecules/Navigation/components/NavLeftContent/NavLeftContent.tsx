@@ -29,6 +29,12 @@ const NavLeftContent = memo(({ mode = "horizontal" }: NavLeftContentProps) => {
     ? [...location.pathname.split(/(?=\/)/g, 1)]
     : undefined;
 
+  const highlightMenu = [
+    ...location.pathname.split(/(?=\/)/g, 1), // Highlight root url
+    location.pathname.substr(0, location.pathname.lastIndexOf("/")), // Highlight parent url
+    location.pathname, // Highlight entire url
+  ];
+
   return (
     <>
       <div
@@ -40,19 +46,17 @@ const NavLeftContent = memo(({ mode = "horizontal" }: NavLeftContentProps) => {
       </div>
       <Menu
         mode={mode}
-        selectedKeys={[location.pathname]}
+        selectedKeys={highlightMenu}
         defaultOpenKeys={rootPathname}
         theme="dark"
       >
         {navLinks.map(navItem =>
           navItem.nestedRoutes?.length ? (
-            <NavSubMenu
-              key={navItem.path}
-              item={navItem}
-              isSidebar={isSidebar}
-            />
+            <NavSubMenu key={navItem.id} item={navItem} isSidebar={isSidebar} />
           ) : (
-            <Menu.Item key={navItem.path}>
+            <Menu.Item
+              key={Array.isArray(navItem.path) ? navItem.path[0] : navItem.path}
+            >
               <NavLink navItem={navItem} />
             </Menu.Item>
           )

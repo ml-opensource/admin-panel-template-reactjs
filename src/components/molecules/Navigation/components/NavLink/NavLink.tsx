@@ -13,7 +13,7 @@ const NavLink = memo(({ navItem }: NavLinkProps) => {
   const { t } = useTranslation();
 
   return (
-    <Link to={navItem.path}>
+    <Link to={Array.isArray(navItem.path) ? navItem.path[0] : navItem.path}>
       {navItem.navigationTitle
         ? t(navItem.navigationTitle)
         : `Missing navigationTitle for "${navItem.id}"`}

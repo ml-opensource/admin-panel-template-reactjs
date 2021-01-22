@@ -23,7 +23,7 @@ export type RouteItemDef = {
    * The URL path for when
    * the component should be rendered
    */
-  path: string;
+  path: string | string[];
   /** Navigation title of menu item for navbar */
   navigationTitle?: string;
   /**
