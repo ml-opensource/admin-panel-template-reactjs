@@ -1,0 +1,14 @@
+@import "styles/colors";
+@import "styles/variables";
+
+$layout-spacing: $spacing-3;
+
+.container {
+  margin: $layout-spacing;
+  background: $bg-white;
+  min-height: 600px;
+}
+
+.content {
+  min-height: calc(100vh - #{$layout-spacing * 2});
+}

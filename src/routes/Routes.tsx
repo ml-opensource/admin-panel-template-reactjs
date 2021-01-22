@@ -2,12 +2,19 @@ import { ElementType, memo, Suspense } from "react";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import DefaultLayout from "@app/components/layouts/DefaultLayout/DefaultLayout";
+import HeaderLayout from "@app/components/layouts/HeaderLayout/HeaderLayout";
 import { Permission } from "@app/features/permissions/permissions";
 import { RouteComponentDef, RouteItemDef } from "@app/types/route.types";
 
 import NotFound from "./components/NotFound/NotFound";
 import { PRIVATE_LIST, ROOT_ROUTE } from "./routes.config";
+
+/**
+ * Change the default layout to:
+ * - HeaderLayout
+ * - SidebarLayout
+ */
+const DefaultLayout = HeaderLayout;
 
 const Routes = () => {
   const routeWrapper = ({

@@ -4,15 +4,15 @@ import { Layout } from "antd";
 
 import Navigation from "@app/components/molecules/Navigation/Navigation";
 
-import styles from "./DefaultLayout.module.scss";
+import styles from "./HeaderLayout.module.scss";
 
 const { Content } = Layout;
 
-type DefaultLayoutProps = {
+type HeaderLayoutProps = {
   children: ReactNode;
 };
 
-const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+const HeaderLayout = ({ children }: HeaderLayoutProps) => {
   return (
     <Layout>
       <Navigation sticky />
@@ -23,4 +23,4 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   );
 };
 
-export default DefaultLayout;
+export default HeaderLayout;

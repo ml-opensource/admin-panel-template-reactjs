@@ -1,6 +1,8 @@
 import { memo } from "react";
 
 import { Menu } from "antd";
+import { MenuMode } from "antd/lib/menu";
+import cx from "classnames";
 import { useLocation } from "react-router-dom";
 
 import { ReactComponent as Logo } from "@app/assets/images/logo.svg";
@@ -15,18 +17,40 @@ const navLinks: RouteItemDef[] = PRIVATE_LIST.filter(
   route => !route.hideInNavigation
 );
 
-const NavLeftContent = memo(() => {
+interface NavLeftContentProps {
+  mode?: MenuMode;
+}
+
+const NavLeftContent = memo(({ mode = "horizontal" }: NavLeftContentProps) => {
   const location = useLocation();
+
+  const isSidebar = mode === "inline";
+  const rootPathname = isSidebar
+    ? [...location.pathname.split(/(?=\/)/g, 1)]
+    : undefined;
 
   return (
     <>
-      <div className={styles.logoContainer}>
+      <div
+        className={cx(styles.logoContainer, {
+          [styles.isSidebar]: isSidebar,
+        })}
+      >
         <Logo className={styles.logo} />
       </div>
-      <Menu mode="horizontal" selectedKeys={[location.pathname]} theme="dark">
+      <Menu
+        mode={mode}
+        selectedKeys={[location.pathname]}
+        defaultOpenKeys={rootPathname}
+        theme="dark"
+      >
         {navLinks.map(navItem =>
           navItem.nestedRoutes?.length ? (
-            <NavSubMenu key={navItem.path} item={navItem} />
+            <NavSubMenu
+              key={navItem.path}
+              item={navItem}
+              isSidebar={isSidebar}
+            />
           ) : (
             <Menu.Item key={navItem.path}>
               <NavLink navItem={navItem} />

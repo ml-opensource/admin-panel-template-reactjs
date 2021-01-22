@@ -9,10 +9,12 @@ import styles from "./NavSubMenu.module.scss";
 
 interface NavSubMenuProps {
   item: RouteItemDef;
+  isSidebar?: boolean;
 }
 
-const NavSubMenu = ({ item, ...props }: NavSubMenuProps) => {
+const NavSubMenu = ({ item, isSidebar, ...props }: NavSubMenuProps) => {
   const { t } = useTranslation();
+
   return (
     <Menu.SubMenu
       popupOffset={[-16, 7]}
@@ -24,7 +26,7 @@ const NavSubMenu = ({ item, ...props }: NavSubMenuProps) => {
               ? t(item.navigationTitle)
               : `Missing navigationTitle for "${item.id}"`}
           </span>
-          <DownOutlined className={styles.icon} />
+          {!isSidebar && <DownOutlined className={styles.icon} />}
         </div>
       }
       {...props}

@@ -7,13 +7,21 @@ import styles from "./Navigation.module.scss";
 import NavLeftContent from "./components/NavLeftContent/NavLeftContent";
 import NavRightContent from "./components/NavRightContent/NavRightContent";
 
-const { Header } = Layout;
+const { Header, Sider } = Layout;
 
 type NavigationProps = {
   sticky?: boolean;
+  sidebar?: boolean;
 };
 
-const Navigation = memo(({ sticky = false }: NavigationProps) => {
+const Navigation = memo(({ sidebar, sticky = false }: NavigationProps) => {
+  if (sidebar) {
+    return (
+      <Sider>
+        <NavLeftContent mode="inline" />
+      </Sider>
+    );
+  }
   return (
     <Header className={cx(styles.navbar, { [styles.sticky]: sticky })}>
       <Row>
