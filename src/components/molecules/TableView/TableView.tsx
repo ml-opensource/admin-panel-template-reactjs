@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React from "react";
 
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { CopyOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Table, Space, Button, Popconfirm, Tooltip } from "antd";
 import { TableProps } from "antd/lib/table";
 import { useTranslation } from "react-i18next";
@@ -14,12 +14,14 @@ interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   actionTitle?: string;
   onEdit?: (record: T) => void;
   onDelete?: (record: T) => void;
+  onDuplicate?: (record: T) => void;
 }
 
 const TableView = <T extends {}>({
   actionTitle,
   onEdit,
   onDelete,
+  onDuplicate,
   children,
   ...tableProps
 }: TableViewProps<T>) => {
@@ -41,6 +43,15 @@ const TableView = <T extends {}>({
                   onClick={() => onEdit(record)}
                   shape="circle"
                   icon={<EditOutlined />}
+                />
+              </Tooltip>
+            )}
+            {!!onDuplicate && (
+              <Tooltip title={t("default.duplicateTitle")}>
+                <Button
+                  onClick={() => onDuplicate(record)}
+                  shape="circle"
+                  icon={<CopyOutlined />}
                 />
               </Tooltip>
             )}

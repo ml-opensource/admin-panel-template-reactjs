@@ -4,6 +4,7 @@ import { Table } from "antd";
 import { useTranslation } from "react-i18next";
 import { generatePath, useHistory, useParams } from "react-router-dom";
 
+import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
 import TableView from "@app/components/molecules/TableView/TableView";
 
 import { SettingsPathsEnum } from "../../constants/settings.paths";
@@ -41,6 +42,11 @@ const UsersScreen = () => {
     console.log(user);
   };
 
+  const handleDuplicate = (user: UserDef) => {
+    // TODO: API to duplicate user
+    console.log(user);
+  };
+
   const handleEdit = (user: UserDef) => {
     history.push(
       generatePath(SettingsPathsEnum.USERS_EDIT, { id: user.id.toString() })
@@ -53,13 +59,13 @@ const UsersScreen = () => {
 
   return (
     <>
-      <h1>{t("settingsUsers.title")}</h1>
-      <p>{t("settingsUsers.text")}</p>
+      <ScreenTitleView />
       <TableView
         dataSource={data}
         actionTitle={t("default.columnAction")}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onDuplicate={handleDuplicate}
       >
         <Table.Column
           key="name"
