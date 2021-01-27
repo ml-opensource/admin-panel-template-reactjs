@@ -1,24 +1,32 @@
 import React, { memo } from "react";
 
-import { Modal } from "antd";
 import { useParams } from "react-router-dom";
+
+import FormModal from "@app/components/atoms/FormModal/FormModal";
 
 interface UsersModalProps {
   visible: boolean;
   onClose: () => void;
+  onFormSubmit: () => void;
 }
 
-const UsersModal = memo(({ visible, onClose }: UsersModalProps) => {
-  const params = useParams<{ id: string }>();
+const UsersModal = memo(
+  ({ visible, onClose, onFormSubmit }: UsersModalProps) => {
+    const params = useParams<{ id: string }>();
 
-  // TODO: Get User from API
+    // TODO: Get User from API
 
-  // TODO: Add a custom FormModal
-  return (
-    <Modal visible={visible} onCancel={onClose}>
-      Edit modal for user: {params.id}
-    </Modal>
-  );
-});
+    return (
+      <FormModal
+        title="Users Modal"
+        visible={visible}
+        onClose={onClose}
+        onFormSubmit={onFormSubmit}
+      >
+        Edit modal for user: {params.id}
+      </FormModal>
+    );
+  }
+);
 
 export default UsersModal;
