@@ -7,11 +7,12 @@ import {
 interface ButtonProps extends AntDesignButtonProps {
   type?: AntDesignButtonType;
   buttonText?: string;
+  onClick?: () => void;
 }
 
-const Button = ({ type, buttonText, ...buttonProps }: ButtonProps) => {
+const Button = ({ type, buttonText, onClick, ...buttonProps }: ButtonProps) => {
   return (
-    <AntDesignButton type={type} {...buttonProps}>
+    <AntDesignButton type={type} onClick={onClick} {...buttonProps}>
       {buttonText}
     </AntDesignButton>
   );
