@@ -1,3 +1,13 @@
+@import "styles/variables";
+
 .title {
-  margin: 15px;
+  font-size: $font-size-32;
+  font-weight: $font-weight-700;
+  margin: $spacing-4;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: $spacing-4;
 }

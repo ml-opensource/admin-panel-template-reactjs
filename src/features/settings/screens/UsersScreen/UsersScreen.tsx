@@ -59,7 +59,7 @@ const UsersScreen = () => {
 
   return (
     <>
-      <ScreenTitleView />
+      <ScreenTitleView mainTitle={t("default.screenTitle")} />
       <TableView
         dataSource={data}
         actionTitle={t("default.columnAction")}
