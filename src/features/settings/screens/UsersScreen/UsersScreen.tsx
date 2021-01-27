@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { Table } from "antd";
+import { Input, Table } from "antd";
 import { useTranslation } from "react-i18next";
 import { generatePath, useHistory, useParams } from "react-router-dom";
 
+import Button from "@app/components/atoms/Button/Button";
+import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
 import TableView from "@app/components/molecules/TableView/TableView";
 
 import { SettingsPathsEnum } from "../../constants/settings.paths";
+import styles from "./UsersScreen.module.scss";
 import UsersModal from "./components/UsersModal/UsersModal";
 
 type UserDef = {
@@ -17,6 +20,7 @@ type UserDef = {
 
 const UsersScreen = () => {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams<{ id: string }>();
@@ -57,9 +61,21 @@ const UsersScreen = () => {
     setShowEditModal(false);
   };
 
+  const handleAddUserModal = () => {
+    setShowAddModal(true);
+  };
+
   return (
     <>
       <ScreenTitleView mainTitle={t("default.screenTitle")} />
+      <div className={styles.buttonContainer}>
+        <Button
+          type="primary"
+          size="large"
+          buttonText="Add user"
+          onClick={handleAddUserModal}
+        />
+      </div>
       <TableView
         dataSource={data}
         actionTitle={t("default.columnAction")}
@@ -73,7 +89,25 @@ const UsersScreen = () => {
           title={t("settingsUsers.columnName")}
         />
       </TableView>
-      <UsersModal visible={showEditModal} onClose={handleCloseModal} />
+      <UsersModal
+        visible={showEditModal}
+        onClose={handleCloseModal}
+        onFormSubmit={handleCloseModal}
+      />
+
+      <FormModal
+        title="Add user modal"
+        visible={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onFormSubmit={values => {
+          console.log("Form submitted", values);
+          setShowAddModal(false);
+        }}
+      >
+        <Item name="Username" label="Username">
+          <Input type="text" />
+        </Item>
+      </FormModal>
     </>
   );
 };

@@ -11,7 +11,7 @@ interface FormModalProps {
   width?: number;
   children?: React.ReactNode;
   onClose: () => void;
-  onFormSubmit: () => void;
+  onFormSubmit: (values?: any) => void;
   submitButtonText?: string;
   cancelButtonText?: string;
 }
