@@ -1,21 +1,22 @@
 import { Button as AntDesignButton } from "antd";
-import {
-  ButtonType as AntDesignButtonType,
-  ButtonProps as AntDesignButtonProps,
-} from "antd/lib/button";
+import { ButtonProps as AntDesignButtonProps } from "antd/lib/button";
+import { Link, LinkProps } from "react-router-dom";
 
-interface ButtonProps extends AntDesignButtonProps {
-  type?: AntDesignButtonType;
-  buttonText?: string;
-  onClick?: () => void;
+interface ButtonProps extends Omit<AntDesignButtonProps, "href"> {
+  /**
+   * Turn button into link (optional)
+   */
+  to?: LinkProps["to"];
 }
 
-const Button = ({ type, buttonText, onClick, ...buttonProps }: ButtonProps) => {
-  return (
-    <AntDesignButton type={type} onClick={onClick} {...buttonProps}>
-      {buttonText}
-    </AntDesignButton>
-  );
+const Button = ({ to, ...buttonProps }: ButtonProps) => {
+  const buttonContent = <AntDesignButton {...buttonProps} />;
+
+  if (to) {
+    return <Link to={to}>{buttonContent}</Link>;
+  }
+
+  return buttonContent;
 };
 
 export default Button;
