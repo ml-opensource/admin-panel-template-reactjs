@@ -3,8 +3,17 @@ import React from "react";
 
 import { CopyOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Table, Space, Button, Popconfirm, Tooltip } from "antd";
-import { TableProps } from "antd/lib/table";
+import { TablePaginationConfig, TableProps } from "antd/lib/table";
+import {
+  Key,
+  SorterResult,
+  TableCurrentDataSource,
+} from "antd/lib/table/interface";
+import qs from "query-string";
 import { useTranslation } from "react-i18next";
+import { useHistory, useLocation } from "react-router-dom";
+
+import { getOrderBy } from "@app/helpers/table.helper";
 
 import styles from "./TableView.module.scss";
 
@@ -23,11 +32,45 @@ const TableView = <T extends {}>({
   onDelete,
   onDuplicate,
   children,
+  onChange,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
+
+  const handleOnChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, (Key | boolean)[] | null>,
+    sorter: SorterResult<T> | SorterResult<T>[],
+    extra: TableCurrentDataSource<T>
+  ) => {
+    // Keep the old search params
+    const currentSearch = qs.parse(location.search);
+
+    const orderBy = Array.isArray(sorter)
+      ? undefined
+      : (sorter.order &&
+          sorter.columnKey &&
+          getOrderBy(sorter.columnKey.toString(), sorter.order)) ||
+        undefined;
+
+    // and overwrite or add new values
+    const values = {
+      ...currentSearch,
+      orderBy,
+    };
+
+    history.push({
+      pathname: location.pathname,
+      search: qs.stringify(values, { arrayFormat: "comma" }),
+    });
+
+    onChange?.(pagination, filters, sorter, extra);
+  };
+
   return (
-    <Table rowKey="id" {...tableProps}>
+    <Table rowKey="id" onChange={handleOnChange} {...tableProps}>
       {children}
       <Column<T>
         key="action"

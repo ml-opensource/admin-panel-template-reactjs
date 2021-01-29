@@ -58,6 +58,7 @@ i18next.use(initReactI18next).init({
           title: "Users",
           text: "Content",
           columnName: "Name",
+          columnLastName: "Last Name",
           editUser: "Edit user",
           addUser: "Add user",
         },
