@@ -68,15 +68,11 @@ const UsersScreen = () => {
     setShowUserModal(false);
   };
 
-  const handleAddUserModal = () => {
-    history.push(generatePath(SettingsPathsEnum.USERS_CREATE));
-  };
-
   return (
     <>
-      <ScreenTitleView mainTitle={t("settingsUsers.title")} />
+      <ScreenTitleView title={t("settingsUsers.title")} />
       <div className={styles.buttonContainer}>
-        <Button type="primary" size="large" onClick={handleAddUserModal}>
+        <Button type="primary" size="large" to={SettingsPathsEnum.USERS_CREATE}>
           {t("settingsUsers.addUser")}
         </Button>
       </div>
