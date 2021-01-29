@@ -1,19 +1,20 @@
 import { Form, Modal, Row, Col, Divider } from "antd";
+import { FormProps } from "antd/lib/form";
 import { useTranslation } from "react-i18next";
 
 import Button from "../Button/Button";
 import styles from "./FormModal.module.scss";
 
-interface FormModalProps {
+interface FormModalProps extends FormProps {
   title: string;
   visible: boolean;
   className?: string;
   width?: number;
   children?: React.ReactNode;
   onClose: () => void;
-  onFormSubmit: (values?: any) => void;
   submitButtonText?: string;
   cancelButtonText?: string;
+  destroyOnClose?: boolean;
 }
 
 const FormModal = ({
@@ -23,11 +24,13 @@ const FormModal = ({
   width,
   children,
   onClose,
-  onFormSubmit,
   submitButtonText,
   cancelButtonText,
+  destroyOnClose,
+  ...formProps
 }: FormModalProps) => {
   const { t } = useTranslation();
+  const [form] = Form.useForm();
 
   return (
     <Modal
@@ -37,24 +40,25 @@ const FormModal = ({
       width={width}
       footer={null}
       onCancel={onClose}
+      destroyOnClose={destroyOnClose}
+      forceRender
     >
-      <Form onFinish={onFormSubmit}>
+      <Form {...formProps} form={form}>
         <Row>{children}</Row>
         <Divider />
         <Row justify="end">
           <Col>
-            <Button
-              danger
-              onClick={onClose}
-              buttonText={cancelButtonText ?? t("default.cancelSubmitForm")}
-            />
+            <Button danger onClick={onClose}>
+              {cancelButtonText ?? t("default.cancelTitle")}
+            </Button>
 
             <Button
-              type="primary"
               className={styles.submitButton}
+              type="primary"
               htmlType="submit"
-              buttonText={submitButtonText ?? t("default.buttonSubmitForm")}
-            />
+            >
+              {submitButtonText ?? t("default.saveTitle")}
+            </Button>
           </Col>
         </Row>
       </Form>

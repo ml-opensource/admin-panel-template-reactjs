@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import { Input, Table } from "antd";
+import { Table } from "antd";
 import { useTranslation } from "react-i18next";
-import { generatePath, useHistory, useParams } from "react-router-dom";
+import {
+  generatePath,
+  useHistory,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 
 import Button from "@app/components/atoms/Button/Button";
-import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
 import TableView from "@app/components/molecules/TableView/TableView";
 
@@ -19,15 +23,18 @@ type UserDef = {
 };
 
 const UsersScreen = () => {
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
+  const location = useLocation();
+
   const params = useParams<{ id: string }>();
 
   useEffect(() => {
-    setShowEditModal(!!params.id);
-  }, [params]);
+    setShowUserModal(
+      location.pathname === SettingsPathsEnum.USERS_CREATE || !!params.id
+    );
+  }, [location.pathname, params]);
 
   // TODO: Add api call to get users
   const data: UserDef[] = [
@@ -58,23 +65,20 @@ const UsersScreen = () => {
   };
   const handleCloseModal = () => {
     history.push(SettingsPathsEnum.USERS);
-    setShowEditModal(false);
+    setShowUserModal(false);
   };
 
   const handleAddUserModal = () => {
-    setShowAddModal(true);
+    history.push(generatePath(SettingsPathsEnum.USERS_CREATE));
   };
 
   return (
     <>
-      <ScreenTitleView mainTitle={t("default.screenTitle")} />
+      <ScreenTitleView mainTitle={t("settingsUsers.title")} />
       <div className={styles.buttonContainer}>
-        <Button
-          type="primary"
-          size="large"
-          buttonText="Add user"
-          onClick={handleAddUserModal}
-        />
+        <Button type="primary" size="large" onClick={handleAddUserModal}>
+          {t("settingsUsers.addUser")}
+        </Button>
       </div>
       <TableView
         dataSource={data}
@@ -89,25 +93,7 @@ const UsersScreen = () => {
           title={t("settingsUsers.columnName")}
         />
       </TableView>
-      <UsersModal
-        visible={showEditModal}
-        onClose={handleCloseModal}
-        onFormSubmit={handleCloseModal}
-      />
-
-      <FormModal
-        title="Add user modal"
-        visible={showAddModal}
-        onClose={() => setShowAddModal(false)}
-        onFormSubmit={values => {
-          console.log("Form submitted", values);
-          setShowAddModal(false);
-        }}
-      >
-        <Item name="Username" label="Username">
-          <Input type="text" />
-        </Item>
-      </FormModal>
+      <UsersModal visible={showUserModal} onClose={handleCloseModal} />
     </>
   );
 };
