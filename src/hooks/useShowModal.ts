@@ -8,7 +8,7 @@ interface UseShowModalProps {
    */
   editMode?: boolean;
   /**
-   * Show modal if current path is equal to create path (optional)
+   * Show modal if current path is equal to this path (optional)
    */
   showForPath?: string;
 }
