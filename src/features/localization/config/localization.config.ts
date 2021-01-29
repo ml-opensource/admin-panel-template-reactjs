@@ -35,6 +35,8 @@ i18next.use(initReactI18next).init({
           confirmDeleteYes: "Yes",
           confirmDeleteNo: "No",
           editTitle: "Edit",
+          saveTitle: "Save",
+          cancelTitle: "Cancel",
         },
         home: {
           navigationTitle: "Home",
@@ -56,6 +58,8 @@ i18next.use(initReactI18next).init({
           title: "Users",
           text: "Content",
           columnName: "Name",
+          editUser: "Edit user",
+          addUser: "Add user",
         },
       },
     },
