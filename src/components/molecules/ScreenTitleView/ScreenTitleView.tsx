@@ -1,15 +1,10 @@
-import styles from "./ScreenTitleView.module.scss";
+import { memo } from "react";
 
-interface ScreenTitleViewProps {
-  mainTitle?: string;
-}
+import { PageHeader } from "antd";
+import { PageHeaderProps } from "antd/lib/page-header";
 
-const ScreenTitleView = ({ mainTitle }: ScreenTitleViewProps) => {
-  return (
-    <div>
-      <h1 className={styles.title}>{mainTitle}</h1>
-    </div>
-  );
-};
+const ScreenTitleView = memo(({ ...props }: PageHeaderProps) => {
+  return <PageHeader {...props} />;
+});
 
 export default ScreenTitleView;
