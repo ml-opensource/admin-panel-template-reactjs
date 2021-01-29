@@ -5,18 +5,23 @@ import { useTranslation } from "react-i18next/";
 import { useParams } from "react-router-dom";
 
 import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
+import { SettingsPathsEnum } from "@app/features/settings/settings";
+import useShowModal from "@app/hooks/useShowModal";
 
 interface UsersModalProps {
-  visible: boolean;
   onClose: () => void;
   onFinish?: () => void;
 }
 
-const UsersModal = memo(({ visible, onClose, onFinish }: UsersModalProps) => {
-  const params = useParams<{ id: string }>();
+const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
   const { t } = useTranslation();
-
+  const params = useParams<{ id: string }>();
   const editMode = !!params.id;
+
+  const { showModal } = useShowModal({
+    editMode,
+    showForPath: SettingsPathsEnum.USERS_CREATE,
+  });
 
   // TODO: Get User from API
 
@@ -25,7 +30,7 @@ const UsersModal = memo(({ visible, onClose, onFinish }: UsersModalProps) => {
       title={
         editMode ? t("settingsUsers.editUser") : t("settingsUsers.addUser")
       }
-      visible={visible}
+      visible={showModal}
       onClose={onClose}
       onFinish={onFinish}
     >

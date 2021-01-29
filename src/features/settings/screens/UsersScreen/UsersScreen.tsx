@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
-import {
-  generatePath,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { generatePath, useHistory } from "react-router-dom";
+import { useMount } from "react-use";
 
 import Button from "@app/components/atoms/Button/Button";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
@@ -23,30 +19,24 @@ type UserDef = {
 };
 
 const UsersScreen = () => {
-  const [showUserModal, setShowUserModal] = useState(false);
+  const [data, setData] = useState<UserDef[]>([]);
   const { t } = useTranslation();
   const history = useHistory();
-  const location = useLocation();
 
-  const params = useParams<{ id: string }>();
-
-  useEffect(() => {
-    setShowUserModal(
-      location.pathname === SettingsPathsEnum.USERS_CREATE || !!params.id
-    );
-  }, [location.pathname, params]);
+  useMount(() => {
+    setData([
+      {
+        id: 0,
+        name: "John",
+      },
+      {
+        id: 1,
+        name: "Jane",
+      },
+    ]);
+  });
 
   // TODO: Add api call to get users
-  const data: UserDef[] = [
-    {
-      id: 0,
-      name: "John",
-    },
-    {
-      id: 1,
-      name: "Jane",
-    },
-  ];
 
   const handleDelete = (user: UserDef) => {
     // TODO: API to delete user
@@ -65,7 +55,6 @@ const UsersScreen = () => {
   };
   const handleCloseModal = () => {
     history.push(SettingsPathsEnum.USERS);
-    setShowUserModal(false);
   };
 
   return (
@@ -89,7 +78,7 @@ const UsersScreen = () => {
           title={t("settingsUsers.columnName")}
         />
       </TableView>
-      <UsersModal visible={showUserModal} onClose={handleCloseModal} />
+      <UsersModal onClose={handleCloseModal} />
     </>
   );
 };
