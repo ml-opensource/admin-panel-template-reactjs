@@ -34,6 +34,7 @@ i18next.use(initReactI18next).init({
           confirmDeleteTitle: "Are you sure to delete this?",
           confirmDeleteYes: "Yes",
           confirmDeleteNo: "No",
+          duplicateTitle: "Duplicate",
           editTitle: "Edit",
           saveTitle: "Save",
           cancelTitle: "Cancel",
