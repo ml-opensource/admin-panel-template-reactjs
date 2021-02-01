@@ -29,7 +29,7 @@ const UsersScreen = () => {
 
   const currentSearch = qs.parse(location.search);
   // TODO: return this in a custom hook, together with pagination and other stuff
-  const orderBy = getOrderByExtraction(currentSearch.orderBy as string);
+  const orderBy = getOrderByExtraction((currentSearch.orderBy as string) || "");
 
   // TODO: make this a reusable function
   const getOrderBy = (key: string) => {
