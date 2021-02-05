@@ -3,8 +3,16 @@ import React from "react";
 
 import { CopyOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Table, Space, Button, Popconfirm, Tooltip } from "antd";
-import { TableProps } from "antd/lib/table";
+import { TablePaginationConfig, TableProps } from "antd/lib/table";
+import {
+  Key,
+  SorterResult,
+  TableCurrentDataSource,
+} from "antd/lib/table/interface";
 import { useTranslation } from "react-i18next";
+
+import { getOrderBy } from "@app/helpers/table.helper";
+import useSearchParams from "@app/hooks/useSearchParams";
 
 import styles from "./TableView.module.scss";
 
@@ -23,11 +31,37 @@ const TableView = <T extends {}>({
   onDelete,
   onDuplicate,
   children,
+  onChange,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
+  const { updateSearchParams } = useSearchParams();
+
+  const handleOnChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, (Key | boolean)[] | null>,
+    sorter: SorterResult<T> | SorterResult<T>[],
+    extra: TableCurrentDataSource<T>
+  ) => {
+    const orderBy = Array.isArray(sorter)
+      ? undefined
+      : (sorter.order &&
+          sorter.columnKey &&
+          getOrderBy(sorter.columnKey.toString(), sorter.order)) ||
+        undefined;
+
+    const page = pagination.current;
+
+    updateSearchParams({
+      orderBy,
+      page,
+    });
+
+    onChange?.(pagination, filters, sorter, extra);
+  };
+
   return (
-    <Table rowKey="id" {...tableProps}>
+    <Table rowKey="id" onChange={handleOnChange} {...tableProps}>
       {children}
       <Column<T>
         key="action"
@@ -35,7 +69,7 @@ const TableView = <T extends {}>({
         fixed="right"
         width={150}
         className={styles.actions}
-        render={(text, record) => (
+        render={(_, record) => (
           <Space size="middle">
             {!!onEdit && (
               <Tooltip title={t("default.editTitle")}>
