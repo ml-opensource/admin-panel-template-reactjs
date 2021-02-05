@@ -1,28 +1,21 @@
 import { useEffect, useState } from "react";
 
-import { useLocation } from "react-router-dom";
+import { ItemModalEnum } from "@app/constants/route.constants";
 
-interface UseShowModalProps {
-  /**
-   * Show modal if in edit mode (optional)
-   */
-  editMode?: boolean;
-  /**
-   * Show modal if current path is equal to this path (optional)
-   */
-  showForPath?: string;
-}
+import useSearchParams from "./useSearchParams";
 
-function useShowModal({ editMode, showForPath }: UseShowModalProps) {
+function useShowModal() {
   const [showModal, setShowModal] = useState(false);
 
-  const location = useLocation();
+  const { search } = useSearchParams();
+  const action = search?.action;
+  const actionId = search?.actionId;
 
   useEffect(() => {
-    setShowModal(location.pathname === showForPath || !!editMode);
-  }, [location.pathname, editMode, showForPath]);
+    setShowModal(action === ItemModalEnum.EDIT || action === ItemModalEnum.ADD);
+  }, [action]);
 
-  return { showModal };
+  return { showModal, action, actionId };
 }
 
 export default useShowModal;

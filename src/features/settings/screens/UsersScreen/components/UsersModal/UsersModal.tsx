@@ -1,11 +1,9 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 
 import { Input } from "antd";
 import { useTranslation } from "react-i18next/";
-import { useParams } from "react-router-dom";
 
 import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
-import { SettingsPathsEnum } from "@app/features/settings/settings";
 import useShowModal from "@app/hooks/useShowModal";
 
 interface UsersModalProps {
@@ -15,15 +13,16 @@ interface UsersModalProps {
 
 const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
   const { t } = useTranslation();
-  const params = useParams<{ id: string }>();
-  const editMode = !!params.id;
+  const { showModal, action, actionId } = useShowModal();
 
-  const { showModal } = useShowModal({
-    editMode,
-    showForPath: SettingsPathsEnum.USERS_CREATE,
-  });
+  const editMode = action === "edit";
 
   // TODO: Get User from API
+  useEffect(() => {
+    if (editMode) {
+      console.log("user id", actionId);
+    }
+  }, [actionId, editMode]);
 
   return (
     <FormModal
