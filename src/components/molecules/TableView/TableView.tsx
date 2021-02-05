@@ -9,11 +9,10 @@ import {
   SorterResult,
   TableCurrentDataSource,
 } from "antd/lib/table/interface";
-import qs from "query-string";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
 
 import { getOrderBy } from "@app/helpers/table.helper";
+import useSearchParams from "@app/hooks/useSearchParams";
 
 import styles from "./TableView.module.scss";
 
@@ -36,8 +35,7 @@ const TableView = <T extends {}>({
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const history = useHistory();
+  const { updateSearchParams } = useSearchParams();
 
   const handleOnChange = (
     pagination: TablePaginationConfig,
@@ -45,9 +43,6 @@ const TableView = <T extends {}>({
     sorter: SorterResult<T> | SorterResult<T>[],
     extra: TableCurrentDataSource<T>
   ) => {
-    // Keep the old search params
-    const currentSearch = qs.parse(location.search);
-
     const orderBy = Array.isArray(sorter)
       ? undefined
       : (sorter.order &&
@@ -55,15 +50,8 @@ const TableView = <T extends {}>({
           getOrderBy(sorter.columnKey.toString(), sorter.order)) ||
         undefined;
 
-    // and overwrite or add new values
-    const values = {
-      ...currentSearch,
+    updateSearchParams({
       orderBy,
-    };
-
-    history.push({
-      pathname: location.pathname,
-      search: qs.stringify(values, { arrayFormat: "comma" }),
     });
 
     onChange?.(pagination, filters, sorter, extra);
@@ -78,7 +66,7 @@ const TableView = <T extends {}>({
         fixed="right"
         width={150}
         className={styles.actions}
-        render={(text, record) => (
+        render={(_, record) => (
           <Space size="middle">
             {!!onEdit && (
               <Tooltip title={t("default.editTitle")}>
