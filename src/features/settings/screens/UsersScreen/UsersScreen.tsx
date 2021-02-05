@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
@@ -20,10 +20,15 @@ type UserDef = {
 };
 
 const UsersScreen = () => {
+  const [pagination, setPagination] = useState<{
+    page: number;
+  }>({
+    page: 1,
+  });
   const [data, setData] = useState<UserDef[]>([]);
   const { t } = useTranslation();
 
-  const { updateSearchParams, getOrderByDirection } = useSearchParams();
+  const { search, updateSearchParams, getOrderByDirection } = useSearchParams();
 
   useMount(() => {
     // TODO: Add api call to get users
@@ -35,11 +40,28 @@ const UsersScreen = () => {
       },
       {
         id: 1,
-        name: "Jane",
+        name: "Jane 1",
+        lastName: "Dane",
+      },
+      {
+        id: 2,
+        name: "Jane 2",
+        lastName: "Dane",
+      },
+      {
+        id: 3,
+        name: "Jane 3",
         lastName: "Dane",
       },
     ]);
   });
+
+  useEffect(() => {
+    // TODO: when pagination changes call api
+    setPagination({
+      page: search?.page ?? 1,
+    });
+  }, [search]);
 
   const handleDelete = (user: UserDef) => {
     // TODO: API to delete user
@@ -86,6 +108,10 @@ const UsersScreen = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
+        pagination={{
+          pageSize: 2, // Example to force pagination for small data set
+          current: pagination.page,
+        }}
       >
         <Table.Column
           key="name"

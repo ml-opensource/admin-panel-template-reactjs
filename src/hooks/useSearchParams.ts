@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
+import _toInteger from "lodash/toInteger";
 import qs from "query-string";
 import { useLocation, useHistory } from "react-router-dom";
 
@@ -12,6 +13,7 @@ type SearchParamDef = {
   actionId?: string;
   orderBy?: string;
   orderByExtracted?: OrderByDef;
+  page?: number;
 };
 
 const useSearchParams = () => {
@@ -24,6 +26,7 @@ const useSearchParams = () => {
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
     );
+    currentSearch.page = _toInteger(currentSearch.page) || 1;
     setSearch(currentSearch);
   }, [location.search]);
 

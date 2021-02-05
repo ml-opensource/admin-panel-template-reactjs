@@ -50,8 +50,11 @@ const TableView = <T extends {}>({
           getOrderBy(sorter.columnKey.toString(), sorter.order)) ||
         undefined;
 
+    const page = pagination.current;
+
     updateSearchParams({
       orderBy,
+      page,
     });
 
     onChange?.(pagination, filters, sorter, extra);
