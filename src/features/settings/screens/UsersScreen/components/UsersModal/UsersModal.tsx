@@ -4,6 +4,7 @@ import { Input } from "antd";
 import { useTranslation } from "react-i18next/";
 
 import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
+import { ItemModalEnum } from "@app/constants/route.constants";
 import useShowModal from "@app/hooks/useShowModal";
 
 interface UsersModalProps {
@@ -15,7 +16,7 @@ const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
   const { t } = useTranslation();
   const { showModal, action, actionId } = useShowModal();
 
-  const editMode = action === "edit";
+  const editMode = action === ItemModalEnum.EDIT;
 
   // TODO: Get User from API
   useEffect(() => {
