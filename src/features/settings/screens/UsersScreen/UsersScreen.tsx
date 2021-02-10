@@ -99,7 +99,7 @@ const UsersScreen = () => {
       <ScreenTitleView title={t("settingsUsers.title")} />
       <div className={styles.buttonContainer}>
         <Button type="primary" size="large" onClick={handleAdd}>
-          {t("settingsUsers.addUser")}
+          {t("settingsUsers.buttonAddUser")}
         </Button>
       </div>
       <TableView

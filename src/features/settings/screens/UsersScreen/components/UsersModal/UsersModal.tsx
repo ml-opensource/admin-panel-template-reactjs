@@ -28,7 +28,9 @@ const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
   return (
     <FormModal
       title={
-        editMode ? t("settingsUsers.editUser") : t("settingsUsers.addUser")
+        editMode
+          ? t("settingsUsers.editUserTitle")
+          : t("settingsUsers.addUserTitle")
       }
       visible={showModal}
       onClose={onClose}
