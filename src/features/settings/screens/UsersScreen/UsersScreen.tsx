@@ -7,7 +7,7 @@ import { useMount } from "react-use";
 import Button from "@app/components/atoms/Button/Button";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
 import TableView from "@app/components/molecules/TableView/TableView";
-import { ItemModalEnum } from "@app/constants/route.constants";
+import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 
 import styles from "./UsersScreen.module.scss";
@@ -74,24 +74,15 @@ const UsersScreen = () => {
   };
 
   const handleEdit = (user: UserDef) => {
-    updateSearchParams({
-      action: ItemModalEnum.EDIT,
-      actionId: user.id.toString(),
-    });
+    updateSearchParams(modalAction.edit(user.id.toString()));
   };
 
   const handleAdd = () => {
-    updateSearchParams({
-      action: ItemModalEnum.ADD,
-      actionId: undefined,
-    });
+    updateSearchParams(modalAction.add());
   };
 
   const handleCloseModal = () => {
-    updateSearchParams({
-      actionId: undefined,
-      action: undefined,
-    });
+    updateSearchParams(modalAction.close());
   };
 
   return (
