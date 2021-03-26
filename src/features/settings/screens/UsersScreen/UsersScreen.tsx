@@ -129,16 +129,18 @@ const UsersScreen = () => {
         }}
       >
         <Table.Column
+          title={t("settingsUsers.columnName")}
           key="name"
           dataIndex="name"
-          title={t("settingsUsers.columnName")}
+          render={(name: UserDef["name"]) => name}
           sorter
           sortOrder={getOrderByDirection("name")}
         />
         <Table.Column
+          title={t("settingsUsers.columnLastName")}
           key="lastName"
           dataIndex="lastName"
-          title={t("settingsUsers.columnLastName")}
+          render={(lastName: UserDef["lastName"]) => lastName}
           sorter
           sortOrder={getOrderByDirection("lastName")}
         />
