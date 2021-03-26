@@ -1,8 +1,12 @@
+import React from "react";
+
 import { Form, Modal, Row, Col, Divider } from "antd";
 import { FormProps } from "antd/lib/form";
+import cx from "classnames";
 import { useTranslation } from "react-i18next";
 
 import Button from "../Button/Button";
+import SpinWrapper from "../SpinWrapper/SpinWrapper";
 import styles from "./FormModal.module.scss";
 
 interface FormModalProps extends FormProps {
@@ -15,6 +19,9 @@ interface FormModalProps extends FormProps {
   submitButtonText?: string;
   cancelButtonText?: string;
   destroyOnClose?: boolean;
+  disableSubmit?: boolean;
+  loadingSubmit?: boolean;
+  loadingContent?: boolean;
 }
 
 const FormModal = ({
@@ -27,14 +34,16 @@ const FormModal = ({
   submitButtonText,
   cancelButtonText,
   destroyOnClose,
+  disableSubmit,
+  loadingSubmit,
+  loadingContent,
   ...formProps
 }: FormModalProps) => {
   const { t } = useTranslation();
-  const [form] = Form.useForm();
 
   return (
     <Modal
-      className={className}
+      className={cx(className, styles.modal)}
       visible={visible}
       title={title}
       width={width}
@@ -43,9 +52,11 @@ const FormModal = ({
       destroyOnClose={destroyOnClose}
       forceRender
     >
-      <Form {...formProps} form={form}>
-        <Row>{children}</Row>
-        <Divider />
+      <Form layout="vertical" {...formProps}>
+        <SpinWrapper loading={loadingContent}>
+          <Row>{children}</Row>
+        </SpinWrapper>
+        <Divider className={styles.divider} />
         <Row justify="end">
           <Col>
             <Button danger onClick={onClose}>
@@ -56,6 +67,8 @@ const FormModal = ({
               className={styles.submitButton}
               type="primary"
               htmlType="submit"
+              loading={loadingSubmit}
+              disabled={disableSubmit}
             >
               {submitButtonText ?? t("default.saveTitle")}
             </Button>
