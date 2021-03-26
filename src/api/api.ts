@@ -1,9 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-import { ENV } from "@app/constants/env";
 import { ApiStatusCodes } from "@app/constants/api.constants";
-import { AuthEndpointsEnum } from "@app/features/auth/constants/auth.endpoints";
-import { getTokens } from "@app/features/auth/helpers/auth.helpers";
+import { ENV } from "@app/constants/env";
+import { AuthEndpointsEnum, getTokens } from "@app/features/auth/auth";
 
 /**
  * All the endpoint that do not require an access token
