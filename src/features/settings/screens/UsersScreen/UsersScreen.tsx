@@ -12,18 +12,13 @@ import TableView, {
 import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 
+import { UserDef } from "../../types/user.types";
 import styles from "./UsersScreen.module.scss";
 import UsersModal from "./components/UsersModal/UsersModal";
 
 enum ActionMenuEnum {
   DUPLICATE = "duplicate",
 }
-
-type UserDef = {
-  id: number;
-  name: string;
-  lastName: string;
-};
 
 const UsersScreen = () => {
   const [pagination, setPagination] = useState<{
@@ -101,6 +96,11 @@ const UsersScreen = () => {
     updateSearchParams(modalAction.close());
   };
 
+  const handleSubmittedModal = () => {
+    // TODO: fetch users again
+    handleCloseModal();
+  };
+
   const handleActionMenu = (key: string, user: UserDef) => {
     if (key === ActionMenuEnum.DUPLICATE) {
       handleDuplicate(user);
@@ -145,7 +145,10 @@ const UsersScreen = () => {
           sortOrder={getOrderByDirection("lastName")}
         />
       </TableView>
-      <UsersModal onClose={handleCloseModal} />
+      <UsersModal
+        onClose={handleCloseModal}
+        onSubmitted={handleSubmittedModal}
+      />
     </>
   );
 };

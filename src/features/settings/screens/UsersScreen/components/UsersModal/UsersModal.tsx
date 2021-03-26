@@ -1,20 +1,23 @@
 import React, { memo, useEffect } from "react";
 
-import { Input } from "antd";
+import { Col, Form, Input } from "antd";
 import { useTranslation } from "react-i18next/";
 
 import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
 import { ItemModalEnum } from "@app/constants/route.constants";
 import useShowModal from "@app/hooks/useShowModal";
 
+import { UserDef } from "../../../../types/user.types";
+
 interface UsersModalProps {
   onClose: () => void;
-  onFinish?: () => void;
+  onSubmitted: () => void;
 }
 
-const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
+const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
   const { t } = useTranslation();
   const { showModal, action, actionId } = useShowModal();
+  const [form] = Form.useForm();
 
   const editMode = action === ItemModalEnum.EDIT;
 
@@ -25,6 +28,18 @@ const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
     }
   }, [actionId, editMode]);
 
+  const handleClose = () => {
+    form.resetFields();
+    onClose();
+  };
+
+  const handleFinish = (values: Partial<UserDef>) => {
+    // TODO: Create / Update users
+    // eslint-disable-next-line no-console
+    console.log(values);
+    onSubmitted();
+  };
+
   return (
     <FormModal
       title={
@@ -33,12 +48,15 @@ const UsersModal = memo(({ onClose, onFinish }: UsersModalProps) => {
           : t("settingsUsers.addUserTitle")
       }
       visible={showModal}
-      onClose={onClose}
-      onFinish={onFinish}
+      onClose={handleClose}
+      onFinish={handleFinish}
+      form={form}
     >
-      <Item name="Username" label="Username">
-        <Input type="text" />
-      </Item>
+      <Col span={24}>
+        <Item name="Username" label="Username">
+          <Input type="text" />
+        </Item>
+      </Col>
     </FormModal>
   );
 });
