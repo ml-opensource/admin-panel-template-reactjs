@@ -1,4 +1,4 @@
-import { ElementType, memo, Suspense } from "react";
+import { ElementType, memo } from "react";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -54,20 +54,18 @@ const Routes = () => {
   };
 
   return (
-    <Suspense fallback={<>Loading...</>}>
-      <Switch>
-        <Redirect exact from="/" to="/home" />
-        {PRIVATE_LIST.map(route => routeWrapper(route))}
-        <Route
-          path="*"
-          render={() => (
-            <DefaultLayout>
-              <NotFound />
-            </DefaultLayout>
-          )}
-        />
-      </Switch>
-    </Suspense>
+    <Switch>
+      <Redirect exact from="/" to="/home" />
+      {PRIVATE_LIST.map(route => routeWrapper(route))}
+      <Route
+        path="*"
+        render={() => (
+          <DefaultLayout>
+            <NotFound />
+          </DefaultLayout>
+        )}
+      />
+    </Switch>
   );
 };
 
