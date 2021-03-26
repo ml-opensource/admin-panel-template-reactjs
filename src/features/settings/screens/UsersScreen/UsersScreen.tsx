@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
@@ -6,12 +6,18 @@ import { useMount } from "react-use";
 
 import Button from "@app/components/atoms/Button/Button";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
-import TableView from "@app/components/molecules/TableView/TableView";
+import TableView, {
+  ActionMenuDef,
+} from "@app/components/molecules/TableView/TableView";
 import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 
 import styles from "./UsersScreen.module.scss";
 import UsersModal from "./components/UsersModal/UsersModal";
+
+enum ActionMenuEnum {
+  DUPLICATE = "duplicate",
+}
 
 type UserDef = {
   id: number;
@@ -63,6 +69,16 @@ const UsersScreen = () => {
     });
   }, [search]);
 
+  const menu: ActionMenuDef = useMemo(
+    () => [
+      {
+        key: ActionMenuEnum.DUPLICATE,
+        label: t("settingsUsers.menuDuplicate"),
+      },
+    ],
+    [t]
+  );
+
   const handleDelete = (user: UserDef) => {
     // TODO: API to delete user
     console.log(user);
@@ -85,6 +101,12 @@ const UsersScreen = () => {
     updateSearchParams(modalAction.close());
   };
 
+  const handleActionMenu = (key: string, user: UserDef) => {
+    if (key === ActionMenuEnum.DUPLICATE) {
+      handleDuplicate(user);
+    }
+  };
+
   return (
     <>
       <ScreenTitleView title={t("settingsUsers.title")} />
@@ -99,6 +121,8 @@ const UsersScreen = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
+        actionMenu={menu}
+        onActionMenu={handleActionMenu}
         pagination={{
           pageSize: 2, // Example to force pagination for small data set
           current: pagination.page,

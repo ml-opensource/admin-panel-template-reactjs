@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React from "react";
+import React, { ReactNode } from "react";
 
-import { CopyOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Table, Space, Button, Popconfirm, Tooltip } from "antd";
+import {
+  CopyOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  MenuOutlined,
+} from "@ant-design/icons";
+import { Table, Space, Popconfirm, Tooltip, Menu, Dropdown } from "antd";
 import { TablePaginationConfig, TableProps } from "antd/lib/table";
 import {
   Key,
@@ -11,6 +16,7 @@ import {
 } from "antd/lib/table/interface";
 import { useTranslation } from "react-i18next";
 
+import Button from "@app/components/atoms/Button/Button";
 import { getOrderBy } from "@app/helpers/table.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 
@@ -18,11 +24,16 @@ import styles from "./TableView.module.scss";
 
 const { Column } = Table;
 
+export type ActionMenuDef = { key: string; label: string }[];
+
 interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   actionTitle?: string;
   onEdit?: (record: T) => void;
   onDelete?: (record: T) => void;
   onDuplicate?: (record: T) => void;
+  extraActions?: ReactNode;
+  actionMenu?: ActionMenuDef;
+  onActionMenu?: (key: string, record: T) => void;
 }
 
 const TableView = <T extends {}>({
@@ -32,6 +43,9 @@ const TableView = <T extends {}>({
   onDuplicate,
   children,
   onChange,
+  actionMenu,
+  onActionMenu,
+  extraActions,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
@@ -59,6 +73,14 @@ const TableView = <T extends {}>({
 
     onChange?.(pagination, filters, sorter, extra);
   };
+
+  const getMenu = (record: T) => (
+    <Menu onClick={e => onActionMenu?.(e.key.toString(), record)}>
+      {actionMenu?.map(({ key, label }) => (
+        <Menu.Item key={key}>{label}</Menu.Item>
+      ))}
+    </Menu>
+  );
 
   return (
     <Table rowKey="id" onChange={handleOnChange} {...tableProps}>
@@ -101,6 +123,18 @@ const TableView = <T extends {}>({
                   <Button shape="circle" icon={<DeleteOutlined />} />
                 </Tooltip>
               </Popconfirm>
+            )}
+            {!!extraActions && extraActions}
+            {actionMenu && (
+              <Dropdown
+                key="more"
+                overlay={getMenu(record)}
+                trigger={["click"]}
+              >
+                <Tooltip title={t("default.moreTitle")}>
+                  <Button shape="circle" icon={<MenuOutlined />} />
+                </Tooltip>
+              </Dropdown>
             )}
           </Space>
         )}

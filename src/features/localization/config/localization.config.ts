@@ -38,6 +38,7 @@ i18next.use(initReactI18next).init({
           editTitle: "Edit",
           saveTitle: "Save",
           cancelTitle: "Cancel",
+          moreTitle: "More",
         },
         home: {
           navigationTitle: "Home",
@@ -63,6 +64,7 @@ i18next.use(initReactI18next).init({
           editUserTitle: "Edit user",
           addUserTitle: "Add user",
           buttonAddUser: "Add user",
+          menuDuplicate: "Duplicate user",
         },
       },
     },
