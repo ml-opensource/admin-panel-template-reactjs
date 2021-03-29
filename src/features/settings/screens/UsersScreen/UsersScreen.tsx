@@ -14,6 +14,9 @@ import useSearchParams from "@app/hooks/useSearchParams";
 
 import { UserDef } from "../../types/user.types";
 import styles from "./UsersScreen.module.scss";
+import UserRoleModal, {
+  ENTRY_TYPE_USER_ROLE,
+} from "./components/UserRoleModal/UserRoleModal";
 import UsersModal from "./components/UsersModal/UsersModal";
 
 enum ActionMenuEnum {
@@ -92,6 +95,15 @@ const UsersScreen = () => {
     updateSearchParams(modalAction.add());
   };
 
+  const handleUserRole = (user: UserDef) => {
+    updateSearchParams(
+      modalAction.edit({
+        id: user.id.toString(),
+        entryType: ENTRY_TYPE_USER_ROLE,
+      })
+    );
+  };
+
   const handleCloseModal = () => {
     updateSearchParams(modalAction.close());
   };
@@ -121,6 +133,16 @@ const UsersScreen = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
+        extraActions={(user: UserDef) => [
+          <Button
+            key="user-role"
+            onClick={() => handleUserRole(user)}
+            noPadding
+            type="link"
+          >
+            {t("settingsUsers.buttonUserRole")}
+          </Button>,
+        ]}
         actionMenu={menu}
         onActionMenu={handleActionMenu}
         pagination={{
@@ -146,6 +168,10 @@ const UsersScreen = () => {
         />
       </TableView>
       <UsersModal
+        onClose={handleCloseModal}
+        onSubmitted={handleSubmittedModal}
+      />
+      <UserRoleModal
         onClose={handleCloseModal}
         onSubmitted={handleSubmittedModal}
       />

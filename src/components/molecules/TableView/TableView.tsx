@@ -31,7 +31,7 @@ interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   onEdit?: (record: T) => void;
   onDelete?: (record: T) => void;
   onDuplicate?: (record: T) => void;
-  extraActions?: ReactNode;
+  extraActions?: (record: T) => ReactNode;
   actionMenu?: ActionMenuDef;
   onActionMenu?: (key: string, record: T) => void;
 }
@@ -124,7 +124,7 @@ const TableView = <T extends {}>({
                 </Tooltip>
               </Popconfirm>
             )}
-            {!!extraActions && extraActions}
+            {!!extraActions && extraActions(record)}
             {actionMenu && (
               <Dropdown
                 key="more"

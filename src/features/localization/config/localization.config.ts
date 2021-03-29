@@ -65,6 +65,8 @@ i18next.use(initReactI18next).init({
           addUserTitle: "Add user",
           buttonAddUser: "Add user",
           menuDuplicate: "Duplicate user",
+          editUserRole: "Edit user role",
+          buttonUserRole: "change role",
         },
       },
     },
