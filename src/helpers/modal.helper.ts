@@ -1,21 +1,40 @@
 import { ItemModalEnum } from "@app/constants/route.constants";
+import { SearchParamDef } from "@app/hooks/useSearchParams";
 
-export const add = () => {
+interface ModalAddDef {
+  entryType?: string;
+}
+
+// Open a modal with an optional entry type
+export const add = (config?: ModalAddDef): SearchParamDef => {
+  const { entryType } = config ?? {};
   return {
     action: ItemModalEnum.ADD,
-    actionId: undefined,
-  };
-};
-export const edit = (id: string) => {
-  return {
-    action: ItemModalEnum.EDIT,
-    actionId: id,
+    entryId: undefined,
+    entryType,
   };
 };
 
-export const close = () => {
+interface ModalEditDef {
+  id: string;
+  entryType?: string;
+}
+
+// Edit a modal with an entry id and an optional entry type
+export const edit = (config: ModalEditDef): SearchParamDef => {
+  const { id, entryType } = config ?? {};
   return {
-    actionId: undefined,
+    action: ItemModalEnum.EDIT,
+    entryId: id,
+    entryType,
+  };
+};
+
+// Close the modal
+export const close = (): SearchParamDef => {
+  return {
     action: undefined,
+    entryId: undefined,
+    entryType: undefined,
   };
 };

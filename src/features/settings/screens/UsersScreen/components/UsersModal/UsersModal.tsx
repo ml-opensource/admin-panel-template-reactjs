@@ -16,7 +16,7 @@ interface UsersModalProps {
 
 const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
   const { t } = useTranslation();
-  const { showModal, action, actionId } = useShowModal();
+  const { showModal, action, entryId } = useShowModal();
   const [form] = Form.useForm();
 
   const editMode = action === ItemModalEnum.EDIT;
@@ -24,9 +24,9 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
   // TODO: Get User from API
   useEffect(() => {
     if (editMode) {
-      console.log("user id", actionId);
+      console.log("user id", entryId);
     }
-  }, [actionId, editMode]);
+  }, [entryId, editMode]);
 
   const handleClose = () => {
     form.resetFields();

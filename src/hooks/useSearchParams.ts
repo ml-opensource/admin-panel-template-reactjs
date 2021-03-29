@@ -8,9 +8,10 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
 
-type SearchParamDef = {
+export type SearchParamDef = {
   action?: ItemModalEnum;
-  actionId?: string;
+  entryId?: string;
+  entryType?: string;
   orderBy?: string;
   orderByExtracted?: OrderByDef;
   page?: number;

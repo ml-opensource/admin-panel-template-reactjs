@@ -4,18 +4,27 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 
 import useSearchParams from "./useSearchParams";
 
-function useShowModal() {
+interface ShowModalConfig {
+  customEntryType?: string;
+}
+
+function useShowModal(config?: ShowModalConfig) {
+  const { customEntryType } = config ?? {};
   const [showModal, setShowModal] = useState(false);
 
   const { search } = useSearchParams();
   const action = search?.action;
-  const actionId = search?.actionId;
+  const entryId = search?.entryId;
+  const entryType = search?.entryType;
 
   useEffect(() => {
-    setShowModal(action === ItemModalEnum.EDIT || action === ItemModalEnum.ADD);
-  }, [action]);
+    setShowModal(
+      (action === ItemModalEnum.EDIT || action === ItemModalEnum.ADD) &&
+        entryType === customEntryType
+    );
+  }, [action, customEntryType, entryType]);
 
-  return { showModal, action, actionId };
+  return { showModal, action, entryId };
 }
 
 export default useShowModal;

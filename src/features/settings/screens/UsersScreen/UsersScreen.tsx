@@ -85,7 +85,7 @@ const UsersScreen = () => {
   };
 
   const handleEdit = (user: UserDef) => {
-    updateSearchParams(modalAction.edit(user.id.toString()));
+    updateSearchParams(modalAction.edit({ id: user.id.toString() }));
   };
 
   const handleAdd = () => {
