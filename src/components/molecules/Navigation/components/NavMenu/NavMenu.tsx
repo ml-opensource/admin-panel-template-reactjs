@@ -36,7 +36,7 @@ const NavMenu = ({ isSidebar, mode }: NavMenuProps) => {
   /**
    * Ant Design has a bug, where it is NOT possible
    * to create custom wrapper components around the Menu and its sub components.
-   * So all AntD Menu components need to be in the same file for now
+   * So all AntD Menu components need to be in the same render for now
    */
   return (
     <Menu
@@ -48,8 +48,8 @@ const NavMenu = ({ isSidebar, mode }: NavMenuProps) => {
       {navLinks.map(navItem =>
         navItem.nestedRoutes?.length ? (
           <Menu.SubMenu
-            popupOffset={[-16, 7]}
             key={Array.isArray(navItem.path) ? navItem.path[0] : navItem.path}
+            popupOffset={[-16, 7]}
             title={
               <div className={styles.subMenuItem}>
                 <span>
