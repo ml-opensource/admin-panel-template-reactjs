@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-import { ApiStatusCodes } from "@app/constants/api.constants";
 import { ENV } from "@app/constants/env";
 import { AuthEndpointsEnum, getTokens } from "@app/features/auth/auth";
 
@@ -27,7 +26,8 @@ const authInterceptor = async (request: AxiosRequestConfig) => {
 
   if (!accessToken && !isAnonymous) {
     console.error("UNAUTHORIZED");
-    return Promise.reject(ApiStatusCodes.UNAUTHORIZED);
+    return request;
+    // return Promise.reject(ApiStatusCodes.UNAUTHORIZED);
   }
 
   return request;
