@@ -5,3 +5,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Force ant input number to take up all width when used inside col */
+.ant-col {
+  .ant-picker,
+  .ant-input-number {
+    width: 100%;
+  }
+}
