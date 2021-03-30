@@ -34,6 +34,7 @@ interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   extraActions?: (record: T) => ReactNode;
   actionMenu?: ActionMenuDef;
   onActionMenu?: (key: string, record: T) => void;
+  actionWidth?: number | string;
 }
 
 const TableView = <T extends {}>({
@@ -46,6 +47,7 @@ const TableView = <T extends {}>({
   actionMenu,
   onActionMenu,
   extraActions,
+  actionWidth = 150,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
@@ -89,7 +91,7 @@ const TableView = <T extends {}>({
         key="action"
         title={actionTitle}
         fixed="right"
-        width={150}
+        width={actionWidth}
         className={styles.actions}
         render={(_, record) => (
           <Space size="middle">
