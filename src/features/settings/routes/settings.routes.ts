@@ -1,8 +1,8 @@
 import { RouteItemDef } from "@app/types/route.types";
 
 import { SettingsPathsEnum } from "../constants/settings.paths";
+import ProjectsScreen from "../screens/ProjectsScreen/ProjectsScreen";
 import UsersScreen from "../screens/UsersScreen/UsersScreen";
-import VehiclesScreen from "../screens/VehiclesScreen/VehiclesScreen";
 import SettingsRoutes from "./SettingsRoutes";
 
 const SETTINGS_SCREEN: RouteItemDef = {
@@ -11,21 +11,23 @@ const SETTINGS_SCREEN: RouteItemDef = {
   navigationTitle: "settings.navigationTitle",
   component: SettingsRoutes,
   nestedRoutes: [
+    /**
+     * A single screen
+     */
     {
-      id: "entity-management",
-      groupTitle: "settings.groupEntityManagement",
-      nestedRoutes: [
-        {
-          id: "vehicles",
-          path: SettingsPathsEnum.VEHICLES,
-          navigationTitle: "settingsVehicles.navigationTitle",
-          component: VehiclesScreen,
-        },
-      ],
+      id: "projects",
+      path: SettingsPathsEnum.PROJECTS,
+      navigationTitle: "settingsProjects.navigationTitle",
+      component: ProjectsScreen,
     },
+    /**
+     * A group of screens
+     * - group title
+     * - nested routes
+     */
     {
       id: "admin-settings",
-      groupTitle: "settings.groupAdminSettings",
+      groupTitle: "settings.groupUsersSettings",
       nestedRoutes: [
         {
           id: "users",

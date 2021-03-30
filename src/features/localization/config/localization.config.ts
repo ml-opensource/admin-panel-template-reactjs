@@ -47,12 +47,11 @@ i18next.use(initReactI18next).init({
         },
         settings: {
           navigationTitle: "Settings",
-          groupEntityManagement: "Entity Management",
-          groupAdminSettings: "Admin Settings",
+          groupUsersSettings: "Group Title",
         },
-        settingsVehicles: {
-          navigationTitle: "Vehicles",
-          title: "Vehicles",
+        settingsProjects: {
+          navigationTitle: "Projects",
+          title: "Projects",
           text: "Content",
         },
         settingsUsers: {
