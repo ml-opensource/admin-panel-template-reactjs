@@ -1,5 +1,9 @@
 import { SortOrder } from "antd/lib/table/interface";
 
+import {
+  PaginationDef,
+  ResponsePaginationDef,
+} from "@app/types/pagination.types";
 import { OrderByDef } from "@app/types/table.types";
 
 /** The divider used in the url for the orderBy search param */
@@ -30,4 +34,14 @@ export const getOrderByExtraction = (orderBy: string): OrderByDef => {
  */
 export const getOrderBy = (orderByKey: string, orderByDirection: SortOrder) => {
   return `${orderByKey}${ORDER_BY_DIVIDER}${orderByDirection}`;
+};
+
+export const mapPagination = (
+  pagination: ResponsePaginationDef
+): PaginationDef => {
+  return {
+    current: pagination?.page ?? 1,
+    pageSize: pagination?.per_page ?? 10,
+    total: pagination?.total ?? 0,
+  };
 };

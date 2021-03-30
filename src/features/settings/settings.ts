@@ -1,5 +1,3 @@
-import { SettingsPathsEnum } from "./constants/settings.paths";
-
-export { SETTINGS_ROUTES } from "./routes/settings.routes";
-
-export { SettingsPathsEnum };
+export * from "./constants/settings.paths";
+export * from "./routes/settings.routes";
+export * from "./redux/users.slice";

@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
-import { useMount } from "react-use";
+import { useSelector } from "react-redux";
 
 import Button from "@app/components/atoms/Button/Button";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
@@ -11,7 +11,10 @@ import TableView, {
 } from "@app/components/molecules/TableView/TableView";
 import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
+import { RootState } from "@app/redux/root-reducer";
+import { useAppDispatch } from "@app/redux/store";
 
+import { getUsers } from "../../redux/users.slice";
 import { UserDef } from "../../types/user.types";
 import styles from "./UsersScreen.module.scss";
 import UserRoleModal, {
@@ -24,48 +27,20 @@ enum ActionMenuEnum {
 }
 
 const UsersScreen = () => {
-  const [pagination, setPagination] = useState<{
-    page: number;
-  }>({
-    page: 1,
-  });
-  const [data, setData] = useState<UserDef[]>([]);
   const { t } = useTranslation();
-
+  const { users, loading, pagination } = useSelector(
+    (state: RootState) => state.users
+  );
   const { search, updateSearchParams, getOrderByDirection } = useSearchParams();
+  const dispatch = useAppDispatch();
 
-  useMount(() => {
-    // TODO: Add api call to get users
-    setData([
-      {
-        id: 0,
-        name: "John",
-        lastName: "Doe",
-      },
-      {
-        id: 1,
-        name: "Jane 1",
-        lastName: "Dane",
-      },
-      {
-        id: 2,
-        name: "Jane 2",
-        lastName: "Dane",
-      },
-      {
-        id: 3,
-        name: "Jane 3",
-        lastName: "Dane",
-      },
-    ]);
-  });
+  const fetchData = useCallback(() => {
+    dispatch(getUsers({ page: search?.page ?? 1 }));
+  }, [dispatch, search?.page]);
 
   useEffect(() => {
-    // TODO: when pagination changes call api
-    setPagination({
-      page: search?.page ?? 1,
-    });
-  }, [search]);
+    fetchData();
+  }, [fetchData]);
 
   const menu: ActionMenuDef = useMemo(
     () => [
@@ -128,7 +103,8 @@ const UsersScreen = () => {
         </Button>
       </div>
       <TableView
-        dataSource={data}
+        dataSource={users}
+        loading={loading}
         actionTitle={t("default.columnAction")}
         onEdit={handleEdit}
         onDelete={handleDelete}
@@ -145,26 +121,23 @@ const UsersScreen = () => {
         ]}
         actionMenu={menu}
         onActionMenu={handleActionMenu}
-        pagination={{
-          pageSize: 2, // Example to force pagination for small data set
-          current: pagination.page,
-        }}
+        pagination={pagination}
       >
         <Table.Column
           title={t("settingsUsers.columnName")}
-          key="name"
-          dataIndex="name"
-          render={(name: UserDef["name"]) => name}
+          key="first_name"
+          dataIndex="first_name"
+          render={(firstName: UserDef["first_name"]) => firstName}
           sorter
           sortOrder={getOrderByDirection("name")}
         />
         <Table.Column
           title={t("settingsUsers.columnLastName")}
-          key="lastName"
-          dataIndex="lastName"
-          render={(lastName: UserDef["lastName"]) => lastName}
+          key="last_name"
+          dataIndex="last_name"
+          render={(lastName: UserDef["last_name"]) => lastName}
           sorter
-          sortOrder={getOrderByDirection("lastName")}
+          sortOrder={getOrderByDirection("last_name")}
         />
       </TableView>
       <UsersModal
