@@ -68,7 +68,7 @@ const FormModal = ({
               type="primary"
               htmlType="submit"
               loading={loadingSubmit}
-              disabled={disableSubmit}
+              disabled={loadingContent ?? disableSubmit}
             >
               {submitButtonText ?? t("default.saveTitle")}
             </Button>
