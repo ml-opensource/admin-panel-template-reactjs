@@ -57,7 +57,7 @@ const useSearchParams = () => {
    */
   const setSearchParams = useCallback(
     (filters: SearchParamDef) => {
-      history.replace({
+      history.push({
         pathname: location.pathname,
         search: qs.stringify(filters, { skipEmptyString: true }),
       });
@@ -73,7 +73,7 @@ const useSearchParams = () => {
       // Keep current search params
       const currentSearch = qs.parse(location.search);
 
-      history.replace({
+      history.push({
         pathname: location.pathname,
         search: qs.stringify(
           {
