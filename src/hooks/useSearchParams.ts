@@ -15,21 +15,28 @@ export type SearchParamDef = {
   orderBy?: string;
   orderByExtracted?: OrderByDef;
   page?: number;
+  pageSize?: number;
 };
 
 const useSearchParams = () => {
-  const [search, setSearch] = useState<SearchParamDef>();
   const location = useLocation();
   const history = useHistory();
 
-  useEffect(() => {
+  const getCurrentSearch = useCallback(() => {
     const currentSearch = qs.parse(location.search) as SearchParamDef;
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
     );
     currentSearch.page = _toInteger(currentSearch.page) || 1;
-    setSearch(currentSearch);
+    currentSearch.pageSize = _toInteger(currentSearch.pageSize) || undefined;
+    return currentSearch;
   }, [location.search]);
+
+  const [search, setSearch] = useState<SearchParamDef>(getCurrentSearch());
+
+  useEffect(() => {
+    setSearch(getCurrentSearch());
+  }, [getCurrentSearch]);
 
   /**
    * get direction if order by key is present in search params
