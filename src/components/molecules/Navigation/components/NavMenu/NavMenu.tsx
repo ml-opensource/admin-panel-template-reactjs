@@ -35,7 +35,7 @@ const NavMenu = ({ isSidebar, mode }: NavMenuProps) => {
 
   /**
    * Ant Design has a bug, where it is NOT possible
-   * to create custom wrapper components around the Menu and its sub components.
+   * to create custom wrapper components around the Menu's sub components.
    * So all AntD Menu components need to be in the same render for now
    */
   return (
