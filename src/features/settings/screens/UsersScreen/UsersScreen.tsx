@@ -1,17 +1,11 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 
-import { Table } from "antd";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 import Button from "@app/components/atoms/Button/Button";
 import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
-import TableView, {
-  ActionMenuDef,
-} from "@app/components/molecules/TableView/TableView";
 import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
-import { RootState } from "@app/redux/root-reducer";
 import { useAppDispatch } from "@app/redux/store";
 
 import { getUsers } from "../../redux/users.slice";
@@ -21,46 +15,22 @@ import UserRoleModal, {
   ENTRY_TYPE_USER_ROLE,
 } from "./components/UserRoleModal/UserRoleModal";
 import UsersModal from "./components/UsersModal/UsersModal";
-
-enum ActionMenuEnum {
-  DUPLICATE = "duplicate",
-}
+import UsersTable, {
+  UsersActionMenuEnum,
+} from "./components/UsersTable/UsersTable";
 
 const UsersScreen = () => {
   const { t } = useTranslation();
-  const { users, loading, pagination } = useSelector(
-    (state: RootState) => state.users
-  );
-  const { search, updateSearchParams, getOrderByDirection } = useSearchParams();
+  const { search, updateSearchParams } = useSearchParams();
   const dispatch = useAppDispatch();
 
   const fetchData = useCallback(() => {
-    dispatch(getUsers({ page: search?.page ?? 1 }));
-  }, [dispatch, search?.page]);
+    dispatch(getUsers({ page: search?.page, per_page: search?.pageSize }));
+  }, [dispatch, search?.page, search?.pageSize]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  const menu: ActionMenuDef = useMemo(
-    () => [
-      {
-        key: ActionMenuEnum.DUPLICATE,
-        label: t("settingsUsers.menuDuplicate"),
-      },
-    ],
-    [t]
-  );
-
-  const handleDelete = (user: UserDef) => {
-    // TODO: API to delete user
-    console.log(user);
-  };
-
-  const handleDuplicate = (user: UserDef) => {
-    // TODO: API to duplicate user
-    console.log(user);
-  };
 
   const handleEdit = (user: UserDef) => {
     updateSearchParams(modalAction.edit({ id: user.id.toString() }));
@@ -84,12 +54,24 @@ const UsersScreen = () => {
   };
 
   const handleSubmittedModal = () => {
-    // TODO: fetch users again
+    fetchData();
     handleCloseModal();
   };
 
+  const handleDelete = (user: UserDef) => {
+    // TODO: API to delete user
+    // eslint-disable-next-line no-console
+    console.log("delete user", user);
+  };
+
+  const handleDuplicate = (user: UserDef) => {
+    // TODO: API to duplicate user
+    // eslint-disable-next-line no-console
+    console.log("duplicate user", user);
+  };
+
   const handleActionMenu = (key: string, user: UserDef) => {
-    if (key === ActionMenuEnum.DUPLICATE) {
+    if (key === UsersActionMenuEnum.DUPLICATE) {
       handleDuplicate(user);
     }
   };
@@ -102,10 +84,7 @@ const UsersScreen = () => {
           {t("settingsUsers.buttonAddUser")}
         </Button>
       </div>
-      <TableView
-        dataSource={users}
-        loading={loading}
-        actionTitle={t("default.columnAction")}
+      <UsersTable
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
@@ -119,31 +98,14 @@ const UsersScreen = () => {
             {t("settingsUsers.buttonUserRole")}
           </Button>,
         ]}
-        actionMenu={menu}
         onActionMenu={handleActionMenu}
-        pagination={pagination}
-      >
-        <Table.Column
-          title={t("settingsUsers.columnName")}
-          key="first_name"
-          dataIndex="first_name"
-          render={(firstName: UserDef["first_name"]) => firstName}
-          sorter
-          sortOrder={getOrderByDirection("name")}
-        />
-        <Table.Column
-          title={t("settingsUsers.columnLastName")}
-          key="last_name"
-          dataIndex="last_name"
-          render={(lastName: UserDef["last_name"]) => lastName}
-          sorter
-          sortOrder={getOrderByDirection("last_name")}
-        />
-      </TableView>
+      />
+      {/* Modal to Create / Edit User */}
       <UsersModal
         onClose={handleCloseModal}
         onSubmitted={handleSubmittedModal}
       />
+      {/* Modal to Update User Role */}
       <UserRoleModal
         onClose={handleCloseModal}
         onSubmitted={handleSubmittedModal}
