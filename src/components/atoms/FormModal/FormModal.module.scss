@@ -9,13 +9,13 @@
   }
 }
 
-.submitButton {
-  margin-left: $spacing-3;
-}
-
 .divider {
   position: relative;
   width: calc(100% + 100px);
   left: -50px;
   margin-bottom: $spacing-4;
+}
+
+.submitButton {
+  margin-left: $spacing-3;
 }

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Form, Modal, Row, Col, Divider } from "antd";
 import { FormProps } from "antd/lib/form";
 import cx from "classnames";
