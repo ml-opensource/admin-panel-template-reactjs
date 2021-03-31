@@ -28,6 +28,7 @@ const UserRoleModal = memo(({ onClose, onSubmitted }: UserRoleModalProps) => {
   // TODO: Get User from API
   useEffect(() => {
     if (editMode) {
+      // eslint-disable-next-line no-console
       console.log("user id", entryId);
     }
   }, [entryId, editMode]);
