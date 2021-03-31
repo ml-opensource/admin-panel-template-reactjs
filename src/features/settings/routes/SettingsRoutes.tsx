@@ -1,24 +1,12 @@
-import { Switch, Route } from "react-router-dom";
-
 import { flatten } from "@app/helpers/route.helper";
+import NestedRouteWrapper from "@app/routes/NestedRouteWrapper";
 
 import { SETTINGS_ROUTES } from "./settings.routes";
 
 const SettingsRoutes = () => {
   const routesWithComponents = flatten(SETTINGS_ROUTES);
 
-  return (
-    <Switch>
-      {routesWithComponents.map(route => (
-        <Route
-          exact
-          key={route.id}
-          path={route.path}
-          component={route.component}
-        />
-      ))}
-    </Switch>
-  );
+  return <NestedRouteWrapper routesWithComponents={routesWithComponents} />;
 };
 
 export default SettingsRoutes;
