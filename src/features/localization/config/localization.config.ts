@@ -29,6 +29,9 @@ i18next.use(initReactI18next).init({
         default: {
           notFoundTitle: "404 - Not found",
           notFoundText: "The page you were looking for was not found.",
+          restrictAccessTitle: "Access denied",
+          restrictAccessText:
+            "Sorry! You don't have necessary permission to access this page!",
           columnAction: "Action",
           deleteTitle: "Delete",
           confirmDeleteTitle: "Are you sure to delete this?",
