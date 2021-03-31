@@ -26,7 +26,7 @@ const { Column } = Table;
 
 export type ActionMenuDef = { key: string; label: string }[];
 
-interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
+export interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   actionTitle?: string;
   onEdit?: (record: T) => void;
   onDelete?: (record: T) => void;
@@ -67,10 +67,12 @@ const TableView = <T extends {}>({
         undefined;
 
     const page = pagination.current;
+    const { pageSize } = pagination;
 
     updateSearchParams({
       orderBy,
       page,
+      pageSize,
     });
 
     onChange?.(pagination, filters, sorter, extra);
