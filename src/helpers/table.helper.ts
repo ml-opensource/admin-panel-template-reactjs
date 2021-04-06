@@ -1,7 +1,7 @@
 import { SortOrder } from "antd/lib/table/interface";
 
 import {
-  PaginationDef,
+  TablePaginationDef,
   ResponsePaginationDef,
 } from "@app/types/pagination.types";
 import { OrderByDef } from "@app/types/table.types";
@@ -38,7 +38,7 @@ export const getOrderBy = (orderByKey: string, orderByDirection: SortOrder) => {
 
 export const mapPagination = (
   pagination: ResponsePaginationDef
-): PaginationDef => {
+): TablePaginationDef => {
   return {
     current: pagination?.page ?? 1,
     pageSize: pagination?.per_page ?? 10,

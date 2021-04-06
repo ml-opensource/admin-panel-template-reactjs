@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { mapPagination } from "@app/helpers/table.helper";
-import { PaginationDef } from "@app/types/pagination.types";
+import { TablePaginationDef } from "@app/types/pagination.types";
 
 import * as userApi from "../api/users.api";
 import {
@@ -14,7 +14,7 @@ export const USERS_FEATURE_KEY = "users";
 
 interface SliceState {
   users: UserDef[];
-  pagination: PaginationDef;
+  pagination: TablePaginationDef;
   loading: boolean;
   error: string | undefined | null;
 }

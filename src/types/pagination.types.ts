@@ -8,8 +8,7 @@ export type ResponsePaginationDef = {
   total_pages: number;
 };
 
-export type PaginationDef = {
-  current: PaginationProps["current"];
-  pageSize: PaginationProps["pageSize"];
-  total: PaginationProps["total"];
-};
+export type TablePaginationDef = Pick<
+  PaginationProps,
+  "current" | "pageSize" | "total"
+>;
