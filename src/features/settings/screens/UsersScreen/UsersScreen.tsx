@@ -14,6 +14,7 @@ import styles from "./UsersScreen.module.scss";
 import UserRoleModal, {
   ENTRY_TYPE_USER_ROLE,
 } from "./components/UserRoleModal/UserRoleModal";
+import UsersFilter from "./components/UsersFilter/UsersFilter";
 import UsersModal from "./components/UsersModal/UsersModal";
 import UsersTable, {
   UsersActionMenuEnum,
@@ -84,6 +85,7 @@ const UsersScreen = () => {
           {t("settingsUsers.buttonAddUser")}
         </Button>
       </div>
+      <UsersFilter />
       <UsersTable
         onEdit={handleEdit}
         onDelete={handleDelete}
