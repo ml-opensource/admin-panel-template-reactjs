@@ -1,15 +1,21 @@
 import { memo } from "react";
 
-import PageFilter from "@app/components/molecules/PageFilter/PageFilter";
+import { Input } from "antd";
+
+import PageFilter, {
+  FilterItem,
+} from "@app/components/molecules/PageFilter/PageFilter";
 
 const UsersFilter = () => {
   return (
     <PageFilter>
-      <p>Test 1</p>
-      <p>Test 2</p>
-      <p>Test 3</p>
-      <p>Test 4</p>
-      <p>Test 5</p>
+      <FilterItem label="Test 1">
+        <Input placeholder="Test 1" />
+      </FilterItem>
+      <FilterItem>Test 2</FilterItem>
+      <FilterItem>Test 3</FilterItem>
+      <FilterItem>Test 4</FilterItem>
+      <FilterItem>Test 5</FilterItem>
     </PageFilter>
   );
 };

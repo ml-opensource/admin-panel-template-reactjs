@@ -2,6 +2,8 @@ import React, { memo } from "react";
 
 import { Form, FormProps, Row, Col } from "antd";
 
+import FilterItem from "./components/FilterItem/FilterItem";
+
 interface PageFilterProps extends FormProps {
   children: React.ReactNode;
   columns?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -22,3 +24,4 @@ const PageFilter = ({ children, columns = 4, ...rest }: PageFilterProps) => {
 };
 
 export default memo(PageFilter);
+export { FilterItem };
