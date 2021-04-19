@@ -33,10 +33,9 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
 
   useEffect(() => {
     if (!showModal) {
-      form.resetFields();
       setIsSubmitting(false);
     }
-  }, [form, setIsSubmitting, showModal]);
+  }, [setIsSubmitting, showModal]);
 
   const handleClose = () => {
     onClose();
