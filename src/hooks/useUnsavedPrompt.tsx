@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal, ModalFuncProps } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 interface UnsavedPromptProps extends Omit<ModalFuncProps, "onOk"> {
   form?: FormInstance;
@@ -14,10 +13,11 @@ interface UnsavedPromptProps extends Omit<ModalFuncProps, "onOk"> {
 const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation();
 
-  const onBlock = useCallback(
-    tx => {
+  useEffect(() => {
+    const unblock = history.block(tx => {
       console.log("history block");
       if (form?.isFieldsTouched() && !isSubmitting) {
         Modal.confirm({
@@ -35,23 +35,12 @@ const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
         return false;
       }
       return unblock();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSubmitting]
-  );
-
-  console.log("mounted");
-  const unblock = history.block(onBlock);
-  console.log("unblock", unblock);
-
-  useEffect(() => {
+    });
     return () => {
-      console.log("unmounted");
       unblock();
-      console.log("unblock", unblock);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location, isSubmitting]);
 
   return { setIsSubmitting };
 };
