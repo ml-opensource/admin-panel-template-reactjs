@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Input, Select } from "antd";
+import { Input, Select, Checkbox, Button } from "antd";
 
 import PageFilter, {
   FilterItem,
@@ -10,7 +10,7 @@ const { Option } = Select;
 
 const UsersFilter = () => {
   return (
-    <PageFilter>
+    <PageFilter onSubmit>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>
@@ -20,9 +20,15 @@ const UsersFilter = () => {
           <Option value="jane">Jane</Option>
         </Select>
       </FilterItem>
-      <FilterItem>Test 3</FilterItem>
+      <FilterItem label="Test3" name="test3">
+        <Checkbox>Test 3</Checkbox>
+      </FilterItem>
       <FilterItem>Test 4</FilterItem>
-      <FilterItem>Test 5</FilterItem>
+      <FilterItem>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </FilterItem>
     </PageFilter>
   );
 };
