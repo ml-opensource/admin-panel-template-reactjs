@@ -19,8 +19,7 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
   const { t } = useTranslation();
   const { showModal, action, entryId } = useShowModal();
   const [form] = Form.useForm<UserDef>();
-  // const [isSubmitting, setIsClosing] = useState(false);
-  useUnsavedPrompt({ form });
+  const { setIsSubmitting } = useUnsavedPrompt({ form });
 
   const editMode = action === ItemModalEnum.EDIT;
 
@@ -35,9 +34,9 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
   useEffect(() => {
     if (!showModal) {
       form.resetFields();
-      // setIsClosing(false);
+      setIsSubmitting(false);
     }
-  }, [form, showModal]);
+  }, [form, setIsSubmitting, showModal]);
 
   const handleClose = () => {
     onClose();
@@ -47,7 +46,7 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
     // TODO: Create / Update users
     // eslint-disable-next-line no-console
     console.log(values);
-    // setIsClosing(true);
+    setIsSubmitting(true);
     onSubmitted();
   };
 
