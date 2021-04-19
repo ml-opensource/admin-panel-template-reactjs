@@ -18,7 +18,6 @@ const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
 
   useEffect(() => {
     const unblock = history.block(tx => {
-      console.log("history block");
       if (form?.isFieldsTouched() && !isSubmitting) {
         Modal.confirm({
           title: t("default.unsavedChangesTitle"),
