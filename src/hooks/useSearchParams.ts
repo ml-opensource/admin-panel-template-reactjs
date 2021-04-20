@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { useCallback, useEffect, useState } from "react";
 
 import _toInteger from "lodash/toInteger";
@@ -8,7 +9,7 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
 
-export type SearchParamDef<T = Record<string, unknown>> = T & {
+export type SearchParamDef<T = {}> = T & {
   action?: ItemModalEnum;
   entryId?: string;
   entryType?: string;
@@ -18,14 +19,14 @@ export type SearchParamDef<T = Record<string, unknown>> = T & {
   pageSize?: number;
 };
 
-const useSearchParams = <T = Record<string, unknown>>() => {
+const useSearchParams = <T = {}>() => {
   const location = useLocation();
   const history = useHistory();
 
   const getCurrentSearch = useCallback(() => {
     const currentSearch = (qs.parse(
       location.search
-    ) as unknown) as SearchParamDef<T>;
+    ) as SearchParamDef) as SearchParamDef<T>;
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
     );
