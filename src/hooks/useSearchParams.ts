@@ -8,7 +8,7 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
 
-export type SearchParamDef = {
+export type SearchParamDef<T = Record<string, unknown>> = T & {
   action?: ItemModalEnum;
   entryId?: string;
   entryType?: string;
@@ -18,12 +18,14 @@ export type SearchParamDef = {
   pageSize?: number;
 };
 
-const useSearchParams = () => {
+const useSearchParams = <T = Record<string, unknown>>() => {
   const location = useLocation();
   const history = useHistory();
 
   const getCurrentSearch = useCallback(() => {
-    const currentSearch = qs.parse(location.search) as SearchParamDef;
+    const currentSearch = (qs.parse(
+      location.search
+    ) as unknown) as SearchParamDef<T>;
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
     );
@@ -32,7 +34,7 @@ const useSearchParams = () => {
     return currentSearch;
   }, [location.search]);
 
-  const [search, setSearch] = useState<SearchParamDef>(getCurrentSearch());
+  const [search, setSearch] = useState<SearchParamDef<T>>(getCurrentSearch());
 
   useEffect(() => {
     setSearch(getCurrentSearch());
@@ -56,7 +58,7 @@ const useSearchParams = () => {
    * Clear search params with new params
    */
   const setSearchParams = useCallback(
-    (filters: SearchParamDef) => {
+    (filters: SearchParamDef<T>) => {
       history.push({
         pathname: location.pathname,
         search: qs.stringify(filters, { skipEmptyString: true }),
@@ -69,7 +71,7 @@ const useSearchParams = () => {
    * Update existing search params with new params
    */
   const updateSearchParams = useCallback(
-    (filters: SearchParamDef) => {
+    (filters: SearchParamDef<T>) => {
       // Keep current search params
       const currentSearch = qs.parse(location.search);
 

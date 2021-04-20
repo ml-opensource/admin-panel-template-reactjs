@@ -2,6 +2,8 @@ import React, { memo } from "react";
 
 import { Form, FormProps, Row, Col } from "antd";
 
+import useSearchParams from "@app/hooks/useSearchParams";
+
 import FilterItem from "./components/FilterItem/FilterItem";
 
 interface PageFilterProps extends FormProps {
@@ -16,12 +18,19 @@ const PageFilter = ({
   onSubmit,
   ...rest
 }: PageFilterProps) => {
-  const handleSelect = (changedValues: unknown, allValues: unknown) => {
+  const { updateSearchParams } = useSearchParams();
+
+  const handleSelect = (
+    changedValues: Record<string, unknown>,
+    allValues: Record<string, unknown>
+  ) => {
     console.log("values changed", changedValues, allValues);
+    updateSearchParams({ ...allValues });
   };
 
-  const handleSubmit = (values: unknown) => {
+  const handleSubmit = (values: Record<string, unknown>) => {
     console.log("filters submitted", values);
+    updateSearchParams({ ...values });
   };
 
   return (
