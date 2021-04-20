@@ -18,24 +18,23 @@ const PageFilter = ({
   onSubmit,
   ...rest
 }: PageFilterProps) => {
-  const { updateSearchParams } = useSearchParams();
+  const { search, updateSearchParams } = useSearchParams();
 
   const handleSelect = (
     changedValues: Record<string, unknown>,
     allValues: Record<string, unknown>
   ) => {
-    console.log("values changed", changedValues, allValues);
     updateSearchParams({ ...allValues });
   };
 
   const handleSubmit = (values: Record<string, unknown>) => {
-    console.log("filters submitted", values);
     updateSearchParams({ ...values });
   };
 
   return (
     <Form
       {...rest}
+      initialValues={search}
       onValuesChange={!onSubmit ? handleSelect : undefined}
       onFinish={handleSubmit}
     >
