@@ -9,7 +9,7 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
 
-export type SearchParamDef<T = {}> = T & {
+export type SearchParamDef<T = {}> = Partial<T> & {
   action?: ItemModalEnum;
   entryId?: string;
   entryType?: string;
