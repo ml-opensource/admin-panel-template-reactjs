@@ -9,33 +9,36 @@ import FilterItem from "./components/FilterItem/FilterItem";
 interface PageFilterProps extends FormProps {
   children: React.ReactNode;
   columns?: 1 | 2 | 3 | 4 | 5 | 6;
-  onSubmit?: boolean;
+  hasSubmit?: boolean;
+  onApply?: () => void;
 }
 
 const PageFilter = ({
   children,
   columns = 4,
-  onSubmit,
+  hasSubmit,
+  onApply,
   ...rest
 }: PageFilterProps) => {
   const { search, updateSearchParams } = useSearchParams();
+
+  const handleSubmit = (values: Record<string, unknown>) => {
+    updateSearchParams({ ...values });
+    onApply?.();
+  };
 
   const handleSelect = (
     changedValues: Record<string, unknown>,
     allValues: Record<string, unknown>
   ) => {
-    updateSearchParams({ ...allValues });
-  };
-
-  const handleSubmit = (values: Record<string, unknown>) => {
-    updateSearchParams({ ...values });
+    handleSubmit({ ...allValues });
   };
 
   return (
     <Form
       {...rest}
       initialValues={search}
-      onValuesChange={!onSubmit ? handleSelect : undefined}
+      onValuesChange={!hasSubmit ? handleSelect : undefined}
       onFinish={handleSubmit}
     >
       <Row>

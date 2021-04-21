@@ -17,12 +17,12 @@ export type UsersFilterDef = {
 
 const UsersFilter = () => {
   return (
-    <PageFilter onSubmit>
+    <PageFilter hasSubmit>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>
       <FilterItem label="Test 2" name="test2">
-        <Select placeholder="Test 2">
+        <Select placeholder="Test 2" allowClear>
           <Option value="1">John</Option>
           <Option value="2">Jane</Option>
         </Select>
