@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
+import _mapValues from "lodash/mapValues";
 import { useTranslation } from "react-i18next";
 
 import useSearchParams from "@app/hooks/useSearchParams";
@@ -31,6 +32,8 @@ const PageFilter = ({
 }: PageFilterProps) => {
   const { t } = useTranslation();
   const { search, updateSearchParams } = useSearchParams();
+  const [filterForm] = Form.useForm();
+  const form = rest.form ?? filterForm;
 
   const handleSubmit = (values: Record<string, unknown>) => {
     updateSearchParams({ ...values });
@@ -44,9 +47,15 @@ const PageFilter = ({
     handleSubmit({ ...allValues });
   };
 
+  const handleReset = () => {
+    const resetFields = _mapValues(form.getFieldsValue(), () => undefined);
+    updateSearchParams({ page: 1, ...resetFields });
+  };
+
   return (
     <Form
       {...rest}
+      form={form}
       initialValues={search}
       onValuesChange={!hasSubmit ? handleSelect : undefined}
       onFinish={handleSubmit}
@@ -63,7 +72,7 @@ const PageFilter = ({
           {hasReset && (
             <Col>
               <Form.Item>
-                <Button htmlType="reset">
+                <Button htmlType="reset" onClick={handleReset}>
                   {resetText ?? t("default.reset")}
                 </Button>
               </Form.Item>
