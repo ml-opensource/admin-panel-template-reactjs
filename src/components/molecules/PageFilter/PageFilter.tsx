@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { Form, FormProps, Row, Col } from "antd";
+import { Form, FormProps, Row, Col, Button } from "antd";
 
 import useSearchParams from "@app/hooks/useSearchParams";
 
@@ -49,6 +49,15 @@ const PageFilter = ({
             {child}
           </Col>
         ))}
+        {hasSubmit && (
+          <Form.Item>
+            <Col xs={24} sm={12} lg={24 / columns}>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Col>
+          </Form.Item>
+        )}
       </Row>
     </Form>
   );
