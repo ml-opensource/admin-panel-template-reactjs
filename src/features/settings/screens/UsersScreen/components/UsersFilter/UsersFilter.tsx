@@ -4,6 +4,7 @@ import { Input, Select, Checkbox, Button } from "antd";
 
 import PageFilter, {
   FilterItem,
+  FilterItemCheckbox,
 } from "@app/components/molecules/PageFilter/PageFilter";
 
 const { Option } = Select;
@@ -27,9 +28,9 @@ const UsersFilter = () => {
           <Option value="2">Jane</Option>
         </Select>
       </FilterItem>
-      <FilterItem noLabel name="test3" valuePropName="checked">
+      <FilterItemCheckbox noLabel name="test3">
         <Checkbox>Test 3</Checkbox>
-      </FilterItem>
+      </FilterItemCheckbox>
       <FilterItem label="Test 4" name="test4">
         <Select placeholder="Test 4" mode="multiple">
           <Option value="1">John</Option>
