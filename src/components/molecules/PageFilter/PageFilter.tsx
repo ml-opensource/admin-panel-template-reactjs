@@ -36,6 +36,22 @@ const PageFilter = ({
   const form = rest.form ?? filterForm;
 
   const handleSubmit = (values: Record<string, unknown>) => {
+    /**
+     * If we have field that has a value of false, then we do
+     * not want it to be passed to the URL, hence why we set it
+     * to undefined. If we pass the false boolean value to the
+     * search params of the URL, we will get a string value
+     * returned, and the checkbox for example will interpret
+     * that as a truthy value and "check" the checkbox. We could
+     * pass it, but then we need to decode it before setting initial
+     * values.
+     */
+    Object.keys(values).forEach(key => {
+      if (values[key] === false) {
+        values[key] = undefined;
+      }
+    });
+
     updateSearchParams({ ...values });
     onApply?.();
   };
