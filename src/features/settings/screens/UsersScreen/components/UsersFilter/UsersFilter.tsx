@@ -27,7 +27,7 @@ const UsersFilter = () => {
           <Option value="2">Jane</Option>
         </Select>
       </FilterItem>
-      <FilterItem label="Test3" name="test3" valuePropName="checked">
+      <FilterItem noLabel name="test3" valuePropName="checked">
         <Checkbox>Test 3</Checkbox>
       </FilterItem>
       <FilterItem label="Test 4" name="test4">
