@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
+import { useTranslation } from "react-i18next";
 
 import useSearchParams from "@app/hooks/useSearchParams";
 
@@ -11,17 +12,24 @@ import FilterItem, {
 interface PageFilterProps extends FormProps {
   children: React.ReactNode;
   columns?: 1 | 2 | 3 | 4 | 5 | 6;
+  hasReset?: boolean;
   hasSubmit?: boolean;
   onApply?: () => void;
+  resetText?: string;
+  submitText?: string;
 }
 
 const PageFilter = ({
   children,
   columns = 4,
+  hasReset,
   hasSubmit,
   onApply,
+  resetText,
+  submitText,
   ...rest
 }: PageFilterProps) => {
+  const { t } = useTranslation();
   const { search, updateSearchParams } = useSearchParams();
 
   const handleSubmit = (values: Record<string, unknown>) => {
@@ -43,22 +51,35 @@ const PageFilter = ({
       onValuesChange={!hasSubmit ? handleSelect : undefined}
       onFinish={handleSubmit}
     >
-      <Row>
+      <Row gutter={24}>
         {React.Children.map(children, child => (
           <Col xs={24} sm={12} lg={24 / columns}>
             {child}
           </Col>
         ))}
-        {hasSubmit && (
-          <Form.Item>
-            <Col xs={24} sm={12} lg={24 / columns}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Col>
-          </Form.Item>
-        )}
       </Row>
+      {(hasReset || hasSubmit) && (
+        <Row gutter={24}>
+          {hasReset && (
+            <Col>
+              <Form.Item>
+                <Button htmlType="reset">
+                  {resetText ?? t("default.reset")}
+                </Button>
+              </Form.Item>
+            </Col>
+          )}
+          {hasSubmit && (
+            <Col>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  {submitText ?? t("default.apply")}
+                </Button>
+              </Form.Item>
+            </Col>
+          )}
+        </Row>
+      )}
     </Form>
   );
 };

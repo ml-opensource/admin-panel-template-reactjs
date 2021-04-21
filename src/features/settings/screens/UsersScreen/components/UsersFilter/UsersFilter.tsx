@@ -18,7 +18,7 @@ export type UsersFilterDef = {
 
 const UsersFilter = () => {
   return (
-    <PageFilter hasSubmit>
+    <PageFilter hasReset hasSubmit>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>
