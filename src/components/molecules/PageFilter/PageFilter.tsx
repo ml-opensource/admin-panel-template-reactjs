@@ -35,6 +35,11 @@ interface PageFilterProps extends FormProps {
    * submit.
    */
   hasSubmit?: boolean;
+  /**
+   * Function to call once filters have been submitted. This of
+   * course depends on whether or not you have a submit / apply
+   * button, or triggering the submit on filter change.
+   */
   onApply?: () => void;
   /**
    * Runs through arrays in the query string, and parses string
