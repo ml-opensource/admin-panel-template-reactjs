@@ -11,7 +11,19 @@ import FilterItem, {
 } from "./components/FilterItem/FilterItem";
 
 interface PageFilterProps extends FormProps {
+  /**
+   * Each child should be wrapped in a FilterItem,
+   * or FilterItemCheckbox, component in order for
+   * the filter to pick up on changes to a given
+   * field.
+   */
   children: React.ReactNode;
+  /**
+   * The amount of columns to use on desktop, or from
+   * the "lg" breakpoint. Alternatively if you need your
+   * filters to be layed out in a vertical manner, you
+   * can simply set columns to 1;
+   */
   columns?: 1 | 2 | 3 | 4 | 5 | 6;
   hasReset?: boolean;
   hasSubmit?: boolean;
@@ -105,7 +117,7 @@ const PageFilter = ({
     >
       <Row gutter={24}>
         {React.Children.map(children, child => (
-          <Col xs={24} sm={12} lg={24 / columns}>
+          <Col xs={24} sm={columns > 1 ? 12 : 24} lg={24 / columns}>
             {child}
           </Col>
         ))}
