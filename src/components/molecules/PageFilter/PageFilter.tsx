@@ -25,13 +25,40 @@ interface PageFilterProps extends FormProps {
    * can simply set columns to 1;
    */
   columns?: 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Outputs a reset button that resets the filters.
+   */
   hasReset?: boolean;
+  /**
+   * Outputs a submit / apply button, which means that the
+   * filters will no longer trigger on change, but rather on
+   * submit.
+   */
   hasSubmit?: boolean;
   onApply?: () => void;
+  /**
+   * Runs through arrays in the query string, and parses string
+   * that contain numbers. Useful if you have a multi select, with
+   * numbers for values.
+   */
   parseArrayNumbers?: boolean;
+  /**
+   * Runs through the query string and parses string with boolean
+   * values. Useful for checkboxes.
+   */
   parseBoolean?: boolean;
+  /**
+   * Runs throught the query string and parses strings with numbers.
+   * Useful for fields that contain numbers for values, such as a select.
+   */
   parseNumbers?: boolean;
+  /**
+   * Text for the reset button. Falls back to the default reset translation.
+   */
   resetText?: string;
+  /**
+   * Text for the submit / apply button. Falls back to the default apply translation.
+   */
   submitText?: string;
 }
 
