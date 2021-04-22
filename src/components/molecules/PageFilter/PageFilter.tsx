@@ -101,7 +101,7 @@ const PageFilter = ({
   const { search, updateSearchParams } = useSearchParams();
 
   const [filterForm] = Form.useForm();
-  const form = rest.form ?? filterForm;
+  const form = rest.form ?? filterForm; // If a form instance is passed in, use that instead.
 
   const parseSearch = useCallback(() => {
     const parsedSearch: Record<string, unknown> = {};
@@ -139,29 +139,34 @@ const PageFilter = ({
     }
   }, [parseBoolean, parseNumbers, parseSearch, search]);
 
+  // Submit filters, update search params.
   const handleSubmit = (values: Record<string, unknown>) => {
     updateSearchParams({ ...values });
     onSubmit?.();
   };
 
-  const handleSelect = (
+  // Submit on field change.
+  const handleChange = (
     changedValues: Record<string, unknown>,
     allValues: Record<string, unknown>
   ) => {
     handleSubmit({ ...allValues });
   };
 
+  // Reset filters, and clear search params.
   const handleReset = () => {
     const resetFields = _mapValues(form.getFieldsValue(), () => undefined);
     updateSearchParams({ page: undefined, ...resetFields });
     onReset?.();
   };
 
+  // Submit triggered from outside of the component.
   useEffect(() => {
     submit && form.submit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submit]);
 
+  // Reset triggered from outside of the component.
   useEffect(() => {
     reset && handleReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,7 +177,7 @@ const PageFilter = ({
       {...rest}
       form={form}
       initialValues={data}
-      onValuesChange={!hasSubmit ? handleSelect : undefined}
+      onValuesChange={!hasSubmit ? handleChange : undefined}
       onFinish={handleSubmit}
     >
       <Row gutter={24}>

@@ -9,6 +9,14 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
 
+/**
+ * The reason for the generic type being wrapped in Partial,
+ * is that we want to be able to update the search params one
+ * parameter at a time. As we have no other way of forcing generics
+ * passed to the hook to always have optional properties, we can wrap
+ * it in Partial, and declare that we do not "care" if a property
+ * in the generic type passed in contains a mandatory property.
+ */
 export type SearchParamDef<T = {}> = Partial<T> & {
   action?: ItemModalEnum;
   entryId?: string;
