@@ -60,10 +60,14 @@ const PageFilter = ({
     return formattedSearch;
   }, [parseBoolean, parseNumbers, search]);
 
-  const [data, setData] = useState(parseSearch());
+  const [data, setData] = useState(
+    parseBoolean || parseNumbers ? parseSearch() : search
+  );
   useEffect(() => {
-    setData(parseSearch());
-  }, [parseSearch, search]);
+    if (parseBoolean || parseNumbers) {
+      setData(parseSearch());
+    }
+  }, [parseBoolean, parseNumbers, parseSearch, search]);
 
   const handleSubmit = (values: Record<string, unknown>) => {
     updateSearchParams({ ...values });
