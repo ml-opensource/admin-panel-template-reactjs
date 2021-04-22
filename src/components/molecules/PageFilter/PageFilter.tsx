@@ -52,6 +52,13 @@ const PageFilter = ({
         !Number.isNaN(Number(value))
       ) {
         parsedSearch[key] = Number(value);
+      } else if (parseNumbers && Array.isArray(value)) {
+        parsedSearch[key] = value.map(item => {
+          if (typeof item === "string" && !Number.isNaN(Number(item))) {
+            return Number(item);
+          }
+          return item;
+        });
       } else {
         parsedSearch[key] = value;
       }

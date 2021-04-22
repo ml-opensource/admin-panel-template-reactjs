@@ -33,8 +33,8 @@ const UsersFilter = () => {
       </FilterItemCheckbox>
       <FilterItem label="Test 4" name="test4">
         <Select placeholder="Test 4" mode="multiple">
-          <Option value="1">John</Option>
-          <Option value="2">Jane</Option>
+          <Option value={1}>John</Option>
+          <Option value={2}>Jane</Option>
         </Select>
       </FilterItem>
     </PageFilter>
