@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
 import _mapValues from "lodash/mapValues";
@@ -16,6 +16,8 @@ interface PageFilterProps extends FormProps {
   hasReset?: boolean;
   hasSubmit?: boolean;
   onApply?: () => void;
+  parseBoolean?: boolean;
+  parseNumbers?: boolean;
   resetText?: string;
   submitText?: string;
 }
@@ -26,32 +28,44 @@ const PageFilter = ({
   hasReset,
   hasSubmit,
   onApply,
+  parseBoolean = true,
+  parseNumbers,
   resetText,
   submitText,
   ...rest
 }: PageFilterProps) => {
   const { t } = useTranslation();
   const { search, updateSearchParams } = useSearchParams();
+
   const [filterForm] = Form.useForm();
   const form = rest.form ?? filterForm;
 
-  const handleSubmit = (values: Record<string, unknown>) => {
-    /**
-     * If we have field that has a value of false, then we do
-     * not want it to be passed to the URL, hence why we set it
-     * to undefined. If we pass the false boolean value to the
-     * search params of the URL, we will get a string value
-     * returned, and the checkbox for example will interpret
-     * that as a truthy value and "check" the checkbox. We could
-     * pass it, but then we need to decode it before setting initial
-     * values.
-     */
-    Object.keys(values).forEach(key => {
-      if (values[key] === false) {
-        values[key] = undefined;
+  const parseSearch = useCallback(() => {
+    const formattedSearch: Record<string, unknown> = {};
+
+    Object.entries(search).forEach(([key, value]) => {
+      if (parseBoolean && (value === "false" || value === "true")) {
+        formattedSearch[key] = JSON.parse(value);
+      } else if (
+        parseNumbers &&
+        typeof value === "string" &&
+        !Number.isNaN(Number(value))
+      ) {
+        formattedSearch[key] = Number(value);
+      } else {
+        formattedSearch[key] = value;
       }
     });
 
+    return formattedSearch;
+  }, [parseBoolean, parseNumbers, search]);
+
+  const [data, setData] = useState(parseSearch());
+  useEffect(() => {
+    setData(parseSearch());
+  }, [parseSearch, search]);
+
+  const handleSubmit = (values: Record<string, unknown>) => {
     updateSearchParams({ ...values });
     onApply?.();
   };
@@ -72,7 +86,7 @@ const PageFilter = ({
     <Form
       {...rest}
       form={form}
-      initialValues={search}
+      initialValues={data}
       onValuesChange={!hasSubmit ? handleSelect : undefined}
       onFinish={handleSubmit}
     >

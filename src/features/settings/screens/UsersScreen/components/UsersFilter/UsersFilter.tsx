@@ -18,14 +18,14 @@ export type UsersFilterDef = {
 
 const UsersFilter = () => {
   return (
-    <PageFilter hasReset hasSubmit>
+    <PageFilter hasReset hasSubmit parseNumbers>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>
       <FilterItem label="Test 2" name="test2">
         <Select placeholder="Test 2" allowClear>
-          <Option value="1">John</Option>
-          <Option value="2">Jane</Option>
+          <Option value={1}>John</Option>
+          <Option value={2}>Jane</Option>
         </Select>
       </FilterItem>
       <FilterItemCheckbox noLabel name="test3">
