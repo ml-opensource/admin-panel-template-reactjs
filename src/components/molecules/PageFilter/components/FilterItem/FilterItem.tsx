@@ -11,7 +11,8 @@ interface FilterItemProps extends FormItemProps {
    * a checkbox with its own inline label. When not passing a label,
    * it would render the checkbox inline with the labels of other
    * fields. Therefore in order to "force" the field, the checkbox
-   * in this scenario, we can pass it a label with a whitespace.
+   * in this scenario, to align with the other fields, we can pass
+   * it a label with a whitespace.
    */
   noLabel?: boolean;
 }
