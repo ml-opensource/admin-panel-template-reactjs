@@ -41,23 +41,23 @@ const PageFilter = ({
   const form = rest.form ?? filterForm;
 
   const parseSearch = useCallback(() => {
-    const formattedSearch: Record<string, unknown> = {};
+    const parsedSearch: Record<string, unknown> = {};
 
     Object.entries(search).forEach(([key, value]) => {
       if (parseBoolean && (value === "false" || value === "true")) {
-        formattedSearch[key] = JSON.parse(value);
+        parsedSearch[key] = JSON.parse(value);
       } else if (
         parseNumbers &&
         typeof value === "string" &&
         !Number.isNaN(Number(value))
       ) {
-        formattedSearch[key] = Number(value);
+        parsedSearch[key] = Number(value);
       } else {
-        formattedSearch[key] = value;
+        parsedSearch[key] = value;
       }
     });
 
-    return formattedSearch;
+    return parsedSearch;
   }, [parseBoolean, parseNumbers, search]);
 
   const [data, setData] = useState(
