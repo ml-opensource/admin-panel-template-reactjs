@@ -36,11 +36,15 @@ interface PageFilterProps extends FormProps {
    */
   hasSubmit?: boolean;
   /**
+   * Function to call when all filters have been reset by a reset button.
+   */
+  onReset?: () => void;
+  /**
    * Function to call once filters have been submitted. This of
    * course depends on whether or not you have a submit / apply
    * button, or triggering the submit on filter change.
    */
-  onApply?: () => void;
+  onSubmit?: () => void;
   /**
    * Runs through arrays in the query string, and parses string
    * that contain numbers. Useful if you have a multi select, with
@@ -58,9 +62,19 @@ interface PageFilterProps extends FormProps {
    */
   parseNumbers?: boolean;
   /**
+   * If true, it triggers a reset of all filters, and the the onReset()
+   * function is called afterwards.
+   */
+  reset?: boolean;
+  /**
    * Text for the reset button. Falls back to the default reset translation.
    */
   resetText?: string;
+  /**
+   * If true, it triggers a submit of all filters, and then the onSubmit()
+   * function is called afterwards.
+   */
+  submit?: boolean;
   /**
    * Text for the submit / apply button. Falls back to the default apply translation.
    */
@@ -72,11 +86,14 @@ const PageFilter = ({
   columns = 4,
   hasReset,
   hasSubmit,
-  onApply,
+  onReset,
+  onSubmit,
   parseArrayNumbers,
   parseBoolean = true,
   parseNumbers,
+  reset,
   resetText,
+  submit,
   submitText,
   ...rest
 }: PageFilterProps) => {
@@ -124,7 +141,7 @@ const PageFilter = ({
 
   const handleSubmit = (values: Record<string, unknown>) => {
     updateSearchParams({ ...values });
-    onApply?.();
+    onSubmit?.();
   };
 
   const handleSelect = (
@@ -137,7 +154,18 @@ const PageFilter = ({
   const handleReset = () => {
     const resetFields = _mapValues(form.getFieldsValue(), () => undefined);
     updateSearchParams({ page: undefined, ...resetFields });
+    onReset?.();
   };
+
+  useEffect(() => {
+    submit && form.submit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submit]);
+
+  useEffect(() => {
+    reset && handleReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reset]);
 
   return (
     <Form
