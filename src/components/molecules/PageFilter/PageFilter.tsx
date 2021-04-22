@@ -16,6 +16,7 @@ interface PageFilterProps extends FormProps {
   hasReset?: boolean;
   hasSubmit?: boolean;
   onApply?: () => void;
+  parseArrayNumbers?: boolean;
   parseBoolean?: boolean;
   parseNumbers?: boolean;
   resetText?: string;
@@ -28,6 +29,7 @@ const PageFilter = ({
   hasReset,
   hasSubmit,
   onApply,
+  parseArrayNumbers,
   parseBoolean = true,
   parseNumbers,
   resetText,
@@ -52,7 +54,7 @@ const PageFilter = ({
         !Number.isNaN(Number(value))
       ) {
         parsedSearch[key] = Number(value);
-      } else if (parseNumbers && Array.isArray(value)) {
+      } else if (parseArrayNumbers && Array.isArray(value)) {
         parsedSearch[key] = value.map(item => {
           if (typeof item === "string" && !Number.isNaN(Number(item))) {
             return Number(item);
@@ -65,7 +67,7 @@ const PageFilter = ({
     });
 
     return parsedSearch;
-  }, [parseBoolean, parseNumbers, search]);
+  }, [parseArrayNumbers, parseBoolean, parseNumbers, search]);
 
   const [data, setData] = useState(
     parseBoolean || parseNumbers ? parseSearch() : search
@@ -90,7 +92,7 @@ const PageFilter = ({
 
   const handleReset = () => {
     const resetFields = _mapValues(form.getFieldsValue(), () => undefined);
-    updateSearchParams({ page: 1, ...resetFields });
+    updateSearchParams({ page: undefined, ...resetFields });
   };
 
   return (
