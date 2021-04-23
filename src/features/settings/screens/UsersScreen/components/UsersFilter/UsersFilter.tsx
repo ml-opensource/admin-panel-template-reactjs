@@ -18,7 +18,12 @@ export type UsersFilterDef = {
 
 const UsersFilter = () => {
   return (
-    <PageFilter hasReset hasSubmit parseNumbers>
+    <PageFilter<UsersFilterDef>
+      hasReset
+      hasSubmit
+      parseNumbers
+      parseBoolean={["test3"]}
+    >
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>

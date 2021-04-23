@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { memo, useCallback, useEffect, useState } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
@@ -9,8 +10,9 @@ import useSearchParams from "@app/hooks/useSearchParams";
 import FilterItem, {
   FilterItemCheckbox,
 } from "./components/FilterItem/FilterItem";
+import { parseFilters, ParseDef } from "./helpers/pagefilter.helpers";
 
-interface PageFilterProps extends FormProps {
+interface PageFilterProps<T = {}> extends FormProps {
   /**
    * Each child should be wrapped in a FilterItem,
    * or FilterItemCheckbox, component in order for
@@ -46,21 +48,24 @@ interface PageFilterProps extends FormProps {
    */
   onSubmit?: () => void;
   /**
+   * TODO: Elaborate on Array type
    * Runs through arrays in the query string, and parses string
    * that contain numbers. Useful if you have a multi select, with
    * numbers for values.
    */
-  parseArrayNumbers?: boolean;
+  parseArrayNumbers?: ParseDef<T>;
   /**
+   * TODO: Elaborate on Array type
    * Runs through the query string and parses string with boolean
    * values. Useful for checkboxes.
    */
-  parseBoolean?: boolean;
+  parseBoolean?: ParseDef<T>;
   /**
-   * Runs throught the query string and parses strings with numbers.
+   * TODO: Elaborate on Array type
+   * Runs through the query string and parses strings with numbers.
    * Useful for fields that contain numbers for values, such as a select.
    */
-  parseNumbers?: boolean;
+  parseNumbers?: ParseDef<T>;
   /**
    * If true, it triggers a reset of all filters, and the the onReset()
    * function is called afterwards.
@@ -81,7 +86,7 @@ interface PageFilterProps extends FormProps {
   submitText?: string;
 }
 
-const PageFilter = ({
+const PageFilter = <T extends {}>({
   children,
   columns = 4,
   hasReset,
@@ -96,39 +101,23 @@ const PageFilter = ({
   submit,
   submitText,
   ...rest
-}: PageFilterProps) => {
+}: PageFilterProps<T>) => {
   const { t } = useTranslation();
   const { search, updateSearchParams } = useSearchParams();
 
   const [filterForm] = Form.useForm();
   const form = rest.form ?? filterForm; // If a form instance is passed in, use that instead.
 
-  const parseSearch = useCallback(() => {
-    const parsedSearch: Record<string, unknown> = {};
-
-    Object.entries(search).forEach(([key, value]) => {
-      if (parseBoolean && (value === "false" || value === "true")) {
-        parsedSearch[key] = JSON.parse(value);
-      } else if (
-        parseNumbers &&
-        typeof value === "string" &&
-        !Number.isNaN(Number(value))
-      ) {
-        parsedSearch[key] = Number(value);
-      } else if (parseArrayNumbers && Array.isArray(value)) {
-        parsedSearch[key] = value.map(item => {
-          if (typeof item === "string" && !Number.isNaN(Number(item))) {
-            return Number(item);
-          }
-          return item;
-        });
-      } else {
-        parsedSearch[key] = value;
-      }
-    });
-
-    return parsedSearch;
-  }, [parseArrayNumbers, parseBoolean, parseNumbers, search]);
+  const parseSearch = useCallback(
+    () =>
+      parseFilters<T>({
+        filters: search,
+        parseArrayNumbers,
+        parseBoolean,
+        parseNumbers,
+      }),
+    [parseArrayNumbers, parseBoolean, parseNumbers, search]
+  );
 
   const [data, setData] = useState(
     parseBoolean || parseNumbers ? parseSearch() : search
@@ -213,5 +202,5 @@ const PageFilter = ({
   );
 };
 
-export default memo(PageFilter);
+export default memo(PageFilter) as typeof PageFilter;
 export { FilterItem, FilterItemCheckbox };
