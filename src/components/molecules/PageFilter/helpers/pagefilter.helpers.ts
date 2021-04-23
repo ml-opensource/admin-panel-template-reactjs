@@ -10,10 +10,10 @@ interface ParseFilterParams<T> {
   parseArrayNumbers?: ParseDef<T>;
 }
 
-const isArrayIncludes = <T extends {}>(array: unknown, key: unknown) =>
+const isArrayIncludes = <T>(array: unknown, key: unknown) =>
   Array.isArray(array) && array.includes(key as keyof T);
 
-export const parseFilters = <T extends {}>({
+export const parseFilters = <T>({
   filters,
   parseArrayNumbers,
   parseBoolean,
