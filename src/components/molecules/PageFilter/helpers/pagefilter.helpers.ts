@@ -10,6 +10,9 @@ interface ParseFilterParams<T> {
   parseArrayNumbers?: ParseDef<T>;
 }
 
+const isArrayIncludes = <T extends {}>(array: unknown, key: unknown) =>
+  Array.isArray(array) && array.includes(key as keyof T);
+
 export const parseFilters = <T extends {}>({
   filters,
   parseArrayNumbers,
@@ -19,24 +22,41 @@ export const parseFilters = <T extends {}>({
   const parsedFilters: Record<string, unknown> = {};
 
   Object.entries(filters).forEach(([key, value]) => {
+    let parsed = false;
+
     if (
       parseBoolean &&
       typeof value === "string" &&
-      ((Array.isArray(parseBoolean) && parseBoolean.includes(key as keyof T)) ||
+      (isArrayIncludes<T>(parseBoolean, key) ||
         value === "false" ||
         value === "true")
     ) {
       parsedFilters[key] = JSON.parse(value);
+      parsed = true;
     } else if (parseNumbers && stringIsNumber(value)) {
-      parsedFilters[key] = Number(value);
+      if (
+        isArrayIncludes<T>(parseNumbers, key) ||
+        !Array.isArray(parseNumbers)
+      ) {
+        parsedFilters[key] = Number(value);
+        parsed = true;
+      }
     } else if (parseArrayNumbers && Array.isArray(value)) {
-      parsedFilters[key] = value.map(item => {
-        if (stringIsNumber(value)) {
-          return Number(item);
-        }
-        return item;
-      });
-    } else {
+      if (
+        isArrayIncludes<T>(parseArrayNumbers, key) ||
+        !Array.isArray(parseArrayNumbers)
+      ) {
+        parsedFilters[key] = value.map(item => {
+          if (stringIsNumber(item)) {
+            return Number(item);
+          }
+          return item;
+        });
+        parsed = true;
+      }
+    }
+
+    if (!parsed) {
       parsedFilters[key] = value;
     }
   });
