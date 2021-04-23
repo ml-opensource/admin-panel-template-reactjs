@@ -20,12 +20,11 @@ export const parseFilters = <T extends {}>({
 
   Object.entries(filters).forEach(([key, value]) => {
     if (
-      (parseBoolean &&
-        typeof value === "string" &&
-        Array.isArray(parseBoolean) &&
-        parseBoolean.includes(key as keyof T)) ||
-      value === "false" ||
-      value === "true"
+      parseBoolean &&
+      typeof value === "string" &&
+      ((Array.isArray(parseBoolean) && parseBoolean.includes(key as keyof T)) ||
+        value === "false" ||
+        value === "true")
     ) {
       parsedFilters[key] = JSON.parse(value);
     } else if (parseNumbers && stringIsNumber(value)) {
