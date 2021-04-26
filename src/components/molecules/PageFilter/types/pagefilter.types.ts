@@ -1,4 +1,5 @@
-export type ParseDef<T> = boolean | Array<keyof T>;
+type ParseDef<T> = boolean | Array<keyof T>;
+
 export interface ParseFiltersProps<T> {
   /**
    * Runs through arrays in the query string and parses strings with date
