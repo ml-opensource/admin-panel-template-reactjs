@@ -156,9 +156,9 @@ const PageFilter = <T extends {}>({
 
   return (
     <Form
+      initialValues={data}
       {...rest}
       form={form}
-      initialValues={data}
       onValuesChange={!hasSubmit ? handleChange : undefined}
       onFinish={handleSubmit}
     >
