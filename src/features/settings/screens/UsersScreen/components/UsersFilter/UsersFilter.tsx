@@ -1,6 +1,7 @@
 import { memo } from "react";
 
-import { Input, Select, Checkbox } from "antd";
+import { Input, Select, Checkbox, DatePicker } from "antd";
+import moment from "moment";
 
 import PageFilter, {
   FilterItem,
@@ -8,17 +9,19 @@ import PageFilter, {
 } from "@app/components/molecules/PageFilter/PageFilter";
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 export type UsersFilterDef = {
   test1?: string;
   test2?: string;
   test3?: boolean;
   test4?: string[];
+  dates?: [moment.Moment, moment.Moment];
 };
 
 const UsersFilter = () => {
   return (
-    <PageFilter<UsersFilterDef> hasReset hasSubmit>
+    <PageFilter<UsersFilterDef> hasReset hasSubmit parseArrayDates>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>
@@ -36,6 +39,9 @@ const UsersFilter = () => {
           <Option value="1">John</Option>
           <Option value="2">Jane</Option>
         </Select>
+      </FilterItem>
+      <FilterItem label="Dates" name="dates">
+        <RangePicker />
       </FilterItem>
     </PageFilter>
   );

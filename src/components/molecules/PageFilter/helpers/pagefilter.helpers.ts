@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import moment from "moment";
+
 import { stringIsNumber } from "@app/helpers/util.heplers";
 
-export type ParseDef<T> = boolean | Array<keyof T>;
+import { ParseFiltersProps } from "../types/pagefilter.types";
 
-interface ParseFilterParams<T> {
+interface ParseFilterParams<T> extends ParseFiltersProps<T> {
   filters: Record<string, unknown>;
-  parseBoolean?: ParseDef<T>;
-  parseNumbers?: ParseDef<T>;
-  parseArrayNumbers?: ParseDef<T>;
 }
 
 const isArrayIncludes = <T>(array: unknown, key: unknown) =>
@@ -15,8 +14,10 @@ const isArrayIncludes = <T>(array: unknown, key: unknown) =>
 
 export const parseFilters = <T>({
   filters,
+  parseArrayDates,
   parseArrayNumbers,
   parseBoolean,
+  parseDates,
   parseNumbers,
 }: ParseFilterParams<T>) => {
   const parsedFilters: Record<string, unknown> = {};
@@ -24,31 +25,51 @@ export const parseFilters = <T>({
   Object.entries(filters).forEach(([key, value]) => {
     let parsed = false;
 
-    if (
-      parseBoolean &&
-      typeof value === "string" &&
-      (isArrayIncludes<T>(parseBoolean, key) ||
-        value === "false" ||
-        value === "true")
-    ) {
-      parsedFilters[key] = JSON.parse(value);
-      parsed = true;
-    } else if (parseNumbers && stringIsNumber(value)) {
+    if (typeof value === "string") {
       if (
-        isArrayIncludes<T>(parseNumbers, key) ||
-        !Array.isArray(parseNumbers)
+        parseBoolean &&
+        (isArrayIncludes<T>(parseBoolean, key) ||
+          value === "false" ||
+          value === "true")
+      ) {
+        parsedFilters[key] = JSON.parse(value);
+        parsed = true;
+      } else if (
+        parseNumbers &&
+        stringIsNumber(value) &&
+        (isArrayIncludes<T>(parseNumbers, key) || !Array.isArray(parseNumbers))
       ) {
         parsedFilters[key] = Number(value);
         parsed = true;
+      } else if (
+        parseDates &&
+        moment(value).isValid() &&
+        (isArrayIncludes<T>(parseDates, key) || !Array.isArray(parseDates))
+      ) {
+        parsedFilters[key] = moment(value);
+        parsed = true;
       }
-    } else if (parseArrayNumbers && Array.isArray(value)) {
+    } else if (Array.isArray(value)) {
       if (
-        isArrayIncludes<T>(parseArrayNumbers, key) ||
-        !Array.isArray(parseArrayNumbers)
+        parseArrayNumbers &&
+        (isArrayIncludes<T>(parseArrayNumbers, key) ||
+          !Array.isArray(parseArrayNumbers))
       ) {
         parsedFilters[key] = value.map(item => {
           if (stringIsNumber(item)) {
             return Number(item);
+          }
+          return item;
+        });
+        parsed = true;
+      } else if (
+        parseArrayDates &&
+        (isArrayIncludes<T>(parseArrayDates, key) ||
+          !Array.isArray(parseArrayDates))
+      ) {
+        parsedFilters[key] = value.map(item => {
+          if (moment(item).isValid()) {
+            return moment(item);
           }
           return item;
         });

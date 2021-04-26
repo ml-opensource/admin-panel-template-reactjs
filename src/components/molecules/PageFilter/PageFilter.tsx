@@ -10,9 +10,10 @@ import useSearchParams from "@app/hooks/useSearchParams";
 import FilterItem, {
   FilterItemCheckbox,
 } from "./components/FilterItem/FilterItem";
-import { parseFilters, ParseDef } from "./helpers/pagefilter.helpers";
+import { parseFilters } from "./helpers/pagefilter.helpers";
+import { ParseFiltersProps } from "./types/pagefilter.types";
 
-interface PageFilterProps<T = {}> extends FormProps {
+interface PageFilterProps<T = {}> extends FormProps, ParseFiltersProps<T> {
   /**
    * Each child should be wrapped in a FilterItem,
    * or FilterItemCheckbox, component in order for
@@ -48,25 +49,6 @@ interface PageFilterProps<T = {}> extends FormProps {
    */
   onSubmit?: () => void;
   /**
-   * TODO: Elaborate on Array type
-   * Runs through arrays in the query string, and parses string
-   * that contain numbers. Useful if you have a multi select, with
-   * numbers for values.
-   */
-  parseArrayNumbers?: ParseDef<T>;
-  /**
-   * TODO: Elaborate on Array type
-   * Runs through the query string and parses string with boolean
-   * values. Useful for checkboxes.
-   */
-  parseBoolean?: ParseDef<T>;
-  /**
-   * TODO: Elaborate on Array type
-   * Runs through the query string and parses strings with numbers.
-   * Useful for fields that contain numbers for values, such as a select.
-   */
-  parseNumbers?: ParseDef<T>;
-  /**
    * If true, it triggers a reset of all filters, and the the onReset()
    * function is called afterwards.
    */
@@ -93,8 +75,10 @@ const PageFilter = <T extends {}>({
   hasSubmit,
   onReset,
   onSubmit,
+  parseArrayDates,
   parseArrayNumbers,
   parseBoolean = true,
+  parseDates,
   parseNumbers,
   reset,
   resetText,
@@ -112,11 +96,20 @@ const PageFilter = <T extends {}>({
     () =>
       parseFilters<T>({
         filters: search,
+        parseArrayDates,
         parseArrayNumbers,
         parseBoolean,
+        parseDates,
         parseNumbers,
       }),
-    [parseArrayNumbers, parseBoolean, parseNumbers, search]
+    [
+      parseArrayDates,
+      parseArrayNumbers,
+      parseBoolean,
+      parseDates,
+      parseNumbers,
+      search,
+    ]
   );
 
   const [data, setData] = useState(
