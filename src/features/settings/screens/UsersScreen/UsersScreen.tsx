@@ -15,7 +15,7 @@ import UserRoleModal, {
   ENTRY_TYPE_USER_ROLE,
 } from "./components/UserRoleModal/UserRoleModal";
 import UsersFilter, {
-  UsersFilterDef,
+  UsersFilterProps,
 } from "./components/UsersFilter/UsersFilter";
 import UsersModal from "./components/UsersModal/UsersModal";
 import UsersTable, {
@@ -24,7 +24,7 @@ import UsersTable, {
 
 const UsersScreen = () => {
   const { t } = useTranslation();
-  const { search, updateSearchParams } = useSearchParams<UsersFilterDef>();
+  const { search, updateSearchParams } = useSearchParams<UsersFilterProps>();
   const dispatch = useAppDispatch();
 
   const fetchData = useCallback(() => {

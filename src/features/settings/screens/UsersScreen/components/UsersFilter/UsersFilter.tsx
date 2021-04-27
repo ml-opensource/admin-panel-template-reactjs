@@ -11,17 +11,17 @@ import PageFilter, {
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-export type UsersFilterDef = {
+export interface UsersFilterProps {
   test1?: string;
   test2?: string;
   test3?: boolean;
   test4?: string[];
   dates?: [moment.Moment, moment.Moment];
-};
+}
 
 const UsersFilter = () => {
   return (
-    <PageFilter<UsersFilterDef> hasReset hasSubmit parseArrayDates>
+    <PageFilter<UsersFilterProps> hasReset hasSubmit parseArrayDates>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>

@@ -14,7 +14,7 @@ export interface ParseFiltersProps<T> {
   /**
    * Runs through arrays in the query string, and parses string
    * that contain numbers. If a boolean is passed, all arrays with
-   * date values will be parsed. If you want to specify which
+   * number values will be parsed. If you want to specify which
    * key / property to parse, you can pass it an array of strings
    * for keys, but you will also need to pass a type containing
    * the properties to the PageFilter.
@@ -24,7 +24,7 @@ export interface ParseFiltersProps<T> {
   parseArrayNumbers?: ParseDef<T>;
   /**
    * Runs through the query string and parses string with boolean
-   * values. If a boolean is passed, all arrays with date values will
+   * values. If a boolean is passed, all strings with boolean values will
    * be parsed. If you want to specify which key / property to parse,
    * you can pass it an array of strings for keys, but you will also
    * need to pass a type containing the properties to the PageFilter.
@@ -33,8 +33,8 @@ export interface ParseFiltersProps<T> {
    */
   parseBoolean?: ParseDef<T>;
   /**
-   * Runs through query string and parses strings with date values.
-   * If a boolean is passed, all arrays with date values will be parsed.
+   * Runs through the query string and parses strings with date values.
+   * If a boolean is passed, all strings with date values will be parsed.
    * If you want to specify which key / property to parse, you can pass
    * it an array of strings for keys, but you will also need to pass a
    * type containing the properties to the PageFilter.
@@ -44,7 +44,7 @@ export interface ParseFiltersProps<T> {
   parseDates?: ParseDef<T>;
   /**
    * Runs through the query string and parses strings with numbers.
-   * If a boolean is passed, all arrays with date values will be parsed.
+   * If a boolean is passed, all strings with number values will be parsed.
    * If you want to specify which key / property to parse, you can
    * pass it an array of strings for keys, but you will also need
    * to pass a type containing the properties to the PageFilter.
