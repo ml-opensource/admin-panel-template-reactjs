@@ -84,8 +84,6 @@ interface PeriodFilterProps {
 
 Passing the `interface` (or `type`) to the `PageFilter` component isn't strictly necessary, but it does give you code completion, when defining which property you want to have parsed.
 
-The properties `parseDates` and `parseNumbers` both have equivalent `array` corresponding props, that parse the values of `array` types in the search params. For example if you have a multi select with numbers, those numbers will be in array. Here you would use the `parseArrayNumbers` prop.
-
 ## Trigger reset / submit
 
 By default the filter will update whenever a field changes. We have however supplied two props that render a submit button, and a reset button. With these props set, the filter will not update until the submit button has been clicked. The reset button clears all fields.
