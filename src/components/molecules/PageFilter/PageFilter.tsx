@@ -75,8 +75,6 @@ const PageFilter = <T extends {}>({
   hasSubmit,
   onReset,
   onSubmit,
-  parseArrayDates,
-  parseArrayNumbers,
   parseBoolean = true,
   parseDates,
   parseNumbers,
@@ -96,20 +94,11 @@ const PageFilter = <T extends {}>({
     () =>
       parseFilters<T>({
         filters: search,
-        parseArrayDates,
-        parseArrayNumbers,
         parseBoolean,
         parseDates,
         parseNumbers,
       }),
-    [
-      parseArrayDates,
-      parseArrayNumbers,
-      parseBoolean,
-      parseDates,
-      parseNumbers,
-      search,
-    ]
+    [parseBoolean, parseDates, parseNumbers, search]
   );
 
   const [data, setData] = useState(

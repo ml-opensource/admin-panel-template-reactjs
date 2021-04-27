@@ -14,8 +14,6 @@ const isArrayIncludes = <T>(array: unknown, key: unknown) =>
 
 export const parseFilters = <T>({
   filters,
-  parseArrayDates,
-  parseArrayNumbers,
   parseBoolean,
   parseDates,
   parseNumbers,
@@ -51,29 +49,30 @@ export const parseFilters = <T>({
       }
     } else if (Array.isArray(value)) {
       if (
-        parseArrayNumbers &&
-        (isArrayIncludes<T>(parseArrayNumbers, key) ||
-          !Array.isArray(parseArrayNumbers))
+        parseNumbers &&
+        (isArrayIncludes<T>(parseNumbers, key) || !Array.isArray(parseNumbers))
       ) {
         parsedFilters[key] = value.map(item => {
           if (stringIsNumber(item)) {
+            parsed = true;
             return Number(item);
           }
           return item;
         });
-        parsed = true;
-      } else if (
-        parseArrayDates &&
-        (isArrayIncludes<T>(parseArrayDates, key) ||
-          !Array.isArray(parseArrayDates))
+      }
+
+      if (
+        parseDates &&
+        (isArrayIncludes<T>(parseDates, key) || !Array.isArray(parseDates)) &&
+        !parsed
       ) {
         parsedFilters[key] = value.map(item => {
           if (moment(item).isValid()) {
+            parsed = true;
             return moment(item);
           }
           return item;
         });
-        parsed = true;
       }
     }
 

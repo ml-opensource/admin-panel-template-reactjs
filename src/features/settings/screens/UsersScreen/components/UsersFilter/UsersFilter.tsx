@@ -15,13 +15,13 @@ export interface UsersFilterProps {
   test1?: string;
   test2?: string;
   test3?: boolean;
-  test4?: string[];
+  test4?: number[];
   dates?: [moment.Moment, moment.Moment];
 }
 
 const UsersFilter = () => {
   return (
-    <PageFilter<UsersFilterProps> hasReset hasSubmit parseArrayDates>
+    <PageFilter<UsersFilterProps> hasReset hasSubmit parseDates parseNumbers>
       <FilterItem label="Test 1" name="test1">
         <Input placeholder="Test 1" />
       </FilterItem>
@@ -36,8 +36,8 @@ const UsersFilter = () => {
       </FilterItemCheckbox>
       <FilterItem label="Test 4" name="test4">
         <Select placeholder="Test 4" mode="multiple">
-          <Option value="1">John</Option>
-          <Option value="2">Jane</Option>
+          <Option value={1}>John</Option>
+          <Option value={2}>Jane</Option>
         </Select>
       </FilterItem>
       <FilterItem label="Dates" name="dates">
