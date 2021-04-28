@@ -105,10 +105,7 @@ const [submit, setSubmit] = useState(false);
 
 <>
   <Button onClick={() => setSubmit(true)}>Apply filters</Button>
-  <PageFilter
-    onSubmit={() => setSubmit(false)}
-    submit={submit}
-    >
+  <PageFilter onSubmit={() => setSubmit(false)} submit={submit}>
     <FilterItem label="Client" name="client">
       <Select>
         <Option value="chrhansen">Chr. Hansen</Option>
@@ -117,7 +114,7 @@ const [submit, setSubmit] = useState(false);
       </Select>
     </FilterItem>
   </PageFilter>
-</Button>
+</>;
 ```
 
 | Property     | Description                                               | Type         | Default              |

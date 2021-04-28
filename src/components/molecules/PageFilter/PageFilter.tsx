@@ -87,8 +87,7 @@ const PageFilter = <T extends {}>({
   const { t } = useTranslation();
   const { search, updateSearchParams } = useSearchParams();
 
-  const [filterForm] = Form.useForm();
-  const form = rest.form ?? filterForm; // If a form instance is passed in, use that instead.
+  const [form] = Form.useForm(rest.form);
 
   const parseSearch = useCallback(
     () =>
