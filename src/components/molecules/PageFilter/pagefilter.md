@@ -90,42 +90,13 @@ By default the filter will update whenever a field changes. We have however supp
 
 It is also possible to trigger the filter from outside of the `PageFilter` component by way of two `boolean` properties and two function properties. Let's have a look at how this is achieved.
 
-```tsx
-import { useState } from "react";
-
-import { Button, Select } from "antd";
-
-import PageFilter, {
-  FilterItem,
-} from "@app/components/molecules/PageFilter/PageFilter";
-
-const { Option } = Select;
-
-const [submit, setSubmit] = useState(false);
-
-<>
-  <Button onClick={() => setSubmit(true)}>Apply filters</Button>
-  <PageFilter onSubmit={() => setSubmit(false)} submit={submit}>
-    <FilterItem label="Client" name="client">
-      <Select>
-        <Option value="chrhansen">Chr. Hansen</Option>
-        <Option value="kerzner">Kerzner</Option>
-        <Option value="mashreq">Mashreq</Option>
-      </Select>
-    </FilterItem>
-  </PageFilter>
-</>;
-```
-
 | Property     | Description                                               | Type         | Default              |
 | ------------ | --------------------------------------------------------- | ------------ | -------------------- |
 | `hasReset`   | Outputs / renders a reset button that clears all fields   | `boolean`    | -                    |
 | `hasSubmit`  | Outputs / renders a submit button that submits the filter | `boolean`    | -                    |
 | `onReset`    | Function to call once a reset has been triggered          | `() => void` | -                    |
 | `onSubmit`   | Function to call once a submit has been triggered         | `() => void` | -                    |
-| `reset`      | Triggers a reset of all fields                            | `boolean`    | -                    |
 | `resetText`  | Text for the reset button                                 | `string`     | `t("default.reset")` |
-| `submit`     | Triggers a submit of the filter                           | `boolean`    | -                    |
 | `submitText` | Text for the submit button                                | `string`     | `t("default.apply")` |
 
 ## Layout

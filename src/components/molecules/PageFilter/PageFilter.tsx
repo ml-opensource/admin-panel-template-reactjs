@@ -49,19 +49,9 @@ interface PageFilterProps<T = {}> extends FormProps, ParseFiltersProps<T> {
    */
   onSubmit?: () => void;
   /**
-   * If true, it triggers a reset of all filters, and the the onReset()
-   * function is called afterwards.
-   */
-  reset?: boolean;
-  /**
    * Text for the reset button. Falls back to the default reset translation.
    */
   resetText?: string;
-  /**
-   * If true, it triggers a submit of all filters, and then the onSubmit()
-   * function is called afterwards.
-   */
-  submit?: boolean;
   /**
    * Text for the submit / apply button. Falls back to the default apply translation.
    */
@@ -78,9 +68,7 @@ const PageFilter = <T extends {}>({
   parseBoolean = true,
   parseDates,
   parseNumbers,
-  reset,
   resetText,
-  submit,
   submitText,
   ...rest
 }: PageFilterProps<T>) => {
@@ -129,18 +117,6 @@ const PageFilter = <T extends {}>({
     updateSearchParams({ page: undefined, ...resetFields });
     onReset?.();
   };
-
-  // Submit triggered from outside of the component.
-  useEffect(() => {
-    submit && form.submit();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submit]);
-
-  // Reset triggered from outside of the component.
-  useEffect(() => {
-    reset && handleReset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reset]);
 
   return (
     <Form
