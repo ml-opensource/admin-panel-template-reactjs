@@ -89,13 +89,13 @@ const PageFilter = <T extends {}>({
   );
 
   const [data, setData] = useState(
-    parseBoolean || parseNumbers ? parseSearch() : search
+    parseBoolean || parseDates || parseNumbers ? parseSearch() : search
   );
   useEffect(() => {
-    if (parseBoolean || parseNumbers) {
+    if (parseBoolean || parseDates || parseNumbers) {
       setData(parseSearch());
     }
-  }, [parseBoolean, parseNumbers, parseSearch, search]);
+  }, [parseBoolean, parseDates, parseNumbers, parseSearch, search]);
 
   // Submit filters, update search params.
   const handleSubmit = (values: Record<string, unknown>) => {
