@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import moment from "moment";
 
-import { stringIsNumber } from "@app/helpers/util.heplers";
-
 import { ParseFiltersProps } from "../types/page-filter.types";
 
 interface ParseFilterParams<T> extends ParseFiltersProps<T> {
   filters: Record<string, unknown>;
 }
 
-const isArrayIncludes = <T>(array: unknown, key: unknown) =>
-  Array.isArray(array) && array.includes(key as keyof T);
+// Check if value is array and includes key
+const isArrayIncludes = <T>(value: unknown, key: unknown) =>
+  Array.isArray(value) && value.includes(key as keyof T);
+
+// Check if value is string and can be converted to valid number
+const isStringNumber = (value: unknown) =>
+  typeof value === "string" && !Number.isNaN(Number(value));
 
 export const parseFilters = <T>({
   filters,
@@ -34,7 +37,7 @@ export const parseFilters = <T>({
         parsed = true;
       } else if (
         parseNumbers &&
-        stringIsNumber(value) &&
+        isStringNumber(value) &&
         (isArrayIncludes<T>(parseNumbers, key) || !Array.isArray(parseNumbers))
       ) {
         parsedFilters[key] = Number(value);
@@ -53,7 +56,7 @@ export const parseFilters = <T>({
         (isArrayIncludes<T>(parseNumbers, key) || !Array.isArray(parseNumbers))
       ) {
         parsedFilters[key] = value.map(item => {
-          if (stringIsNumber(item)) {
+          if (isStringNumber(item)) {
             parsed = true;
             return Number(item);
           }
