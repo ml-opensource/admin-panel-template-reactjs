@@ -3,7 +3,7 @@ import moment from "moment";
 
 import { stringIsNumber } from "@app/helpers/util.heplers";
 
-import { ParseFiltersProps } from "../types/pagefilter.types";
+import { ParseFiltersProps } from "../types/page-filter.types";
 
 interface ParseFilterParams<T> extends ParseFiltersProps<T> {
   filters: Record<string, unknown>;

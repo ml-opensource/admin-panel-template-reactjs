@@ -10,8 +10,8 @@ import useSearchParams from "@app/hooks/useSearchParams";
 import FilterItem, {
   FilterItemCheckbox,
 } from "./components/FilterItem/FilterItem";
-import { parseFilters } from "./helpers/pagefilter.helpers";
-import { ParseFiltersProps } from "./types/pagefilter.types";
+import { parseFilters } from "./helpers/page-filter.helpers";
+import { ParseFiltersProps } from "./types/page-filter.types";
 
 interface PageFilterProps<T = {}> extends FormProps, ParseFiltersProps<T> {
   /**
