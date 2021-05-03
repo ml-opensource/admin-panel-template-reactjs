@@ -1,10 +1,10 @@
 # PageFilter
 
-When displaying data in an admin panel, it is quite common to also have a way of filtering the data. This `PageFilter` component achieves this by way of updating the search params / query string in the URL. Which means that a user will be able to share a URL with a predefined set of filters, as well as have history of their choices. These parameters can then of course be accessed from almost anywhere that has access to the window object, or more conveniently with the use of our custom `useSearchParams` hooks.
+When displaying data in an admin panel, it is quite common to also have a way of filtering the data. This `PageFilter` component achieves this by updating the search params / query string in the URL. Which means that a user will be able to share a URL with a predefined set of filters, as well as have history of their choices. These parameters can then of course be accessed from almost anywhere that has access to the window object, or more conveniently with the use of our custom `useSearchParams` hooks.
 
 ## Basic usage
 
-In its simplest form the `PageFilter` can be used with practically no setup, and only requires that you wrap your fields in the `FilterItem` component. The reason for this, is that the `PageFilter` component makes use of the Ant Design `Form` component to detect changes and so on. This also means that the `PageFilter` can accept any props that the `Form` component can. This also applies for the `FilterItem`, which is based on the `Form.Item` component.
+In its simplest form the `PageFilter` can be used with practically no setup, and only requires that you wrap your fields in the `FilterItem` component. The reason for this, is that the `PageFilter` component makes use of the Ant Design `Form` component to detect changes and so on. This also means that the `PageFilter` can accept any props that the `Form` component can. This also applies for the `FilterItem`, which is based on the Ant Design `Form.Item` component.
 
 Let's have a look at a simple example:
 
@@ -30,7 +30,7 @@ const { Option } = Select;
 
 With this simple setup any changes to your filters will be reflected in the URL. The property `name` on the `FilterItem` component, is what defines what the given search param will be called in the URL.
 
-In order to retrieve the search params of your filter from the URL, and have code completion, you will need to create an `interface` (a `type` will also work) for your filter properties, and pass it to the `useSearchParams` hook.
+In order to retrieve the search params of your filter from the URL, and have code completion, you will need to create an `interface`/`type` for your filter properties, and pass it to the `useSearchParams` hook.
 
 ```tsx
 import useSearchParams from "@app/hooks/useSearchParams";
@@ -48,15 +48,15 @@ You will now have code completion, and TypeScript won't flag it is a non-exist p
 
 By default when retrieving search params from the URL, they are all returned as a `string`. If you have fields that have values other than strings, we have built in the functionality to parse `booleans`, `dates`, and `numbers`. If you do not use these properties, then your filter will fail upon page reload, if the URL contains predefined filter params, as the strings will not match up to your field's specific data type.
 
-| Property       | Description                                                                                                                                                                                                                                                                                                                                                                                           | Type                         | Default |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------- |
-| `parseBoolean` | Runs through the query string and parses strings with boolean values. If a boolean is passed, all strings with boolean values will be parsed. If you want to specify which key / property to parse, you can pass it an array of strings for keys, but you will also need to pass a type containing the properties to the PageFilter. **Use when you have checkboxes, radio buttons, or switches.**    | `boolean` \| Array\<keyof T> | `true`  |
-| `parseDates`   | Runs through the query string and parses strings with date values. If a boolean is passed, all strings and arrays with date values will be parsed. If you want to specify which key / property to parse, you can pass it an array of strings for keys, but you will also need to pass a type containing the properties to the PageFilter. **Use this when using date pickers.**                       | `boolean` \| Array\<keyof T> | -       |
-| `parseNumbers` | Runs through the query string and parses strings with numbers. If a boolean is passed, all strings and arrays with number values will be parsed. If you want to specify which key / property to parse, you can pass it an array of strings for keys, but you will also need to pass a type containing the properties to the PageFilter. **Use when you have fields that contain numbers for values.** | `boolean` \| Array\<keyof T> | -       |
+| Property       | Description                                                                                                                                                                                                                                                                   | Type                         | Default |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------- |
+| `parseBoolean` | Runs through the query string and parses strings with boolean values. You can pass it an array of the specific keys that should be passed, or a boolean if all strings with boolean values should be parsed. **Use when you have checkboxes, radio buttons, or switches.**    | `boolean` \| Array\<keyof T> | `true`  |
+| `parseDates`   | Runs through the query string and parses strings with date values. You can pass it an array of the specific keys that should be passed, or a boolean if all strings and arrays with date values should be parsed. **Use this when using date pickers.**                       | `boolean` \| Array\<keyof T> | -       |
+| `parseNumbers` | Runs through the query string and parses strings with numbers. You can pass it an array of the specific keys that should be passed, or a boolean if all strings and arrays with number values should be parsed. **Use when you have fields that contain numbers for values.** | `boolean` \| Array\<keyof T> | -       |
 
 ### Specifying fields to parse
 
-As noted for all the parameters, you can either pass in a `boolean`, or an `array`. Passing in `array` of `strings` allows you to specify exactly which fields / parameters you want parsed, and as what data type. Let's take a look at an example.
+As noted for all the parameters, you can either pass in a `boolean`, or an `array`. Passing in `array` of `strings` allows you to specify exactly which fields / parameters you want parsed, and as what data type. It is also recommended to pass a type containing the properties to the PageFilter. Let's take a look at an example.
 
 ```tsx
 import { Select } from "antd";
@@ -82,7 +82,7 @@ interface PeriodFilterProps {
 </PageFilter>;
 ```
 
-Passing the `interface` (or `type`) to the `PageFilter` component isn't strictly necessary, but it does give you code completion, when defining which property you want to have parsed.
+Passing the `interface`/`type` to the `PageFilter` component isn't strictly necessary, but it does give you code completion, when defining which property you want to have parsed.
 
 ## Trigger reset / submit
 
@@ -90,14 +90,14 @@ By default the filter will update whenever a field changes. We have however supp
 
 It is also possible to trigger the filter from outside of the `PageFilter` component by way of two `boolean` properties and two function properties. Let's have a look at how this is achieved.
 
-| Property     | Description                                               | Type         | Default              |
-| ------------ | --------------------------------------------------------- | ------------ | -------------------- |
-| `hasReset`   | Outputs / renders a reset button that clears all fields   | `boolean`    | -                    |
-| `hasSubmit`  | Outputs / renders a submit button that submits the filter | `boolean`    | -                    |
-| `onReset`    | Function to call once a reset has been triggered          | `() => void` | -                    |
-| `onSubmit`   | Function to call once a submit has been triggered         | `() => void` | -                    |
-| `resetText`  | Text for the reset button                                 | `string`     | `t("default.reset")` |
-| `submitText` | Text for the submit button                                | `string`     | `t("default.apply")` |
+| Property           | Description                                       | Type         | Default              |
+| ------------------ | ------------------------------------------------- | ------------ | -------------------- |
+| `showResetButton`  | Renders a reset button that clears all fields     | `boolean`    | `false`              |
+| `showSubmitButton` | Renders a submit button that submits the filter   | `boolean`    | `false`              |
+| `onReset`          | Function to call once a reset has been triggered  | `() => void` | -                    |
+| `onSubmit`         | Function to call once a submit has been triggered | `() => void` | -                    |
+| `resetText`        | Text for the reset button                         | `string`     | `t("default.reset")` |
+| `submitText`       | Text for the submit button                        | `string`     | `t("default.apply")` |
 
 ## Layout
 
