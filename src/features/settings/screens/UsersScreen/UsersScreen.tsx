@@ -14,6 +14,9 @@ import styles from "./UsersScreen.module.scss";
 import UserRoleModal, {
   ENTRY_TYPE_USER_ROLE,
 } from "./components/UserRoleModal/UserRoleModal";
+import UsersFilter, {
+  UsersFilterProps,
+} from "./components/UsersFilter/UsersFilter";
 import UsersModal from "./components/UsersModal/UsersModal";
 import UsersTable, {
   UsersActionMenuEnum,
@@ -21,7 +24,7 @@ import UsersTable, {
 
 const UsersScreen = () => {
   const { t } = useTranslation();
-  const { search, updateSearchParams } = useSearchParams();
+  const { search, updateSearchParams } = useSearchParams<UsersFilterProps>();
   const dispatch = useAppDispatch();
 
   const fetchData = useCallback(() => {
@@ -84,6 +87,7 @@ const UsersScreen = () => {
           {t("settingsUsers.buttonAddUser")}
         </Button>
       </div>
+      <UsersFilter />
       <UsersTable
         onEdit={handleEdit}
         onDelete={handleDelete}

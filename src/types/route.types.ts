@@ -11,6 +11,7 @@ export type RouteGroupDef = {
   nestedRoutes?: RouteItemDef[];
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RouteComponentDef = ComponentType<RouteComponentProps<any>>;
 
 export type RouteItemDef = {
