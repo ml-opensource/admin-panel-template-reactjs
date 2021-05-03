@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Form, Modal, Row, Col, Divider } from "antd";
 import { FormProps } from "antd/lib/form";
 import cx from "classnames";
@@ -35,9 +37,16 @@ const FormModal = ({
   disableSubmit,
   loadingSubmit,
   loadingContent,
+  form,
   ...formProps
 }: FormModalProps) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (!visible) {
+      form?.resetFields();
+    }
+  }, [form, visible]);
 
   return (
     <Modal
@@ -50,7 +59,7 @@ const FormModal = ({
       destroyOnClose={destroyOnClose}
       forceRender
     >
-      <Form layout="vertical" {...formProps}>
+      <Form layout="vertical" form={form} {...formProps}>
         <SpinWrapper loading={loadingContent}>
           <Row>{children}</Row>
         </SpinWrapper>
