@@ -14,7 +14,6 @@ import styles from "./FormModal.module.scss";
 
 interface FormModalProps extends FormProps {
   title: string;
-  visible: boolean;
   className?: string;
   width?: number;
   children?: React.ReactNode;
@@ -29,7 +28,6 @@ interface FormModalProps extends FormProps {
 
 const FormModal = ({
   title,
-  visible,
   className,
   width,
   children,
@@ -50,10 +48,8 @@ const FormModal = ({
   const { setIsSubmitting } = useUnsavedPrompt({ form });
 
   useEffect(() => {
-    if (!visible) {
-      setIsSubmitting(false);
-    }
-  }, [setIsSubmitting, visible]);
+    setIsSubmitting(false);
+  }, [setIsSubmitting]);
 
   const onFormSubmit = (values: unknown) => {
     setIsSubmitting(true);
@@ -66,7 +62,7 @@ const FormModal = ({
   return (
     <Modal
       className={cx(className, styles.modal)}
-      visible={visible}
+      visible
       title={title}
       width={width}
       footer={null}
