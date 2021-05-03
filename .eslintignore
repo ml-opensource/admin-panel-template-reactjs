@@ -1,2 +1,3 @@
 craco.config.js
 .eslintrc.js
+tsconfig.json

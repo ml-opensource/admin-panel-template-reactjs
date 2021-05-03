@@ -7,13 +7,17 @@ import { ENV } from "@app/constants/env";
 import { DEFAULT_NS, INITIAL_LANG } from "../constants/localization.constants";
 import { NSTACK_ENV } from "../constants/localization.env";
 
-export const nstackClient = new NstackInstance({
-  appId: NSTACK_ENV.NSTACK_APP_ID,
-  apiKey: NSTACK_ENV.NSTACK_API_KEY,
-  version: ENV.VERSION,
-  initialLanguage: INITIAL_LANG,
-  meta: `web;${ENV.NODE_ENV}`,
-});
+export const nstackClient =
+  (NSTACK_ENV.NSTACK_APP_ID &&
+    NSTACK_ENV.NSTACK_API_KEY &&
+    new NstackInstance({
+      appId: NSTACK_ENV.NSTACK_APP_ID,
+      apiKey: NSTACK_ENV.NSTACK_API_KEY,
+      version: ENV.VERSION,
+      initialLanguage: INITIAL_LANG,
+      meta: `web;${ENV.NODE_ENV}`,
+    })) ||
+  undefined;
 
 i18next.use(initReactI18next).init({
   fallbackLng: INITIAL_LANG,
@@ -42,6 +46,8 @@ i18next.use(initReactI18next).init({
           saveTitle: "Save",
           cancelTitle: "Cancel",
           moreTitle: "More",
+          apply: "Apply",
+          reset: "Reset",
           unsavedChangesTitle: "Are you sure?",
           unsavedChangesText:
             "You have unsaved changes in the form, if you close it then the changes will be discarded.",
@@ -72,6 +78,10 @@ i18next.use(initReactI18next).init({
           menuDuplicate: "Duplicate user",
           editUserRole: "Edit user role",
           buttonUserRole: "change role",
+          filterDatesLabel: "Dates",
+          filterNameLabel: "Name",
+          filterNamePlaceholder: "Select name",
+          filterHasEmailLabel: "Has e-mail",
         },
       },
     },

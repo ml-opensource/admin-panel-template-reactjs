@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { useCallback, useEffect, useState } from "react";
 
 import _toInteger from "lodash/toInteger";
@@ -8,7 +9,15 @@ import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
 
-export type SearchParamDef = {
+/**
+ * The reason for the generic type being wrapped in Partial,
+ * is that we want to be able to update the search params one
+ * parameter at a time. As we have no other way of forcing generics
+ * passed to the hook to always have optional properties, we can wrap
+ * it in Partial, and declare that we do not "care" if a property
+ * in the generic type passed in contains a mandatory property.
+ */
+export type SearchParamDef<T = {}> = Partial<T> & {
   action?: ItemModalEnum;
   entryId?: string;
   entryType?: string;
@@ -18,12 +27,14 @@ export type SearchParamDef = {
   pageSize?: number;
 };
 
-const useSearchParams = () => {
+const useSearchParams = <T = {}>() => {
   const location = useLocation();
   const history = useHistory();
 
   const getCurrentSearch = useCallback(() => {
-    const currentSearch = qs.parse(location.search) as SearchParamDef;
+    const currentSearch = (qs.parse(
+      location.search
+    ) as SearchParamDef) as SearchParamDef<T>;
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
     );
@@ -32,7 +43,7 @@ const useSearchParams = () => {
     return currentSearch;
   }, [location.search]);
 
-  const [search, setSearch] = useState<SearchParamDef>(getCurrentSearch());
+  const [search, setSearch] = useState<SearchParamDef<T>>(getCurrentSearch());
 
   useEffect(() => {
     setSearch(getCurrentSearch());
@@ -56,7 +67,7 @@ const useSearchParams = () => {
    * Clear search params with new params
    */
   const setSearchParams = useCallback(
-    (filters: SearchParamDef) => {
+    (filters: SearchParamDef<T>) => {
       history.push({
         pathname: location.pathname,
         search: qs.stringify(filters, { skipEmptyString: true }),
@@ -69,7 +80,7 @@ const useSearchParams = () => {
    * Update existing search params with new params
    */
   const updateSearchParams = useCallback(
-    (filters: SearchParamDef) => {
+    (filters: SearchParamDef<T>) => {
       // Keep current search params
       const currentSearch = qs.parse(location.search);
 
