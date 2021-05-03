@@ -5,6 +5,7 @@ import { FormProps } from "antd/lib/form";
 import cx from "classnames";
 import { useTranslation } from "react-i18next";
 
+import useSafeReload from "@app/hooks/useSafeReload";
 import useUnsavedPrompt from "@app/hooks/useUnsavedPrompt";
 
 import Button from "../Button/Button";
@@ -43,15 +44,10 @@ const FormModal = ({
   form,
   ...formProps
 }: FormModalProps) => {
+  useSafeReload();
   const { t } = useTranslation();
 
   const { setIsSubmitting } = useUnsavedPrompt({ form });
-
-  useEffect(() => {
-    if (!visible) {
-      form?.resetFields();
-    }
-  }, [form, visible]);
 
   useEffect(() => {
     if (!visible) {
