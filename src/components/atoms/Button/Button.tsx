@@ -13,7 +13,7 @@ const cx = classnames.bind(styles);
 
 interface ButtonProps extends Omit<AntdButtonProps, "href"> {
   /**
-   * Turn button into link (optional)
+   * Turn button into link, accepts internal and external links (optional)
    */
   to?: LinkProps["to"];
   /**
