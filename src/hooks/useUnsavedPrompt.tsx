@@ -28,6 +28,7 @@ const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
           onOk: () => {
             unblock();
             history.push(tx.pathname);
+            form.resetFields();
           },
           ...modalProps,
         });

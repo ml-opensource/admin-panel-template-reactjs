@@ -5,6 +5,8 @@ import { FormProps } from "antd/lib/form";
 import cx from "classnames";
 import { useTranslation } from "react-i18next";
 
+import useUnsavedPrompt from "@app/hooks/useUnsavedPrompt";
+
 import Button from "../Button/Button";
 import SpinWrapper from "../SpinWrapper/SpinWrapper";
 import styles from "./FormModal.module.scss";
@@ -37,16 +39,33 @@ const FormModal = ({
   disableSubmit,
   loadingSubmit,
   loadingContent,
+  onFinish,
   form,
   ...formProps
 }: FormModalProps) => {
   const { t } = useTranslation();
+
+  const { setIsSubmitting } = useUnsavedPrompt({ form });
 
   useEffect(() => {
     if (!visible) {
       form?.resetFields();
     }
   }, [form, visible]);
+
+  useEffect(() => {
+    if (!visible) {
+      setIsSubmitting(false);
+    }
+  }, [setIsSubmitting, visible]);
+
+  const onFormSubmit = (values: unknown) => {
+    setIsSubmitting(true);
+    if (onFinish) {
+      onFinish(values);
+      form?.resetFields();
+    }
+  };
 
   return (
     <Modal
@@ -59,7 +78,12 @@ const FormModal = ({
       destroyOnClose={destroyOnClose}
       forceRender
     >
-      <Form layout="vertical" form={form} {...formProps}>
+      <Form
+        layout="vertical"
+        form={form}
+        {...formProps}
+        onFinish={onFormSubmit}
+      >
         <SpinWrapper loading={loadingContent}>
           <Row>{children}</Row>
         </SpinWrapper>

@@ -34,7 +34,6 @@ const UserRoleModal = memo(({ onClose, onSubmitted }: UserRoleModalProps) => {
   }, [entryId, editMode]);
 
   const handleClose = () => {
-    form.resetFields();
     onClose();
   };
 
@@ -45,7 +44,7 @@ const UserRoleModal = memo(({ onClose, onSubmitted }: UserRoleModalProps) => {
     onSubmitted();
   };
 
-  return (
+  return !showModal ? null : (
     <FormModal
       title={t("settingsUsers.editUserRole")}
       visible={showModal}
