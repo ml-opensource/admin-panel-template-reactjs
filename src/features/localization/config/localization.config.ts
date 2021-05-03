@@ -42,6 +42,9 @@ i18next.use(initReactI18next).init({
           saveTitle: "Save",
           cancelTitle: "Cancel",
           moreTitle: "More",
+          unsavedChangesTitle: "Are you sure?",
+          unsavedChangesText:
+            "You have unsaved changes in the form, if you close it then the changes will be discarded.",
         },
         home: {
           navigationTitle: "Home",
