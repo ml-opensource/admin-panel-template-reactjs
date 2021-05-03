@@ -31,13 +31,13 @@ interface PageFilterProps<T = {}> extends FormProps, ParseFiltersProps<T> {
   /**
    * Outputs a reset button that resets the filters.
    */
-  hasReset?: boolean;
+  showResetButton?: boolean;
   /**
    * Outputs a submit / apply button, which means that the
    * filters will no longer trigger on change, but rather on
    * submit.
    */
-  hasSubmit?: boolean;
+  showSubmitButton?: boolean;
   /**
    * Function to call when all filters have been reset by a reset button.
    */
@@ -61,8 +61,8 @@ interface PageFilterProps<T = {}> extends FormProps, ParseFiltersProps<T> {
 const PageFilter = <T extends {}>({
   children,
   columns = 4,
-  hasReset,
-  hasSubmit,
+  showResetButton,
+  showSubmitButton,
   onReset,
   onSubmit,
   parseBoolean = true,
@@ -91,6 +91,7 @@ const PageFilter = <T extends {}>({
   const [data, setData] = useState(
     parseBoolean || parseDates || parseNumbers ? parseSearch() : search
   );
+
   useEffect(() => {
     if (parseBoolean || parseDates || parseNumbers) {
       setData(parseSearch());
@@ -123,7 +124,7 @@ const PageFilter = <T extends {}>({
       initialValues={data}
       {...rest}
       form={form}
-      onValuesChange={!hasSubmit ? handleChange : undefined}
+      onValuesChange={!showSubmitButton ? handleChange : undefined}
       onFinish={handleSubmit}
     >
       <Row gutter={24}>
@@ -133,9 +134,9 @@ const PageFilter = <T extends {}>({
           </Col>
         ))}
       </Row>
-      {(hasReset || hasSubmit) && (
+      {(showResetButton || showSubmitButton) && (
         <Row gutter={24}>
-          {hasReset && (
+          {showResetButton && (
             <Col>
               <Form.Item>
                 <Button htmlType="reset" onClick={handleReset}>
@@ -144,7 +145,7 @@ const PageFilter = <T extends {}>({
               </Form.Item>
             </Col>
           )}
-          {hasSubmit && (
+          {showSubmitButton && (
             <Col>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
