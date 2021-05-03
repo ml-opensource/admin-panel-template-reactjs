@@ -24,7 +24,7 @@ const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
           content: t("default.unsavedChangesText"),
           icon: <ExclamationCircleOutlined />,
           okType: "primary",
-          cancelText: t("default.cancel"),
+          cancelText: t("default.cancelTitle"),
           onOk: () => {
             unblock();
             history.push(tx.pathname);
