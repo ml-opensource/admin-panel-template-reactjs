@@ -1,5 +1,11 @@
 # Admin Panel Template ReactJS
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c5bd55a2-cf9c-46ec-8cd2-acb2222aed90/deploy-status)](https://app.netlify.com/sites/ml-admin-panel-template/deploys)
+
+## Demo
+
+You can check out a running demo of the site here: [https://ml-admin-panel-template.netlify.app/](https://ml-admin-panel-template.netlify.app/)
+
 ## Live Playground
 
 **You’ll need to have Node 10.x or Node 12.x on your local development machine**. You can use [nvm](https://github.com/nvm-sh/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.

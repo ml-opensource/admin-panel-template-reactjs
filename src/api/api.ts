@@ -6,7 +6,7 @@ import { AuthEndpointsEnum, getTokens } from "@app/features/auth/auth";
 /**
  * All the endpoint that do not require an access token
  */
-const anonymousEndpoints: any[] = [AuthEndpointsEnum.LOGIN.toString()];
+const anonymousEndpoints = [AuthEndpointsEnum.LOGIN.toString()];
 
 /**
  * Adds authorization headers to API calls
@@ -25,9 +25,9 @@ const authInterceptor = async (request: AxiosRequestConfig) => {
   }
 
   if (!accessToken && !isAnonymous) {
-    console.error("UNAUTHORIZED");
-    return request;
+    // TODO: handle when UNAUTHORIZED;
     // return Promise.reject(ApiStatusCodes.UNAUTHORIZED);
+    return request;
   }
 
   return request;
