@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 interface OptionalRenderProps {
   visible: boolean;
 }
@@ -7,7 +5,7 @@ interface OptionalRenderProps {
 // eslint-disable-next-line @typescript-eslint/ban-types
 const OptionalRender = <P extends object>(
   WrappedComponent: React.ComponentType<P>
-): FC<P & OptionalRenderProps> => ({
+): React.ComponentType<P & OptionalRenderProps> => ({
   visible,
   ...props
 }: OptionalRenderProps) =>
