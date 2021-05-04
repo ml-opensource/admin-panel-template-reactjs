@@ -1,12 +1,10 @@
-import { memo, ReactNode } from "react";
+import React from "react";
 
-interface OptionalRenderProps {
-  visible: boolean;
-  children: ReactNode;
-}
-
-const OptionalRender = ({ visible, children }: OptionalRenderProps) => {
-  return visible ? <>{children}</> : null;
+const OptionalRender = (WrappedComponent: React.ElementType) => {
+  const component = (props: any) => {
+    return props.visible ? <WrappedComponent {...props} /> : null;
+  };
+  return component;
 };
 
-export default memo(OptionalRender);
+export default OptionalRender;

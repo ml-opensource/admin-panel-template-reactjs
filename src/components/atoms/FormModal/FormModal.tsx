@@ -9,12 +9,14 @@ import useSafeReload from "@app/hooks/useSafeReload";
 import useUnsavedPrompt from "@app/hooks/useUnsavedPrompt";
 
 import Button from "../Button/Button";
+import OptionalRender from "../OptionalRender/OptionalRender";
 import SpinWrapper from "../SpinWrapper/SpinWrapper";
 import styles from "./FormModal.module.scss";
 
 interface FormModalProps extends FormProps {
   title: string;
   className?: string;
+  visible: boolean;
   width?: number;
   children?: React.ReactNode;
   onClose: () => void;
@@ -30,6 +32,7 @@ const FormModal = ({
   title,
   className,
   width,
+  visible,
   children,
   onClose,
   submitButtonText,
@@ -48,8 +51,10 @@ const FormModal = ({
   const { setIsSubmitting } = useUnsavedPrompt({ form });
 
   useEffect(() => {
-    setIsSubmitting(false);
-  }, [setIsSubmitting]);
+    if (!visible) {
+      setIsSubmitting(false);
+    }
+  }, [setIsSubmitting, visible]);
 
   const onFormSubmit = (values: unknown) => {
     setIsSubmitting(true);
@@ -103,4 +108,4 @@ const FormModal = ({
 };
 
 export const { Item } = Form;
-export default FormModal;
+export default OptionalRender(FormModal);
