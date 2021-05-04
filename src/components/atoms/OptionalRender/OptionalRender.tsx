@@ -1,10 +1,16 @@
-import React from "react";
+import { FC } from "react";
 
-const OptionalRender = (WrappedComponent: React.ElementType) => {
-  const component = (props: any) => {
-    return props.visible ? <WrappedComponent {...props} /> : null;
-  };
-  return component;
-};
+interface OptionalRenderProps {
+  visible: boolean;
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+const OptionalRender = <P extends object>(
+  WrappedComponent: React.ComponentType<P>
+): FC<P & OptionalRenderProps> => ({
+  visible,
+  ...props
+}: OptionalRenderProps) =>
+  visible ? <WrappedComponent {...(props as P)} /> : null;
 
 export default OptionalRender;
