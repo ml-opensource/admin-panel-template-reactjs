@@ -1,9 +1,10 @@
-import React, { memo, useEffect } from "react";
+import { memo, useEffect } from "react";
 
 import { Col, Form, Input } from "antd";
 import { useTranslation } from "react-i18next/";
 
 import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
+import OptionalRender from "@app/components/atoms/OptionalRender/OptionalRender";
 import { ItemModalEnum } from "@app/constants/route.constants";
 import useShowModal from "@app/hooks/useShowModal";
 
@@ -44,19 +45,21 @@ const UserRoleModal = memo(({ onClose, onSubmitted }: UserRoleModalProps) => {
     onSubmitted();
   };
 
-  return !showModal ? null : (
-    <FormModal
-      title={t("settingsUsers.editUserRole")}
-      onClose={handleClose}
-      onFinish={handleFinish}
-      form={form}
-    >
-      <Col span={24}>
-        <Item name="role" label="User Role">
-          <Input type="text" />
-        </Item>
-      </Col>
-    </FormModal>
+  return (
+    <OptionalRender visible={showModal}>
+      <FormModal
+        title={t("settingsUsers.editUserRole")}
+        onClose={handleClose}
+        onFinish={handleFinish}
+        form={form}
+      >
+        <Col span={24}>
+          <Item name="role" label="User Role">
+            <Input type="text" />
+          </Item>
+        </Col>
+      </FormModal>
+    </OptionalRender>
   );
 });
 

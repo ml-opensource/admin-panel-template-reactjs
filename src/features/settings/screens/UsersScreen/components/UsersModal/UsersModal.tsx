@@ -4,6 +4,7 @@ import { Col, Form, Input } from "antd";
 import { useTranslation } from "react-i18next/";
 
 import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
+import OptionalRender from "@app/components/atoms/OptionalRender/OptionalRender";
 import { ItemModalEnum } from "@app/constants/route.constants";
 import useShowModal from "@app/hooks/useShowModal";
 
@@ -40,23 +41,25 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
     onSubmitted();
   };
 
-  return !showModal ? null : (
-    <FormModal
-      title={
-        editMode
-          ? t("settingsUsers.editUserTitle")
-          : t("settingsUsers.addUserTitle")
-      }
-      onClose={handleClose}
-      onFinish={handleFinish}
-      form={form}
-    >
-      <Col span={24}>
-        <Item name="Username" label="Username">
-          <Input type="text" />
-        </Item>
-      </Col>
-    </FormModal>
+  return (
+    <OptionalRender visible={showModal}>
+      <FormModal
+        title={
+          editMode
+            ? t("settingsUsers.editUserTitle")
+            : t("settingsUsers.addUserTitle")
+        }
+        onClose={handleClose}
+        onFinish={handleFinish}
+        form={form}
+      >
+        <Col span={24}>
+          <Item name="Username" label="Username">
+            <Input type="text" />
+          </Item>
+        </Col>
+      </FormModal>
+    </OptionalRender>
   );
 });
 
