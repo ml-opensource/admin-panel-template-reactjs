@@ -84,6 +84,23 @@ interface PeriodFilterProps {
 
 Passing the `interface`/`type` to the `PageFilter` component isn't strictly necessary, but it does give you code completion, when defining which property you want to have parsed.
 
+### Debounce fields
+
+In some cases you will have a text field, which will update the url on every change unless you have a submit button. But without the submit button, you can use the `DebouncedInput` component to debounce the changes in an input and thus only update the url after a specific time.
+
+For example:
+
+```tsx
+import { Input } from "antd";
+import DebouncedInput from "@app/components/atoms/DebouncedInput/DebouncedInput";
+
+<PageFilter>
+  <FilterItem label="Search for name" name="search">
+    <DebouncedInput wait={500} renderInput={props => <Input {...props} />} />
+  </FilterItem>
+</PageFilter>;
+```
+
 ## Trigger reset / submit
 
 By default the filter will update whenever a field changes. We have however supplied two props that render a submit button, and a reset button. With these props set, the filter will not update until the submit button has been clicked. The reset button clears all fields.
