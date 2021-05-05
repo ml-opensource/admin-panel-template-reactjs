@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-
 import { Form, Modal, Row, Col, Divider } from "antd";
 import { FormProps } from "antd/lib/form";
 import cx from "classnames";
 import { useTranslation } from "react-i18next";
+import { useUnmount } from "react-use";
 
 import useSafeReload from "@app/hooks/useSafeReload";
 import useUnsavedPrompt from "@app/hooks/useUnsavedPrompt";
@@ -16,7 +15,6 @@ import styles from "./FormModal.module.scss";
 interface FormModalProps extends FormProps {
   title: string;
   className?: string;
-  visible: boolean;
   width?: number;
   children?: React.ReactNode;
   onClose: () => void;
@@ -32,7 +30,6 @@ const FormModal = ({
   title,
   className,
   width,
-  visible,
   children,
   onClose,
   submitButtonText,
@@ -50,11 +47,7 @@ const FormModal = ({
 
   const { setIsSubmitting } = useUnsavedPrompt({ form });
 
-  useEffect(() => {
-    if (!visible) {
-      setIsSubmitting(false);
-    }
-  }, [setIsSubmitting, visible]);
+  useUnmount(() => setIsSubmitting(false));
 
   const onFormSubmit = (values: unknown) => {
     setIsSubmitting(true);
