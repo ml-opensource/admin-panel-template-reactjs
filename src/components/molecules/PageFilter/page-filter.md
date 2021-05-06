@@ -86,7 +86,7 @@ Passing the `interface`/`type` to the `PageFilter` component isn't strictly nece
 
 ### Debounce fields
 
-In some cases you will have a text field, which will update the url on every change unless you have a submit button. But without the submit button, you can use the `DebouncedInput` component to debounce the changes in an input and thus only update the url after a specific time.
+In some cases you will have a text field, which will update the url on every change unless you have a submit button. But without the submit button, you can use the `DebouncedInput` component to debounce the changes in an input and thus only update the url after a specific delay.
 
 For example:
 
@@ -96,7 +96,7 @@ import DebouncedInput from "@app/components/atoms/DebouncedInput/DebouncedInput"
 
 <PageFilter>
   <FilterItem label="Search for name" name="search">
-    <DebouncedInput wait={500} renderInput={props => <Input {...props} />} />
+    <DebouncedInput wait={500} />
   </FilterItem>
 </PageFilter>;
 ```
