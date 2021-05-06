@@ -27,7 +27,7 @@ const UsersFilter = () => {
 
   return (
     <PageFilter<UsersFilterProps>
-      // showSubmitButton
+      showSubmitButton
       showResetButton
       parseDates
       parseNumbers={["name"]}
