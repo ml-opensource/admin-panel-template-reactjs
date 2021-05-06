@@ -1,7 +1,7 @@
-import { Input } from "antd";
+import { Input, InputProps } from "antd";
 import _debounce from "lodash/debounce";
 
-interface DebouncedInputProps {
+interface DebouncedInputProps extends InputProps {
   /** The number of milliseconds to delay the debounced event (default 500ms) */
   wait?: number;
   /** onChange passed in from FormItem */
