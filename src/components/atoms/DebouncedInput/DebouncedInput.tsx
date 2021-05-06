@@ -1,17 +1,13 @@
+import { Input } from "antd";
 import _debounce from "lodash/debounce";
 
 interface DebouncedInputProps {
-  renderInput: (props: {
-    onChange?: React.ChangeEventHandler;
-    defaultValue?: string | number | readonly string[];
-  }) => React.ReactNode;
   onChange?: React.ChangeEventHandler;
   value?: string | number | readonly string[];
   wait?: number;
 }
 
 const DebouncedInput = ({
-  renderInput,
   onChange,
   value,
   wait = 500,
@@ -28,24 +24,20 @@ const DebouncedInput = ({
     wait
   );
 
-  const persistedOnChange = (persistOnChange: React.ChangeEventHandler) => (
+  const persistedOnChange = (persistOnChange?: React.ChangeEventHandler) => (
     e: React.ChangeEvent
   ) => {
     // persist event as it will be resolved after debounce
     e.persist();
-    debouncedOnChange(e, persistOnChange);
+    persistOnChange && debouncedOnChange(e, persistOnChange);
   };
 
   return (
-    <>
-      {(!!onChange &&
-        renderInput?.({
-          ...props,
-          defaultValue: value,
-          onChange: persistedOnChange(onChange),
-        })) ??
-        null}
-    </>
+    <Input
+      defaultValue={value}
+      onChange={persistedOnChange(onChange)}
+      {...props}
+    />
   );
 };
 

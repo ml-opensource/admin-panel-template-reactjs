@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Select, Checkbox, DatePicker, Input } from "antd";
+import { Select, Checkbox, DatePicker } from "antd";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -27,17 +27,14 @@ const UsersFilter = () => {
 
   return (
     <PageFilter<UsersFilterProps>
-      showSubmitButton
+      // showSubmitButton
       showResetButton
       parseDates
       parseNumbers={["name"]}
     >
       <FilterItem label={t("settingsUsers.filterSearchLabel")} name="search">
         {/* Remove `showSubmitButton` to see the difference */}
-        <DebouncedInput
-          wait={500}
-          renderInput={props => <Input {...props} />}
-        />
+        <DebouncedInput wait={500} />
       </FilterItem>
       <FilterItem label={t("settingsUsers.filterDatesLabel")} name="dates">
         <RangePicker />
