@@ -78,6 +78,7 @@ i18next.use(initReactI18next).init({
           menuDuplicate: "Duplicate user",
           editUserRole: "Edit user role",
           buttonUserRole: "change role",
+          filterSearchLabel: "Search",
           filterDatesLabel: "Dates",
           filterNameLabel: "Name",
           filterNamePlaceholder: "Select name",

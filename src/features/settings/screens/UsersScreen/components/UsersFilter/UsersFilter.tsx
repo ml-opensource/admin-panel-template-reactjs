@@ -5,6 +5,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
+import DebouncedInput from "@app/components/atoms/DebouncedInput/DebouncedInput";
 import PageFilter, {
   FilterItem,
   FilterItemCheckbox,
@@ -31,6 +32,10 @@ const UsersFilter = () => {
       parseDates
       parseNumbers={["name"]}
     >
+      <FilterItem label={t("settingsUsers.filterSearchLabel")} name="search">
+        {/* Remove `showSubmitButton` to see the difference */}
+        <DebouncedInput wait={500} />
+      </FilterItem>
       <FilterItem label={t("settingsUsers.filterDatesLabel")} name="dates">
         <RangePicker />
       </FilterItem>

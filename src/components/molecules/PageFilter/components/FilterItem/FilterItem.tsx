@@ -17,25 +17,23 @@ interface FilterItemProps extends FormItemProps {
   noLabel?: boolean;
 }
 
-const FilterItem = ({ children, noLabel, ...rest }: FilterItemProps) => (
+const FilterItem = memo(({ noLabel, ...rest }: FilterItemProps) => (
   <Item
     labelCol={{ span: 24 }}
     wrapperCol={{ span: 24 }}
     label={noLabel && "\u00A0"} // To ensure layout consistency between fields, if no label is passed
     {...rest}
-  >
-    {children}
-  </Item>
-);
+  />
+));
 
 /**
  * In order to avoid having to write out valuePropName="checked" again
  * and again, when you have a filter setup with many checkboxes, importing
  * the FilterItemCheckbox variant can improve maintainability.
  */
-const FilterItemCheckbox = (props: FilterItemProps) => (
+const FilterItemCheckbox = memo((props: FilterItemProps) => (
   <FilterItem valuePropName="checked" {...props} />
-);
+));
 
-export default memo(FilterItem);
+export default FilterItem;
 export { FilterItemCheckbox };
