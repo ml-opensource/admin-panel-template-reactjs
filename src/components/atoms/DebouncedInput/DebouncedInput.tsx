@@ -2,9 +2,12 @@ import { Input } from "antd";
 import _debounce from "lodash/debounce";
 
 interface DebouncedInputProps {
-  onChange?: React.ChangeEventHandler;
-  value?: string | number | readonly string[];
+  /** The number of milliseconds to delay the debounced event (default 500ms) */
   wait?: number;
+  /** onChange passed in from FormItem */
+  onChange?: React.ChangeEventHandler;
+  /** Value passed in from FormItem */
+  value?: string | number | readonly string[];
 }
 
 const DebouncedInput = ({
