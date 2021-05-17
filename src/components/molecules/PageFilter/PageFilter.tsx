@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
 import _mapValues from "lodash/mapValues";
@@ -88,13 +88,14 @@ const PageFilter = <T extends {}>({
     [parseBoolean, parseDates, parseNumbers, search]
   );
 
-  const [data, setData] = useState(
-    parseBoolean || parseDates || parseNumbers ? parseSearch() : search
+  const data = useCallback(
+    () => (parseBoolean || parseDates || parseNumbers ? parseSearch() : search),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   useEffect(() => {
     if (parseBoolean || parseDates || parseNumbers) {
-      setData(parseSearch());
     }
   }, [parseBoolean, parseDates, parseNumbers, parseSearch, search]);
 
