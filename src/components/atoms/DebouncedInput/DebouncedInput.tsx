@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 import { Input, InputProps } from "antd";
 import _debounce from "lodash/debounce";
 
@@ -16,6 +18,15 @@ const DebouncedInput = ({
   wait = 500,
   ...props
 }: DebouncedInputProps) => {
+  const inputRef = useRef<Input>(null);
+
+  useEffect(() => {
+    // This will allow parent to update value
+    if (inputRef.current) {
+      inputRef.current.setValue(value as string);
+    }
+  }, [value]);
+
   // Debounce the changes to the value
   const debouncedOnChange = _debounce(
     (
@@ -39,6 +50,7 @@ const DebouncedInput = ({
     <Input
       defaultValue={value}
       onChange={persistedOnChange(onChange)}
+      ref={inputRef}
       {...props}
     />
   );
