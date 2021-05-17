@@ -88,12 +88,6 @@ const PageFilter = <T extends {}>({
     [parseBoolean, parseDates, parseNumbers, search]
   );
 
-  const data = useCallback(
-    () => (parseBoolean || parseDates || parseNumbers ? parseSearch() : search),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
   // Every time the search is updated
   // then we reset the fields and parse in the search values
   // this will update the form values when going back
@@ -134,7 +128,6 @@ const PageFilter = <T extends {}>({
 
   return (
     <Form
-      initialValues={data}
       {...rest}
       form={form}
       onValuesChange={!showSubmitButton ? handleChange : undefined}
