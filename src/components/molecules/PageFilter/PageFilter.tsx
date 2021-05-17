@@ -65,7 +65,6 @@ const PageFilter = <T extends {}>({
   showSubmitButton,
   onReset,
   onSubmit,
-  parseBoolean = true,
   parseDates,
   parseNumbers,
   resetText,
@@ -77,15 +76,16 @@ const PageFilter = <T extends {}>({
 
   const [form] = Form.useForm(rest.form);
 
-  const parseSearch = useCallback(
+  const getSearch = useCallback(
     () =>
-      parseFilters<T>({
-        filters: search,
-        parseBoolean,
-        parseDates,
-        parseNumbers,
-      }),
-    [parseBoolean, parseDates, parseNumbers, search]
+      parseDates || parseNumbers
+        ? parseFilters<T>({
+            filters: search,
+            parseDates,
+            parseNumbers,
+          })
+        : search,
+    [parseDates, parseNumbers, search]
   );
 
   // Every time the search is updated
@@ -93,17 +93,9 @@ const PageFilter = <T extends {}>({
   // this will update the form values when going back
   // and forth in the navigation history
   useEffect(() => {
-    let allFields: Record<string, unknown> = _mapValues(
-      form.getFieldsValue(),
-      () => undefined
-    );
-    if (parseBoolean || parseDates || parseNumbers) {
-      allFields = { ...allFields, ...parseSearch() };
-    } else {
-      allFields = { ...allFields, ...search };
-    }
-    form.setFieldsValue(allFields);
-  }, [form, parseBoolean, parseDates, parseNumbers, parseSearch, search]);
+    const resetFields = _mapValues(form.getFieldsValue(), () => undefined);
+    form.setFieldsValue({ ...resetFields, ...getSearch() });
+  }, [form, getSearch]);
 
   // Submit filters, update search params.
   const handleSubmit = (values: Record<string, unknown>) => {
