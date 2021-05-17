@@ -94,10 +94,22 @@ const PageFilter = <T extends {}>({
     []
   );
 
+  // Every time the search is updated
+  // then we reset the fields and parse in the search values
+  // this will update the form values when going back
+  // and forth in the navigation history
   useEffect(() => {
+    let allFields: Record<string, unknown> = _mapValues(
+      form.getFieldsValue(),
+      () => undefined
+    );
     if (parseBoolean || parseDates || parseNumbers) {
+      allFields = { ...allFields, ...parseSearch() };
+    } else {
+      allFields = { ...allFields, ...search };
     }
-  }, [parseBoolean, parseDates, parseNumbers, parseSearch, search]);
+    form.setFieldsValue(allFields);
+  }, [form, parseBoolean, parseDates, parseNumbers, parseSearch, search]);
 
   // Submit filters, update search params.
   const handleSubmit = (values: Record<string, unknown>) => {
