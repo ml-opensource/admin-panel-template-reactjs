@@ -2,14 +2,13 @@ import { useMemo } from "react";
 
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 import TableView, {
   ActionMenuDef,
   TableViewProps,
 } from "@app/components/molecules/TableView/TableView";
 import useSearchParams from "@app/hooks/useSearchParams";
-import { RootState } from "@app/redux/root-reducer";
+import { useAppSelector } from "@app/redux/store";
 
 import { UserDef } from "../../../../types/user.types";
 
@@ -21,9 +20,11 @@ export enum UsersActionMenuEnum {
 
 const UsersTable = (props: UsersTableProps) => {
   const { t } = useTranslation();
-  const { users, loading, pagination } = useSelector(
-    (state: RootState) => state.users
-  );
+  const { users, loading, pagination } = useAppSelector(state => ({
+    users: state.users.users,
+    loading: state.users.loading,
+    pagination: state.users.pagination,
+  }));
   const { getOrderByDirection } = useSearchParams();
 
   const menu: ActionMenuDef = useMemo(
