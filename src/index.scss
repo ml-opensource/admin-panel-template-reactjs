@@ -13,3 +13,9 @@ body {
     width: 100%;
   }
 }
+
+// Fix for blurry images on retina https://stackoverflow.com/questions/13347947/css-filter-on-retina-display-fuzzy-images
+img {
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
