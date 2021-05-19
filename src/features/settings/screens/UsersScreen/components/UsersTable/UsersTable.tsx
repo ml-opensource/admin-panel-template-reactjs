@@ -20,7 +20,11 @@ export enum UsersActionMenuEnum {
 
 const UsersTable = (props: UsersTableProps) => {
   const { t } = useTranslation();
-  const { users, loading, pagination } = useAppSelector(state => state.users);
+  const { users, loading, pagination } = useAppSelector(state => ({
+    users: state.users.users,
+    loading: state.users.loading,
+    pagination: state.users.pagination,
+  }));
   const { getOrderByDirection } = useSearchParams();
 
   const menu: ActionMenuDef = useMemo(

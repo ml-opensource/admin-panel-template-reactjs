@@ -22,7 +22,10 @@ export interface UsersFilterProps {
 
 const UsersFilter = () => {
   const { t } = useTranslation();
-  const { users, loading } = useAppSelector(state => state.users);
+  const { users, loading } = useAppSelector(state => ({
+    users: state.users.users,
+    loading: state.users.loading,
+  }));
 
   return (
     <PageFilter<UsersFilterProps>
