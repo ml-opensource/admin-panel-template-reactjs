@@ -3,14 +3,13 @@ import { memo } from "react";
 import { Select, Checkbox, DatePicker } from "antd";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 import DebouncedInput from "@app/components/atoms/DebouncedInput/DebouncedInput";
 import PageFilter, {
   FilterItem,
   FilterItemCheckbox,
 } from "@app/components/molecules/PageFilter/PageFilter";
-import { RootState } from "@app/redux/root-reducer";
+import { useAppSelector } from "@app/redux/store";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -23,7 +22,7 @@ export interface UsersFilterProps {
 
 const UsersFilter = () => {
   const { t } = useTranslation();
-  const { users, loading } = useSelector((state: RootState) => state.users);
+  const { users, loading } = useAppSelector(state => state.users);
 
   return (
     <PageFilter<UsersFilterProps>
