@@ -36,12 +36,15 @@ export const getOrderBy = (orderByKey: string, orderByDirection: SortOrder) => {
   return `${orderByKey}${ORDER_BY_DIVIDER}${orderByDirection}`;
 };
 
+/**
+ * Map pagination from API to Ant Design pagination
+ */
 export const mapPagination = (
   pagination: ResponsePaginationDef
 ): TablePaginationDef => {
   return {
-    current: pagination?.page ?? 1,
-    pageSize: pagination?.per_page ?? 10,
-    total: pagination?.total ?? 0,
+    current: pagination?.page ?? undefined,
+    pageSize: pagination?.per_page ?? undefined,
+    total: pagination?.total ?? undefined,
   };
 };
