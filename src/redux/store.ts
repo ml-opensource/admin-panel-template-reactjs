@@ -7,6 +7,7 @@ import rootReducer, { RootState } from "./root-reducer";
 
 const store = configureStore({
   reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 if (process.env.NODE_ENV === "development" && module.hot) {
