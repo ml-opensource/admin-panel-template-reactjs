@@ -3,10 +3,10 @@ import { memo, useEffect } from "react";
 import { Col, Form, Input } from "antd";
 import { useTranslation } from "react-i18next/";
 
-import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
+import { Item } from "@app/components/atoms/Form/Form";
+import FormModal from "@app/components/atoms/FormModal/FormModal";
 import { ItemModalEnum } from "@app/constants/route.constants";
 import useShowModal from "@app/hooks/useShowModal";
-import useUnsavedPrompt from "@app/hooks/useUnsavedPrompt";
 
 import { UserDef } from "../../../../types/user.types";
 
@@ -19,7 +19,6 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
   const { t } = useTranslation();
   const { showModal, action, entryId } = useShowModal();
   const [form] = Form.useForm<UserDef>();
-  const { setIsSubmitting } = useUnsavedPrompt({ form });
 
   const editMode = action === ItemModalEnum.EDIT;
 
@@ -31,12 +30,6 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
     }
   }, [entryId, editMode]);
 
-  useEffect(() => {
-    if (!showModal) {
-      setIsSubmitting(false);
-    }
-  }, [setIsSubmitting, showModal]);
-
   const handleClose = () => {
     onClose();
   };
@@ -45,7 +38,6 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
     // TODO: Create / Update users
     // eslint-disable-next-line no-console
     console.log(values);
-    setIsSubmitting(true);
     onSubmitted();
   };
 
