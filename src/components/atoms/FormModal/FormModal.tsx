@@ -46,7 +46,13 @@ const FormModal = ({
   ...formProps
 }: FormModalProps) => {
   const { t } = useTranslation();
-  const { setIsSubmitting } = useUnsavedPrompt({ form });
+  const { setIsSubmitting } = useUnsavedPrompt({ form, visible });
+
+  const onCancel = () => {
+    setIsSubmitting(false);
+
+    // onClose();
+  };
 
   useEffect(() => {
     if (!visible) {
@@ -55,17 +61,13 @@ const FormModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
-  const onCancel = () => {
-    setIsSubmitting(false);
-    onClose();
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: any) => {
     setIsSubmitting(true);
     onFinish?.(values);
   };
 
+  // FIXME: coordinate with the new Form - if the new form is used, is this necessary then?
   const onAfterClose = () => form?.resetFields();
 
   return (

@@ -45,12 +45,15 @@ i18next.use(initReactI18next).init({
           editTitle: "Edit",
           saveTitle: "Save",
           cancelTitle: "Cancel",
+          okTitle: "Ok",
           moreTitle: "More",
           apply: "Apply",
           reset: "Reset",
           unsavedChangesTitle: "Are you sure?",
           unsavedChangesText:
-            "You have unsaved changes in the form, if you close it then the changes will be discarded.",
+            "You have unsaved changes in the form, if you close it the changes will be discarded.",
+          unsavedChangesCancelTitle: "No, continue editing",
+          unsavedChangesConfirmTitle: "Close and leave",
         },
         home: {
           navigationTitle: "Home",

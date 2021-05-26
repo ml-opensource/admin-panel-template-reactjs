@@ -1,45 +1,80 @@
 import { useEffect, useState } from "react";
 
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal, ModalFuncProps } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-interface UnsavedPromptProps extends Omit<ModalFuncProps, "onOk"> {
+import { modalConfirm } from "@app/components/atoms/ModalConfirm/ModalConfirm";
+
+interface UnsavedPromptProps {
   form?: FormInstance;
+  visible?: boolean;
+  title?: string;
+  text?: string;
+  asyncForm?: boolean; // FIXME: remove once everyone uses the new Form
 }
 
-const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
+const useUnsavedPrompt = ({
+  form,
+  title,
+  text,
+  visible,
+  asyncForm,
+}: UnsavedPromptProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
-  const location = useLocation();
   const { t } = useTranslation();
 
+  const prompt = () => {
+    setIsSubmitting(false);
+  };
   useEffect(() => {
-    const unblock = history.block(tx => {
-      if (form?.isFieldsTouched() && !isSubmitting) {
-        Modal.confirm({
-          title: t("default.unsavedChangesTitle"),
-          content: t("default.unsavedChangesText"),
-          icon: <ExclamationCircleOutlined />,
-          okType: "primary",
-          cancelText: t("default.cancel"),
-          onOk: () => {
-            unblock();
-            history.push(tx.pathname);
-          },
-          ...modalProps,
-        });
-        return false;
-      }
-      return unblock();
-    });
+    window.addEventListener("beforeunload", prompt);
     return () => {
-      unblock();
+      window.removeEventListener("beforeunload", prompt);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, isSubmitting]);
+  }, []);
+
+  // const promptConfirmation = () => {};
+  useEffect(() => {
+    if (visible) {
+      // window.addEventListener("beforeunload", onCancel);
+      const unblock = history.block(tx => {
+        if (form?.isFieldsTouched() && !isSubmitting) {
+          modalConfirm(t, {
+            title: title ?? t("default.unsavedChangesTitle"),
+            content: text ?? t("default.unsavedChangesText"),
+            cancelText: t("default.unsavedChangesCancelTitle"),
+            okText: t("default.unsavedChangesConfirmTitle"),
+            onOk: () => {
+              unblock();
+              history.push(tx.pathname);
+              if (asyncForm) form.resetFields();
+            },
+          });
+          return false;
+        }
+        return unblock();
+      });
+      return () => {
+        unblock();
+      };
+    }
+    // window.removeEventListener("beforeunload", onCancel);
+
+    // return if not visible
+    return undefined;
+  }, [
+    visible,
+    form,
+    history,
+    history.location,
+    isSubmitting,
+    t,
+    text,
+    title,
+    asyncForm,
+  ]);
 
   return { setIsSubmitting };
 };
