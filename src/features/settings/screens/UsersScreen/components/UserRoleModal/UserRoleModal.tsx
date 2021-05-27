@@ -1,9 +1,9 @@
 import React, { memo, useEffect } from "react";
 
-import { Col, Form, Input } from "antd";
+import { Col, Input } from "antd";
 import { useTranslation } from "react-i18next/";
 
-import { Item } from "@app/components/atoms/Form/Form";
+import { Item, useForm } from "@app/components/atoms/Form/Form";
 import FormModal from "@app/components/atoms/FormModal/FormModal";
 import { ItemModalEnum } from "@app/constants/route.constants";
 import useShowModal from "@app/hooks/useShowModal";
@@ -22,7 +22,7 @@ const UserRoleModal = memo(({ onClose, onSubmitted }: UserRoleModalProps) => {
   const { showModal, action, entryId } = useShowModal({
     customEntryType: ENTRY_TYPE_USER_ROLE,
   });
-  const [form] = Form.useForm();
+  const [form] = useForm();
 
   const editMode = action === ItemModalEnum.EDIT;
 
