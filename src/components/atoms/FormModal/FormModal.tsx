@@ -48,12 +48,6 @@ const FormModal = ({
   const { t } = useTranslation();
   const { setIsSubmitting } = useUnsavedPrompt({ form, visible });
 
-  const onCancel = () => {
-    setIsSubmitting(false);
-
-    // onClose();
-  };
-
   useEffect(() => {
     if (!visible) {
       setIsSubmitting(false);
@@ -67,7 +61,7 @@ const FormModal = ({
     onFinish?.(values);
   };
 
-  // FIXME: coordinate with the new Form - if the new form is used, is this necessary then?
+  // FIXME: coordinate with the new Form.tsx - if the new form is used, is this *reset* necessary then?
   const onAfterClose = () => form?.resetFields();
 
   return (
@@ -77,7 +71,7 @@ const FormModal = ({
       title={title}
       width={width}
       footer={null}
-      onCancel={onCancel}
+      onCancel={() => setIsSubmitting(false)}
       destroyOnClose={destroyOnClose}
       forceRender
       afterClose={onAfterClose}

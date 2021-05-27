@@ -5,14 +5,16 @@ const { confirm } = Modal;
 
 export const modalConfirm = (
   t: TFunction<"translation">,
-  { cancelText, okText, ...rest }: ModalFuncProps
+  {
+    cancelText = t("default.cancelTitle"),
+    okText = t("default.okTitle"),
+    ...rest
+  }: ModalFuncProps
 ) => {
   return confirm({
-    cancelText: cancelText ?? t("default.cancelTitle"),
-    okText: okText ?? t("default.okTitle"),
+    cancelText,
+    okText,
     width: 456,
     ...rest,
-    okButtonProps: { type: "link" },
-    cancelButtonProps: { type: "primary" },
   });
 };

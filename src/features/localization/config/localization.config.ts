@@ -49,11 +49,11 @@ i18next.use(initReactI18next).init({
           moreTitle: "More",
           apply: "Apply",
           reset: "Reset",
-          unsavedChangesTitle: "Are you sure?",
+          unsavedChangesTitle: "Are you sure you want to leave?",
           unsavedChangesText:
             "You have unsaved changes in the form, if you close it the changes will be discarded.",
-          unsavedChangesCancelTitle: "No, continue editing",
-          unsavedChangesConfirmTitle: "Close and leave",
+          unsavedChangesCancelTitle: "Keep editing",
+          unsavedChangesConfirmTitle: "Leave",
         },
         home: {
           navigationTitle: "Home",

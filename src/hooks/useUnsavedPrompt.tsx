@@ -25,20 +25,33 @@ const useUnsavedPrompt = ({
   const history = useHistory();
   const { t } = useTranslation();
 
-  const prompt = () => {
-    setIsSubmitting(false);
+  /**
+   * Prompt -
+   * canceling unload event and opening native dialogue
+   * //TODO: consider if the beforeunload-part should be its own custom hook?
+   */
+  const prompt = (event: BeforeUnloadEvent) => {
+    if (visible && form?.isFieldsTouched()) {
+      const e = event || window.event;
+      e.preventDefault();
+      if (e) {
+        e.returnValue = "";
+      }
+      return "";
+    }
+    return undefined;
   };
+
   useEffect(() => {
     window.addEventListener("beforeunload", prompt);
     return () => {
       window.removeEventListener("beforeunload", prompt);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const promptConfirmation = () => {};
   useEffect(() => {
     if (visible) {
-      // window.addEventListener("beforeunload", onCancel);
       const unblock = history.block(tx => {
         if (form?.isFieldsTouched() && !isSubmitting) {
           modalConfirm(t, {
@@ -52,6 +65,7 @@ const useUnsavedPrompt = ({
               if (asyncForm) form.resetFields();
             },
           });
+
           return false;
         }
         return unblock();
@@ -60,10 +74,7 @@ const useUnsavedPrompt = ({
         unblock();
       };
     }
-    // window.removeEventListener("beforeunload", onCancel);
-
-    // return if not visible
-    return undefined;
+    return undefined; // return if not visible
   }, [
     visible,
     form,
