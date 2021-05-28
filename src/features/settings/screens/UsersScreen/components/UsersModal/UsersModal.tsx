@@ -74,13 +74,19 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
       loadingContent={loading}
     >
       <Col span={24}>
-        <Item name="first_name" label="First name">
-          <Input type="text" />
+        <Item name="first_name" label={t("settingsUsers.inputFirstNameLabel")}>
+          <Input
+            type="text"
+            placeholder={t("settingsUsers.inputFirstNamePlaceholder")}
+          />
         </Item>
       </Col>
       <Col span={24}>
-        <Item name="last_name" label="Last name">
-          <Input type="text" />
+        <Item name="last_name" label={t("settingsUsers.inputLastNameLabel")}>
+          <Input
+            type="text"
+            placeholder={t("settingsUsers.inputLastNamePlaceholder")}
+          />
         </Item>
       </Col>
     </FormModal>
