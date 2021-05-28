@@ -1,12 +1,19 @@
 import { memo, useEffect } from "react";
 
 import { Col, Input } from "antd";
+import _toNumber from "lodash/toNumber";
 import { useTranslation } from "react-i18next/";
 
 import { Item, useForm } from "@app/components/atoms/Form/Form";
 import FormModal from "@app/components/atoms/FormModal/FormModal";
 import { ItemModalEnum } from "@app/constants/route.constants";
+import {
+  clearUser,
+  getUserById,
+  isValidUserId,
+} from "@app/features/settings/settings";
 import useShowModal from "@app/hooks/useShowModal";
+import { useAppDispatch, useAppSelector } from "@app/redux/store";
 
 import { UserDef } from "../../../../types/user.types";
 
@@ -16,30 +23,40 @@ interface UsersModalProps {
 }
 
 const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
+  // Hooks
   const { t } = useTranslation();
   const { showModal, action, entryId } = useShowModal();
   const [form] = useForm<UserDef>();
+  const dispatch = useAppDispatch();
+  const { user, loading } = useAppSelector(state => ({
+    user: state.users.user,
+    loading: state.users.loading,
+  }));
 
+  // Constants
+  const userId = _toNumber(entryId);
   const editMode = action === ItemModalEnum.EDIT;
 
-  // TODO: Get User from API
   useEffect(() => {
-    if (editMode) {
-      // eslint-disable-next-line no-console
-      console.log("user id", entryId);
+    if (showModal) {
+      if (editMode && isValidUserId(userId)) {
+        dispatch(getUserById(userId));
+      } else {
+        dispatch(clearUser());
+      }
     }
-  }, [entryId, editMode]);
+  }, [showModal, editMode, userId, dispatch]);
 
-  const handleClose = () => {
-    onClose();
-  };
+  const handleClose = () => onClose();
 
   const handleFinish = (values: Partial<UserDef>) => {
-    // TODO: Create / Update users
+    // TODO: Create / Update user
     // eslint-disable-next-line no-console
     console.log(values);
     onSubmitted();
   };
+
+  const getFormValues = () => user;
 
   return (
     <FormModal
@@ -52,9 +69,17 @@ const UsersModal = memo(({ onClose, onSubmitted }: UsersModalProps) => {
       onClose={handleClose}
       onFinish={handleFinish}
       form={form}
+      values={getFormValues()}
+      destroyOnClose
+      loadingContent={loading}
     >
       <Col span={24}>
-        <Item name="Username" label="Username">
+        <Item name="first_name" label="First name">
+          <Input type="text" />
+        </Item>
+      </Col>
+      <Col span={24}>
+        <Item name="last_name" label="Last name">
           <Input type="text" />
         </Item>
       </Col>
