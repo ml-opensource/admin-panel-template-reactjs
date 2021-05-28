@@ -80,7 +80,7 @@ const FormModal = ({
       forceRender
       afterClose={onAfterClose}
     >
-      <Form layout="vertical" form={form} onFinish={onSubmit} {...formProps}>
+      <Form form={form} onFinish={onSubmit} {...formProps}>
         <SpinWrapper loading={loadingContent}>
           <Row>{children}</Row>
         </SpinWrapper>
