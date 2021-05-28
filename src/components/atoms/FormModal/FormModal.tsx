@@ -60,7 +60,8 @@ const FormModal = ({
     onFinish?.(values);
   };
 
-  // FIXME: coordinate with the new Form.tsx - if the new form is used, is this *reset* necessary then?
+  // Reset fields when closing modal
+  // necessary when modal is in ADD mode
   const onAfterClose = () => form?.resetFields();
 
   const handleOnClose = () => {
