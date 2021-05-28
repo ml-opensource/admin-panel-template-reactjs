@@ -52,8 +52,7 @@ const FormModal = ({
     if (!visible) {
       setIsSubmitting(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, [visible, setIsSubmitting]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: any) => {
@@ -64,6 +63,11 @@ const FormModal = ({
   // FIXME: coordinate with the new Form.tsx - if the new form is used, is this *reset* necessary then?
   const onAfterClose = () => form?.resetFields();
 
+  const handleOnClose = () => {
+    setIsSubmitting(false);
+    onClose();
+  };
+
   return (
     <Modal
       className={cx(className, styles.modal)}
@@ -71,7 +75,7 @@ const FormModal = ({
       title={title}
       width={width}
       footer={null}
-      onCancel={() => setIsSubmitting(false)}
+      onCancel={handleOnClose}
       destroyOnClose={destroyOnClose}
       forceRender
       afterClose={onAfterClose}
@@ -83,7 +87,7 @@ const FormModal = ({
         <Divider className={styles.divider} />
         <Row justify="end">
           <Col>
-            <Button danger onClick={onClose}>
+            <Button danger onClick={handleOnClose}>
               {cancelButtonText ?? t("default.cancelTitle")}
             </Button>
 
