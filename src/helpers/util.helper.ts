@@ -11,3 +11,12 @@ export const isURL = (str: string) => {
  */
 export const delay = (ms: number) =>
   new Promise(resolve => setTimeout(resolve, ms));
+
+export const getInitials = (name: string, maxChar: number) => {
+  return name
+    .split(/\s/)
+    .map(word => word[0])
+    .join("")
+    .substr(0, maxChar)
+    .toUpperCase();
+};

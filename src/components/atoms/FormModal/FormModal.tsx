@@ -52,8 +52,7 @@ const FormModal = ({
     if (!visible) {
       setIsSubmitting(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, [visible, setIsSubmitting]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: any) => {
@@ -61,8 +60,14 @@ const FormModal = ({
     onFinish?.(values);
   };
 
-  // FIXME: coordinate with the new Form.tsx - if the new form is used, is this *reset* necessary then?
+  // Reset fields when closing modal
+  // necessary when modal is in ADD mode
   const onAfterClose = () => form?.resetFields();
+
+  const handleOnClose = () => {
+    setIsSubmitting(false);
+    onClose();
+  };
 
   return (
     <Modal
@@ -71,19 +76,19 @@ const FormModal = ({
       title={title}
       width={width}
       footer={null}
-      onCancel={() => setIsSubmitting(false)}
+      onCancel={handleOnClose}
       destroyOnClose={destroyOnClose}
       forceRender
       afterClose={onAfterClose}
     >
-      <Form layout="vertical" form={form} onFinish={onSubmit} {...formProps}>
+      <Form form={form} onFinish={onSubmit} {...formProps}>
         <SpinWrapper loading={loadingContent}>
           <Row>{children}</Row>
         </SpinWrapper>
         <Divider className={styles.divider} />
         <Row justify="end">
           <Col>
-            <Button danger onClick={onClose}>
+            <Button danger onClick={handleOnClose}>
               {cancelButtonText ?? t("default.cancelTitle")}
             </Button>
 

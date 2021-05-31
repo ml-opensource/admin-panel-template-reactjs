@@ -20,14 +20,14 @@ const Form = ({
   values = undefined,
   children,
   formRef = undefined,
+  form,
   ...props
 }: FormProps) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  const [form] = useForm(props.form);
+  const [formInstance] = useForm(form);
 
   const bindValues = useCallback(() => {
-    form.resetFields();
-  }, [form]);
+    formInstance.resetFields();
+  }, [formInstance]);
 
   const prevValues = usePrevious(values);
 
@@ -39,9 +39,9 @@ const Form = ({
 
   return (
     <AntdForm
-      {...props}
-      form={form}
       layout="vertical"
+      {...props}
+      form={formInstance}
       ref={formRef}
       initialValues={values}
     >

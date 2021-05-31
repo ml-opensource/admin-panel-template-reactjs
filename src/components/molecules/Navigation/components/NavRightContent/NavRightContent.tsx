@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { Menu, Avatar } from "antd";
 
-import { getInitials } from "@app/helpers/user.helper";
+import { getInitials } from "@app/helpers/util.helper";
 
 const NavRightContent = memo(() => {
   // TODO: use current user
