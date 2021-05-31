@@ -104,11 +104,13 @@ const UsersScreen = () => {
         ]}
         onActionMenu={handleActionMenu}
       />
+
       {/* Modal to Create / Edit User */}
       <UsersModal
         onClose={handleCloseModal}
         onSubmitted={handleSubmittedModal}
       />
+
       {/* Modal to Update User Role */}
       <UserRoleModal
         onClose={handleCloseModal}

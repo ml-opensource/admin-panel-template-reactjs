@@ -15,3 +15,7 @@ export type GetUsersParamDef = {
   page?: ResponsePaginationDef["page"];
   per_page?: ResponsePaginationDef["per_page"];
 };
+
+export type GetUserByIdResponseDef = {
+  data: UserDef;
+};

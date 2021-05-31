@@ -1,45 +1,91 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal, ModalFuncProps } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-interface UnsavedPromptProps extends Omit<ModalFuncProps, "onOk"> {
+import { modalConfirm } from "@app/components/atoms/ModalConfirm/ModalConfirm";
+
+interface UnsavedPromptProps {
   form?: FormInstance;
+  visible?: boolean;
+  title?: string;
+  text?: string;
 }
 
-const useUnsavedPrompt = ({ form, ...modalProps }: UnsavedPromptProps) => {
+/**
+ * A hook to prompt the user when leaving an unsaved form
+ */
+const useUnsavedPrompt = ({
+  form,
+  title,
+  text,
+  visible,
+}: UnsavedPromptProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
-  const location = useLocation();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const unblock = history.block(tx => {
-      if (form?.isFieldsTouched() && !isSubmitting) {
-        Modal.confirm({
-          title: t("default.unsavedChangesTitle"),
-          content: t("default.unsavedChangesText"),
-          icon: <ExclamationCircleOutlined />,
-          okType: "primary",
-          cancelText: t("default.cancel"),
-          onOk: () => {
-            unblock();
-            history.push(tx.pathname);
-          },
-          ...modalProps,
-        });
-        return false;
+  /**
+   * This will prompt a native browser dialog to confirm
+   * if the user wants to leave this page without saving the changes
+   * It will prompt the confirm dialog when the user:
+   * - Clicks 'reload' in browser
+   * - Clicks 'back' in browser
+   * - Enters a url in browser
+   * - Closes the browser/tab
+   */
+  const prompt = useCallback(
+    (event: BeforeUnloadEvent) => {
+      if (visible && form?.isFieldsTouched()) {
+        const e = event || window.event;
+        e.preventDefault();
+        if (e) {
+          e.returnValue = "";
+        }
+        return "";
       }
-      return unblock();
-    });
+      return undefined;
+    },
+    [form, visible]
+  );
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", prompt);
     return () => {
-      unblock();
+      window.removeEventListener("beforeunload", prompt);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, isSubmitting]);
+  }, [prompt]);
+
+  /**
+   * Runs when there is a history change,
+   * and shows a modal confirmation to discard form changes if form is touched.
+   */
+  useEffect(() => {
+    if (visible) {
+      const unblock = history.block(tx => {
+        if (form?.isFieldsTouched() && !isSubmitting) {
+          modalConfirm(t, {
+            title: title ?? t("default.unsavedChangesTitle"),
+            content: text ?? t("default.unsavedChangesText"),
+            cancelText: t("default.unsavedChangesCancelTitle"),
+            okText: t("default.unsavedChangesConfirmTitle"),
+            onOk: () => {
+              unblock();
+              history.push(tx.pathname);
+            },
+          });
+
+          return false;
+        }
+        return unblock();
+      });
+      return () => {
+        unblock();
+      };
+    }
+    return undefined; // return if not visible
+  }, [visible, form, history, history.location, isSubmitting, t, text, title]);
 
   return { setIsSubmitting };
 };

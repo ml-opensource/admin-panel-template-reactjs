@@ -24,7 +24,7 @@ function useShowModal(config?: ShowModalConfig) {
     );
   }, [action, customEntryType, entryType]);
 
-  return { showModal, action, entryId };
+  return { showModal, action, entryId, entryType };
 }
 
 export default useShowModal;

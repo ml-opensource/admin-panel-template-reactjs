@@ -1,13 +1,14 @@
 import React, { memo, useEffect } from "react";
 
-import { Col, Form, Input } from "antd";
+import { Col, Input } from "antd";
+import _toNumber from "lodash/toNumber";
 import { useTranslation } from "react-i18next/";
 
-import FormModal, { Item } from "@app/components/atoms/FormModal/FormModal";
+import { Item, useForm } from "@app/components/atoms/Form/Form";
+import FormModal from "@app/components/atoms/FormModal/FormModal";
 import { ItemModalEnum } from "@app/constants/route.constants";
+import { isValidUserId, UserDef } from "@app/features/settings/settings";
 import useShowModal from "@app/hooks/useShowModal";
-
-import { UserDef } from "../../../../types/user.types";
 
 export const ENTRY_TYPE_USER_ROLE = "user-role";
 
@@ -21,20 +22,23 @@ const UserRoleModal = memo(({ onClose, onSubmitted }: UserRoleModalProps) => {
   const { showModal, action, entryId } = useShowModal({
     customEntryType: ENTRY_TYPE_USER_ROLE,
   });
-  const [form] = Form.useForm();
+  const [form] = useForm();
 
+  // Constants
+  const userId = _toNumber(entryId);
   const editMode = action === ItemModalEnum.EDIT;
 
   // TODO: Get User from API
   useEffect(() => {
-    if (editMode) {
-      // eslint-disable-next-line no-console
-      console.log("user id", entryId);
+    if (showModal) {
+      if (editMode && isValidUserId(userId)) {
+        // eslint-disable-next-line no-console
+        console.log("user id", userId);
+      }
     }
-  }, [entryId, editMode]);
+  }, [userId, editMode, showModal]);
 
   const handleClose = () => {
-    form.resetFields();
     onClose();
   };
 

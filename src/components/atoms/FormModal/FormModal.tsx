@@ -1,19 +1,21 @@
 import { useEffect } from "react";
 
-import { Form, Modal, Row, Col, Divider } from "antd";
-import { FormProps } from "antd/lib/form";
+import { Modal, Row, Col, Divider, ModalProps } from "antd";
 import cx from "classnames";
 import { useTranslation } from "react-i18next";
+
+import Form, { FormProps } from "@app/components/atoms/Form/Form";
+import useUnsavedPrompt from "@app/hooks/useUnsavedPrompt";
 
 import Button from "../Button/Button";
 import SpinWrapper from "../SpinWrapper/SpinWrapper";
 import styles from "./FormModal.module.scss";
 
-interface FormModalProps extends FormProps {
-  title: string;
-  visible: boolean;
-  className?: string;
-  width?: number;
+interface FormModalProps extends Omit<FormProps, "title"> {
+  title?: ModalProps["title"];
+  visible: ModalProps["visible"];
+  className?: ModalProps["className"];
+  width?: ModalProps["width"];
   children?: React.ReactNode;
   onClose: () => void;
   submitButtonText?: string;
@@ -22,6 +24,8 @@ interface FormModalProps extends FormProps {
   disableSubmit?: boolean;
   loadingSubmit?: boolean;
   loadingContent?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onFinish?: (values: any) => void;
 }
 
 const FormModal = ({
@@ -38,15 +42,32 @@ const FormModal = ({
   loadingSubmit,
   loadingContent,
   form,
+  onFinish,
   ...formProps
 }: FormModalProps) => {
   const { t } = useTranslation();
+  const { setIsSubmitting } = useUnsavedPrompt({ form, visible });
 
   useEffect(() => {
     if (!visible) {
-      form?.resetFields();
+      setIsSubmitting(false);
     }
-  }, [form, visible]);
+  }, [visible, setIsSubmitting]);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit = (values: any) => {
+    setIsSubmitting(true);
+    onFinish?.(values);
+  };
+
+  // Reset fields when closing modal
+  // necessary when modal is in ADD mode
+  const onAfterClose = () => form?.resetFields();
+
+  const handleOnClose = () => {
+    setIsSubmitting(false);
+    onClose();
+  };
 
   return (
     <Modal
@@ -55,18 +76,19 @@ const FormModal = ({
       title={title}
       width={width}
       footer={null}
-      onCancel={onClose}
+      onCancel={handleOnClose}
       destroyOnClose={destroyOnClose}
       forceRender
+      afterClose={onAfterClose}
     >
-      <Form layout="vertical" form={form} {...formProps}>
+      <Form form={form} onFinish={onSubmit} {...formProps}>
         <SpinWrapper loading={loadingContent}>
           <Row>{children}</Row>
         </SpinWrapper>
         <Divider className={styles.divider} />
         <Row justify="end">
           <Col>
-            <Button danger onClick={onClose}>
+            <Button danger onClick={handleOnClose}>
               {cancelButtonText ?? t("default.cancelTitle")}
             </Button>
 
@@ -86,5 +108,4 @@ const FormModal = ({
   );
 };
 
-export const { Item } = Form;
 export default FormModal;
