@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 
+import { useAppSelector } from "@app/redux/store";
+
 import { PermissionEnum } from "../constants/permissions.scopes";
-import { getPermissions } from "../logics/permissions.logics";
 
 function usePermissions(
   requiredPermissions: PermissionEnum[],
   hasAll?: boolean
 ) {
   const [allowed, setAllowed] = useState<boolean>(false);
+  const { permissions } = useAppSelector(state => ({
+    permissions: state.permissions.permissions,
+  }));
 
   useEffect(() => {
-    const permissions = getPermissions();
     let hasPermission = false;
 
     if (!requiredPermissions) {

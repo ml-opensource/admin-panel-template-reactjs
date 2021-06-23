@@ -13,8 +13,8 @@ import { setPermissions } from "features/permissions/permissions";
 const response = await axios.get("/me");
 const user = response.data;
 
-// Set user's permissions
-setPermissions(user.permissions ?? []);
+// Set user's permissions using dispatch
+dispatch(setPermissions(user.permissions ?? []));
 ```
 
 The Permission component will now have access to the user's permission scopes and can show/hide components.
