@@ -14,6 +14,7 @@ import {
   SorterResult,
   TableCurrentDataSource,
 } from "antd/lib/table/interface";
+import cx from "classnames";
 import { useTranslation } from "react-i18next";
 
 import Button from "@app/components/atoms/Button/Button";
@@ -48,6 +49,7 @@ const TableView = <T extends {}>({
   onActionMenu,
   extraActions,
   actionWidth = 150,
+  className,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
@@ -90,7 +92,12 @@ const TableView = <T extends {}>({
   );
 
   return (
-    <Table rowKey="id" onChange={handleOnChange} {...tableProps}>
+    <Table
+      rowKey="id"
+      onChange={handleOnChange}
+      className={cx(styles.table, className)}
+      {...tableProps}
+    >
       {children}
       <Column<T>
         key="action"
