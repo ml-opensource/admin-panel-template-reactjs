@@ -59,12 +59,15 @@ const TableView = <T extends {}>({
     sorter: SorterResult<T> | SorterResult<T>[],
     extra: TableCurrentDataSource<T>
   ) => {
-    const orderBy = Array.isArray(sorter)
-      ? undefined
-      : (sorter.order &&
-          sorter.columnKey &&
-          getOrderBy(sorter.columnKey.toString(), sorter.order)) ||
-        undefined;
+    let orderBy: string | undefined;
+    if (!Array.isArray(sorter)) {
+      // Use column key or field (`dataIndex`), depending on what is set
+      const columnKey =
+        sorter.columnKey?.toString() ?? sorter.field?.toString();
+      if (sorter.order && columnKey) {
+        orderBy = getOrderBy(columnKey, sorter.order);
+      }
+    }
 
     const page = pagination.current;
     const { pageSize } = pagination;
