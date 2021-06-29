@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { ReactNode } from "react";
+import React, { memo, ReactNode } from "react";
 
 import {
   CopyOutlined,
@@ -36,6 +36,7 @@ export interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   actionMenu?: ActionMenuDef;
   onActionMenu?: (key: string, record: T) => void;
   actionWidth?: number | string;
+  hideActionColumn?: boolean;
 }
 
 const TableView = <T extends {}>({
@@ -49,6 +50,7 @@ const TableView = <T extends {}>({
   onActionMenu,
   extraActions,
   actionWidth = 150,
+  hideActionColumn = false,
   className,
   ...tableProps
 }: TableViewProps<T>) => {
@@ -99,62 +101,65 @@ const TableView = <T extends {}>({
       {...tableProps}
     >
       {children}
-      <Column<T>
-        key="action"
-        title={actionTitle}
-        fixed="right"
-        width={actionWidth}
-        className={styles.actions}
-        render={(_, record) => (
-          <Space size="middle">
-            {!!onEdit && (
-              <Tooltip title={t("default.editTitle")}>
-                <Button
-                  onClick={() => onEdit(record)}
-                  shape="circle"
-                  icon={<EditOutlined />}
-                />
-              </Tooltip>
-            )}
-            {!!onDuplicate && (
-              <Tooltip title={t("default.duplicateTitle")}>
-                <Button
-                  onClick={() => onDuplicate(record)}
-                  shape="circle"
-                  icon={<CopyOutlined />}
-                />
-              </Tooltip>
-            )}
-            {!!onDelete && (
-              <Popconfirm
-                title={t("default.confirmDeleteTitle")}
-                okText={t("default.confirmDeleteYes")}
-                cancelText={t("default.confirmDeleteNo")}
-                onConfirm={() => onDelete(record)}
-                placement="left"
-              >
-                <Tooltip title={t("default.deleteTitle")}>
-                  <Button shape="circle" icon={<DeleteOutlined />} />
+      {!hideActionColumn && (
+        <Column<T>
+          key="action"
+          title={actionTitle}
+          fixed="right"
+          width={actionWidth}
+          className={styles.actions}
+          render={(_, record) => (
+            <Space size="middle">
+              {!!onEdit && (
+                <Tooltip title={t("default.editTitle")}>
+                  <Button
+                    onClick={() => onEdit(record)}
+                    shape="circle"
+                    icon={<EditOutlined />}
+                  />
                 </Tooltip>
-              </Popconfirm>
-            )}
-            {!!extraActions && extraActions(record)}
-            {actionMenu && (
-              <Dropdown
-                key="more"
-                overlay={getMenu(record)}
-                trigger={["click"]}
-              >
-                <Tooltip title={t("default.moreTitle")}>
-                  <Button shape="circle" icon={<MenuOutlined />} />
+              )}
+              {!!onDuplicate && (
+                <Tooltip title={t("default.duplicateTitle")}>
+                  <Button
+                    onClick={() => onDuplicate(record)}
+                    shape="circle"
+                    icon={<CopyOutlined />}
+                  />
                 </Tooltip>
-              </Dropdown>
-            )}
-          </Space>
-        )}
-      />
+              )}
+              {!!onDelete && (
+                <Popconfirm
+                  title={t("default.confirmDeleteTitle")}
+                  okText={t("default.confirmDeleteYes")}
+                  cancelText={t("default.confirmDeleteNo")}
+                  onConfirm={() => onDelete(record)}
+                  placement="left"
+                >
+                  <Tooltip title={t("default.deleteTitle")}>
+                    <Button shape="circle" icon={<DeleteOutlined />} />
+                  </Tooltip>
+                </Popconfirm>
+              )}
+              {!!extraActions && extraActions(record)}
+              {actionMenu && (
+                <Dropdown
+                  key="more"
+                  overlay={getMenu(record)}
+                  trigger={["click"]}
+                >
+                  <Tooltip title={t("default.moreTitle")}>
+                    <Button shape="circle" icon={<MenuOutlined />} />
+                  </Tooltip>
+                </Dropdown>
+              )}
+            </Space>
+          )}
+        />
+      )}
     </Table>
   );
 };
 
-export default TableView;
+export default memo(TableView) as typeof TableView;
+export { Column };
