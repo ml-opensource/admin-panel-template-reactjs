@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { MenuMode } from "antd/lib/menu";
+import { MenuProps } from "antd/lib/menu";
 import cx from "classnames";
 
 import { ReactComponent as Logo } from "@app/assets/images/logo.svg";
@@ -9,7 +9,7 @@ import NavMenu from "../NavMenu/NavMenu";
 import styles from "./NavLeftContent.module.scss";
 
 interface NavLeftContentProps {
-  mode?: MenuMode;
+  mode?: MenuProps["mode"];
 }
 
 const NavLeftContent = memo(({ mode = "horizontal" }: NavLeftContentProps) => {
