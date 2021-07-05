@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
 import _mapValues from "lodash/mapValues";
@@ -65,7 +65,6 @@ const PageFilter = <T extends {}>({
   showSubmitButton,
   onReset,
   onSubmit,
-  parseBoolean = true,
   parseDates,
   parseNumbers,
   resetText,
@@ -77,26 +76,26 @@ const PageFilter = <T extends {}>({
 
   const [form] = Form.useForm(rest.form);
 
-  const parseSearch = useCallback(
+  const getSearch = useCallback(
     () =>
-      parseFilters<T>({
-        filters: search,
-        parseBoolean,
-        parseDates,
-        parseNumbers,
-      }),
-    [parseBoolean, parseDates, parseNumbers, search]
+      parseDates || parseNumbers
+        ? parseFilters<T>({
+            filters: search,
+            parseDates,
+            parseNumbers,
+          })
+        : search,
+    [parseDates, parseNumbers, search]
   );
 
-  const [data, setData] = useState(
-    parseBoolean || parseDates || parseNumbers ? parseSearch() : search
-  );
-
+  // Every time the search is updated
+  // then we reset the fields and parse in the search values
+  // this will update the form values when going back
+  // and forth in the navigation history
   useEffect(() => {
-    if (parseBoolean || parseDates || parseNumbers) {
-      setData(parseSearch());
-    }
-  }, [parseBoolean, parseDates, parseNumbers, parseSearch, search]);
+    const resetFields = _mapValues(form.getFieldsValue(), () => undefined);
+    form.setFieldsValue({ ...resetFields, ...getSearch() });
+  }, [form, getSearch]);
 
   // Submit filters, update search params.
   const handleSubmit = (values: Record<string, unknown>) => {
@@ -121,7 +120,6 @@ const PageFilter = <T extends {}>({
 
   return (
     <Form
-      initialValues={data}
       {...rest}
       form={form}
       onValuesChange={!showSubmitButton ? handleChange : undefined}

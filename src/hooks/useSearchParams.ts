@@ -2,12 +2,22 @@
 import { useCallback, useEffect, useState } from "react";
 
 import _toInteger from "lodash/toInteger";
-import qs from "query-string";
+import qs, { ParseOptions, StringifyOptions } from "query-string";
 import { useLocation, useHistory } from "react-router-dom";
 
 import { ItemModalEnum } from "@app/constants/route.constants";
 import { getOrderByExtraction } from "@app/helpers/table.helper";
 import { OrderByDef } from "@app/types/table.types";
+
+const ARRAY_FORMAT: StringifyOptions["arrayFormat"] = "bracket";
+const QUERY_OPTIONS: StringifyOptions = {
+  arrayFormat: ARRAY_FORMAT,
+  skipEmptyString: true,
+};
+const PARSE_OPTIONS: ParseOptions = {
+  arrayFormat: ARRAY_FORMAT,
+  parseBooleans: true,
+};
 
 /**
  * The reason for the generic type being wrapped in Partial,
@@ -33,7 +43,8 @@ const useSearchParams = <T = {}>() => {
 
   const getCurrentSearch = useCallback(() => {
     const currentSearch = (qs.parse(
-      location.search
+      location.search,
+      PARSE_OPTIONS
     ) as SearchParamDef) as SearchParamDef<T>;
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
@@ -70,7 +81,7 @@ const useSearchParams = <T = {}>() => {
     (filters: SearchParamDef<T>) => {
       history.push({
         pathname: location.pathname,
-        search: qs.stringify(filters, { skipEmptyString: true }),
+        search: qs.stringify(filters, QUERY_OPTIONS),
       });
     },
     [history, location.pathname]
@@ -82,7 +93,7 @@ const useSearchParams = <T = {}>() => {
   const updateSearchParams = useCallback(
     (filters: SearchParamDef<T>) => {
       // Keep current search params
-      const currentSearch = qs.parse(location.search);
+      const currentSearch = qs.parse(location.search, PARSE_OPTIONS);
 
       history.push({
         pathname: location.pathname,
@@ -91,7 +102,7 @@ const useSearchParams = <T = {}>() => {
             ...currentSearch,
             ...filters,
           },
-          { skipEmptyString: true }
+          QUERY_OPTIONS
         ),
       });
     },

@@ -46,17 +46,16 @@ You will now have code completion, and TypeScript won't flag it is a non-exist p
 
 ## Parsing field types
 
-By default when retrieving search params from the URL, they are all returned as a `string`. If you have fields that have values other than strings, we have built in the functionality to parse `booleans`, `dates`, and `numbers`. If you do not use these properties, then your filter will fail upon page reload, if the URL contains predefined filter params, as the strings will not match up to your field's specific data type.
+By default when retrieving search params from the URL, they are all returned as a `string` or `boolean`. If you have fields that have values other than strings and booleans, then we have built in the functionality to parse `dates` and `numbers`. If you do not use these properties, then your filter will fail upon page reload, if the URL contains predefined filter params, as the value will not match up to your field's specific data type.
 
 | Property       | Description                                                                                                                                                                                                                                                                   | Type                         | Default |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------- |
-| `parseBoolean` | Runs through the query string and parses strings with boolean values. You can pass it an array of the specific keys that should be passed, or a boolean if all strings with boolean values should be parsed. **Use when you have checkboxes, radio buttons, or switches.**    | `boolean` \| Array\<keyof T> | `true`  |
 | `parseDates`   | Runs through the query string and parses strings with date values. You can pass it an array of the specific keys that should be passed, or a boolean if all strings and arrays with date values should be parsed. **Use this when using date pickers.**                       | `boolean` \| Array\<keyof T> | -       |
 | `parseNumbers` | Runs through the query string and parses strings with numbers. You can pass it an array of the specific keys that should be passed, or a boolean if all strings and arrays with number values should be parsed. **Use when you have fields that contain numbers for values.** | `boolean` \| Array\<keyof T> | -       |
 
 ### Specifying fields to parse
 
-As noted for all the parameters, you can either pass in a `boolean`, or an `array`. Passing in `array` of `strings` allows you to specify exactly which fields / parameters you want parsed, and as what data type. It is also recommended to pass a type containing the properties to the PageFilter. Let's take a look at an example.
+As noted for all the parameters, you can either pass in a `boolean` or an `array`. Passing in `array` of `strings` allows you to specify exactly which fields / parameters you want parsed, and as what data type. It is also recommended to pass a type containing the properties to the PageFilter. Let's take a look at an example.
 
 ```tsx
 import { Select } from "antd";

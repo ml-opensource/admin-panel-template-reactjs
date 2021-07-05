@@ -17,7 +17,6 @@ const isStringNumber = (value: unknown) =>
 
 export const parseFilters = <T>({
   filters,
-  parseBoolean,
   parseDates,
   parseNumbers,
 }: ParseFilterParams<T>) => {
@@ -28,14 +27,6 @@ export const parseFilters = <T>({
 
     if (typeof value === "string") {
       if (
-        parseBoolean &&
-        (isArrayIncludes<T>(parseBoolean, key) ||
-          value === "false" ||
-          value === "true")
-      ) {
-        parsedFilters[key] = JSON.parse(value);
-        parsed = true;
-      } else if (
         parseNumbers &&
         isStringNumber(value) &&
         (isArrayIncludes<T>(parseNumbers, key) || !Array.isArray(parseNumbers))
