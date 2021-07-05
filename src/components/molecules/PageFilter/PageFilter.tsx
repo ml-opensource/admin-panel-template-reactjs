@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { memo, useCallback, useEffect } from "react";
+import { Children, memo, useCallback, useEffect } from "react";
 
 import { Form, FormProps, Row, Col, Button } from "antd";
 import _mapValues from "lodash/mapValues";
@@ -126,7 +126,7 @@ const PageFilter = <T extends {}>({
       onFinish={handleSubmit}
     >
       <Row gutter={24}>
-        {React.Children.map(children, child => (
+        {Children.map(children, child => (
           <Col xs={24} sm={columns > 1 ? 12 : 24} lg={24 / columns}>
             {child}
           </Col>

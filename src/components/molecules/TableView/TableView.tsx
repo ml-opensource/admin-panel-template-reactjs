@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { memo, ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 import {
   CopyOutlined,

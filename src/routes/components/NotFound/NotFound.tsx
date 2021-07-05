@@ -1,5 +1,3 @@
-import React from "react";
-
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 import { useTranslation } from "react-i18next";
