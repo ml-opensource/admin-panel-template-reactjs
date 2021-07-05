@@ -1,6 +1,6 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-import { MenuMode } from "antd/lib/menu";
+import { MenuProps } from "antd/lib/menu";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const navLinks: RouteItemDef[] = PRIVATE_LIST.filter(
 
 interface NavMenuProps {
   isSidebar?: boolean;
-  mode?: MenuMode;
+  mode?: MenuProps["mode"];
 }
 
 const NavMenu = ({ isSidebar, mode }: NavMenuProps) => {
