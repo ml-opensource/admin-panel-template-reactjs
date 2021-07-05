@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import { memo, useEffect } from "react";
 
 import { Col, Input } from "antd";
 import _toNumber from "lodash/toNumber";
