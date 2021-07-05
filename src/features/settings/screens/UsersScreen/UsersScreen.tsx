@@ -35,26 +35,20 @@ const UsersScreen = () => {
     fetchData();
   }, [fetchData]);
 
-  const handleEdit = (user: UserDef) => {
+  const handleEdit = (user: UserDef) =>
     updateSearchParams(modalAction.edit({ id: user.id.toString() }));
-  };
 
-  const handleAdd = () => {
-    updateSearchParams(modalAction.add());
-  };
+  const handleAdd = () => updateSearchParams(modalAction.add());
 
-  const handleUserRole = (user: UserDef) => {
+  const handleUserRole = (user: UserDef) =>
     updateSearchParams(
       modalAction.edit({
         id: user.id.toString(),
         entryType: ENTRY_TYPE_USER_ROLE,
       })
     );
-  };
 
-  const handleCloseModal = () => {
-    updateSearchParams(modalAction.close());
-  };
+  const handleCloseModal = () => updateSearchParams(modalAction.close());
 
   const handleSubmittedModal = () => {
     fetchData();
