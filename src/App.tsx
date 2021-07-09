@@ -21,10 +21,11 @@ const App = () => {
   useEffect(() => {
     dispatch(
       setPermissions(
-        Object.values(PermissionEnum).filter(x =>
-          // HACK: added here to play around with the permissions
-          // permissions listed here will be removed from user's permissions
-          [PermissionEnum.USERS_DELETE].includes(x)
+        Object.values(PermissionEnum).filter(
+          x =>
+            // HACK: added here to play around with the permissions
+            // permissions listed here will be removed from user's permissions
+            ![PermissionEnum.USERS_DELETE].includes(x)
         )
       )
     );
