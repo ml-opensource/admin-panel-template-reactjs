@@ -1,3 +1,4 @@
+import { PermissionEnum } from "@app/features/permissions/permissions";
 import { RouteItemDef } from "@app/types/route.types";
 
 import { SettingsPathsEnum } from "../constants/settings.paths";
@@ -34,6 +35,7 @@ const SETTINGS_SCREEN: RouteItemDef = {
           path: SettingsPathsEnum.USERS,
           navigationTitle: "settingsUsers.navigationTitle",
           component: UsersScreen,
+          permissions: [PermissionEnum.USERS_READ],
         },
       ],
     },
