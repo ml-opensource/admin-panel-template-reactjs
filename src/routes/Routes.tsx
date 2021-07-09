@@ -7,7 +7,8 @@ import { Permission } from "@app/features/permissions/permissions";
 import { RouteComponentDef, RouteItemDef } from "@app/types/route.types";
 
 import NotFound from "./components/NotFound/NotFound";
-import { PRIVATE_LIST, ROOT_ROUTE } from "./routes.config";
+import RestrictAccess from "./components/RestrictAccess/RestrictAccess";
+import { PRIVATE_LIST } from "./routes.config";
 
 /**
  * Change the default layout to:
@@ -40,7 +41,7 @@ const Routes = () => {
           return (
             (permissions && (
               <Permission
-                fallback={<Redirect to={ROOT_ROUTE} />}
+                fallback={<RestrictAccess />}
                 requiredPermissions={permissions}
               >
                 {renderContent}
