@@ -48,10 +48,10 @@ import {
 } from "features/permissions/permissions";
 
 const MyApp = () => {
-  const { allowed } = usePermissions([PermissionEnum.USERS_CREATE]);
+  const allowUsersCreate = usePermissions([PermissionEnum.USERS_CREATE]);
 
   return (
-    <Button onClick={createUser} disabled={allowed}>
+    <Button onClick={createUser} disabled={allowUsersCreate}>
       {t("users.buttonCreateUser")}
     </Button>
   );
