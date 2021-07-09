@@ -1,21 +1,45 @@
+import { lazy, Suspense, useEffect } from "react";
+
 import { BrowserRouter as Router } from "react-router-dom";
 
 import LoadingSpinner from "@app/components/atoms/LoadingSpinner/LoadingSpinner";
-import Routes from "@app/routes/Routes";
 
 import { useLocalization } from "./features/localization/localization";
+import {
+  PermissionEnum,
+  setPermissions,
+} from "./features/permissions/permissions";
+import { useAppDispatch } from "./redux/store";
+
+// Routes are lazy loaded so they will access to correct permissions
+const Routes = lazy(() => import("./routes/Routes"));
 
 const App = () => {
   const { loadingTranslation } = useLocalization({ shouldCall: true });
+  const dispatch = useAppDispatch();
 
-  if (loadingTranslation) {
-    return <LoadingSpinner isFullscreen text="Loading Admin Panel" />;
-  }
+  useEffect(() => {
+    dispatch(
+      setPermissions(
+        Object.values(PermissionEnum).filter(x =>
+          // HACK: added here to play around with the permissions
+          // permissions listed here will be removed from user's permissions
+          [PermissionEnum.USERS_DELETE].includes(x)
+        )
+      )
+    );
+  }, [dispatch]);
+
+  const loading = <LoadingSpinner isFullscreen text="Loading DSF Studio CMS" />;
+
+  if (loadingTranslation) return loading;
 
   return (
-    <Router>
-      <Routes />
-    </Router>
+    <Suspense fallback={loading}>
+      <Router>
+        <Routes />
+      </Router>
+    </Suspense>
   );
 };
 
