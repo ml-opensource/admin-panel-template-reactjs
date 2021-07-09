@@ -3,9 +3,12 @@ import store from "@app/redux/store";
 import { PermissionEnum } from "../constants/permissions.scopes";
 
 export const hasPermissions = (
-  requiredPermissions: PermissionEnum[],
+  requiredPermissions?: PermissionEnum[],
   hasAll?: boolean
 ) => {
+  // if no required permissions are passed in, then it's allowed
+  if (!requiredPermissions?.length) return true;
+
   const { permissions } = store.getState().permissions;
   let hasPermission = false;
 
@@ -23,7 +26,7 @@ export const hasPermissions = (
   }
   // eslint-disable-next-line no-console
   console.warn(
-    "No permissions detected. Did you remember to use setPermissions() to set the permissions?"
+    "No user permissions detected. Did you remember to use setPermissions() to set the permissions?"
   );
   return hasPermission;
 };
