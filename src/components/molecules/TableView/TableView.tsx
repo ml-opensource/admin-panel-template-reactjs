@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "@app/components/atoms/Button/Button";
 import { getOrderBy } from "@app/helpers/table.helper";
+import { scrollToTop } from "@app/helpers/util.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 
 import styles from "./TableView.module.scss";
@@ -81,6 +82,9 @@ const TableView = <T extends {}>({
       page,
       pageSize,
     });
+
+    // Scroll to top when there are changes to pagination, sorting, or filters
+    scrollToTop();
 
     onChange?.(pagination, filters, sorter, extra);
   };
