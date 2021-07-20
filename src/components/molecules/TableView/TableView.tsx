@@ -38,6 +38,7 @@ export interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   onActionMenu?: (key: string, record: T) => void;
   actionWidth?: number | string;
   hideActionColumn?: boolean;
+  disableScrollToTopOnChange?: boolean;
 }
 
 const TableView = <T extends {}>({
@@ -53,6 +54,7 @@ const TableView = <T extends {}>({
   actionWidth = 150,
   hideActionColumn = false,
   className,
+  disableScrollToTopOnChange,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
@@ -83,8 +85,10 @@ const TableView = <T extends {}>({
       pageSize,
     });
 
-    // Scroll to top when there are changes to pagination, sorting, or filters
-    scrollToTop();
+    if (!disableScrollToTopOnChange) {
+      // Scroll to top when there are changes to pagination, sorting, or filters
+      scrollToTop();
+    }
 
     onChange?.(pagination, filters, sorter, extra);
   };
