@@ -28,7 +28,7 @@ export const getInitials = (name: string, maxChar: number) => {
 export const scrollToTop = () => {
   try {
     // trying to use new API - https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
-    window.scroll({
+    window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
