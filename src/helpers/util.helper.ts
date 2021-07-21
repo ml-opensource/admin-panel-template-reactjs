@@ -20,3 +20,23 @@ export const getInitials = (name: string, maxChar: number) => {
     .substr(0, maxChar)
     .toUpperCase();
 };
+
+/**
+ * Scroll to top of screen smoothly,
+ * or fallback to instant scroll to top
+ */
+export const scrollToTop = () => {
+  try {
+    // trying to use new API - https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  } catch (error) {
+    // fallback for older browsers
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0;
+  }
+};

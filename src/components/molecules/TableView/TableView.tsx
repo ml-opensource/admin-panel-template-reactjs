@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "@app/components/atoms/Button/Button";
 import { getOrderBy } from "@app/helpers/table.helper";
+import { scrollToTop } from "@app/helpers/util.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 
 import styles from "./TableView.module.scss";
@@ -37,6 +38,7 @@ export interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   onActionMenu?: (key: string, record: T) => void;
   actionWidth?: number | string;
   hideActionColumn?: boolean;
+  disableScrollToTopOnChange?: boolean;
 }
 
 const TableView = <T extends {}>({
@@ -52,6 +54,7 @@ const TableView = <T extends {}>({
   actionWidth = 150,
   hideActionColumn = false,
   className,
+  disableScrollToTopOnChange,
   ...tableProps
 }: TableViewProps<T>) => {
   const { t } = useTranslation();
@@ -81,6 +84,11 @@ const TableView = <T extends {}>({
       page,
       pageSize,
     });
+
+    if (!disableScrollToTopOnChange) {
+      // Scroll to top when there are changes to pagination, sorting, or filters
+      scrollToTop();
+    }
 
     onChange?.(pagination, filters, sorter, extra);
   };
