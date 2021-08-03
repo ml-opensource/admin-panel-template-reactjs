@@ -31,7 +31,7 @@ const App = () => {
     );
   }, [dispatch]);
 
-  const loading = <LoadingSpinner isFullscreen text="Loading DSF Studio CMS" />;
+  const loading = <LoadingSpinner isFullscreen text="Loading Admin Panel" />;
 
   if (loadingTranslation) return loading;
 
