@@ -3,7 +3,7 @@ import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import Button from "@app/components/atoms/Button/Button";
-import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
+import ContentLayout from "@app/components/layouts/ContentLayout/ContentLayout";
 import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 import { useAppDispatch } from "@app/redux/store";
@@ -74,8 +74,7 @@ const UsersScreen = () => {
   };
 
   return (
-    <>
-      <ScreenTitleView title={t("settingsUsers.title")} />
+    <ContentLayout header={{ title: t("settingsUsers.title") }}>
       <div className={styles.buttonContainer}>
         <Button type="primary" size="large" onClick={handleAdd}>
           {t("settingsUsers.buttonAddUser")}
@@ -110,7 +109,7 @@ const UsersScreen = () => {
         onClose={handleCloseModal}
         onSubmitted={handleSubmittedModal}
       />
-    </>
+    </ContentLayout>
   );
 };
 
