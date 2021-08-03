@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 import { Layout } from "antd";
 
@@ -12,15 +12,15 @@ type SidebarLayoutProps = {
   children: ReactNode;
 };
 
-const SidebarLayout = ({ children }: SidebarLayoutProps) => {
+const SidebarLayout = memo(({ children }: SidebarLayoutProps) => {
   return (
     <Layout>
       <Navigation sidebar />
-      <Content className={styles.container}>
-        <div className={styles.content}>{children}</div>
-      </Content>
+      <Layout className={styles.pushContent}>
+        <Content>{children}</Content>
+      </Layout>
     </Layout>
   );
-};
+});
 
 export default SidebarLayout;

@@ -19,3 +19,14 @@
     flex-direction: row-reverse;
   }
 }
+
+.sidebar {
+  width: $sidebar-width !important;
+  max-width: $sidebar-width !important;
+  min-width: $sidebar-width !important;
+  flex: 0 0 #{$sidebar-width} !important;
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  height: 100vh;
+}
