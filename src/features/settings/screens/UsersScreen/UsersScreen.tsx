@@ -74,13 +74,16 @@ const UsersScreen = () => {
   };
 
   return (
-    <ContentLayout header={{ title: t("settingsUsers.title") }}>
+    <ContentLayout
+      header={{ title: t("settingsUsers.title") }}
+      filters={<UsersFilter />}
+    >
       <div className={styles.buttonContainer}>
         <Button type="primary" size="large" onClick={handleAdd}>
           {t("settingsUsers.buttonAddUser")}
         </Button>
       </div>
-      <UsersFilter />
+
       <UsersTable
         onEdit={handleEdit}
         onDelete={handleDelete}
