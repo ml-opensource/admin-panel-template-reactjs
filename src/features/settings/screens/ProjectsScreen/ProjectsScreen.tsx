@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
 
+import ContentLayout from "@app/components/layouts/ContentLayout/ContentLayout";
+
 const ProjectsScreen = () => {
   const { t } = useTranslation();
   return (
-    <>
-      <h1>{t("settingsProjects.title")}</h1>
+    <ContentLayout header={{ title: t("settingsProjects.title") }}>
       <p>{t("settingsProjects.text")}</p>
-    </>
+    </ContentLayout>
   );
 };
 

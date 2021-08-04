@@ -1,0 +1,35 @@
+@import "styles/colors";
+@import "styles/variables";
+
+.container {
+  height: 100%;
+}
+
+.content {
+  background: $bg-white;
+  padding: $spacing-6;
+  margin: 0 $spacing-6 $spacing-6;
+}
+
+.pageHeader {
+  :global {
+    .ant-page-header-footer .ant-tabs .ant-tabs-tab {
+      font-size: $font-size-14;
+    }
+
+    .ant-page-header-heading {
+      flex-wrap: wrap;
+    }
+    .ant-page-header-heading-title {
+      white-space: normal;
+    }
+    .ant-page-header-heading-extra {
+      margin-left: auto;
+    }
+  }
+}
+
+.pageHeader,
+.filters {
+  margin-bottom: $spacing-6;
+}

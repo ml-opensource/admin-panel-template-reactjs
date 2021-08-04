@@ -2,4 +2,11 @@
   .actions {
     text-align: right !important;
   }
+  :global {
+    .ant-table-title {
+      text-align: right;
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
 }

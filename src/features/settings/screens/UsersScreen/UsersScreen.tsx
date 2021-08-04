@@ -3,14 +3,13 @@ import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import Button from "@app/components/atoms/Button/Button";
-import ScreenTitleView from "@app/components/molecules/ScreenTitleView/ScreenTitleView";
+import ContentLayout from "@app/components/layouts/ContentLayout/ContentLayout";
 import * as modalAction from "@app/helpers/modal.helper";
 import useSearchParams from "@app/hooks/useSearchParams";
 import { useAppDispatch } from "@app/redux/store";
 
 import { getUsers } from "../../redux/users.slice";
 import { UserDef } from "../../types/user.types";
-import styles from "./UsersScreen.module.scss";
 import UserRoleModal, {
   ENTRY_TYPE_USER_ROLE,
 } from "./components/UserRoleModal/UserRoleModal";
@@ -74,14 +73,10 @@ const UsersScreen = () => {
   };
 
   return (
-    <>
-      <ScreenTitleView title={t("settingsUsers.title")} />
-      <div className={styles.buttonContainer}>
-        <Button type="primary" size="large" onClick={handleAdd}>
-          {t("settingsUsers.buttonAddUser")}
-        </Button>
-      </div>
-      <UsersFilter />
+    <ContentLayout
+      header={{ title: t("settingsUsers.title") }}
+      filters={<UsersFilter />}
+    >
       <UsersTable
         onEdit={handleEdit}
         onDelete={handleDelete}
@@ -97,6 +92,7 @@ const UsersScreen = () => {
           </Button>,
         ]}
         onActionMenu={handleActionMenu}
+        onAdd={handleAdd}
       />
 
       {/* Modal to Create / Edit User */}
@@ -110,7 +106,7 @@ const UsersScreen = () => {
         onClose={handleCloseModal}
         onSubmitted={handleSubmittedModal}
       />
-    </>
+    </ContentLayout>
   );
 };
 

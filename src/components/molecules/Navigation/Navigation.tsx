@@ -17,7 +17,7 @@ type NavigationProps = {
 const Navigation = memo(({ sidebar, sticky = false }: NavigationProps) => {
   if (sidebar) {
     return (
-      <Sider>
+      <Sider className={styles.sidebar}>
         <NavLeftContent mode="inline" />
       </Sider>
     );
