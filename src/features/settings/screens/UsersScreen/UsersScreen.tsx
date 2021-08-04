@@ -10,7 +10,6 @@ import { useAppDispatch } from "@app/redux/store";
 
 import { getUsers } from "../../redux/users.slice";
 import { UserDef } from "../../types/user.types";
-import styles from "./UsersScreen.module.scss";
 import UserRoleModal, {
   ENTRY_TYPE_USER_ROLE,
 } from "./components/UserRoleModal/UserRoleModal";
@@ -79,7 +78,6 @@ const UsersScreen = () => {
       filters={<UsersFilter />}
     >
       <UsersTable
-        className={styles.table}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
