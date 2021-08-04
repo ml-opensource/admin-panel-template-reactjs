@@ -48,7 +48,8 @@ const Permission = ({
   redirectTo,
   requiredPermissions,
 }: PermissionProps) => {
-  const allowed = usePermissions(requiredPermissions, hasAll);
+  const { hasPermissions } = usePermissions();
+  const allowed = hasPermissions(requiredPermissions, hasAll);
 
   /**
    * In case there is more than one child element, we need
