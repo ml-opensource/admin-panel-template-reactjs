@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
 
+import Button from "@app/components/atoms/Button/Button";
 import TableView, {
   ActionMenuDef,
   TableViewProps,
@@ -12,13 +13,15 @@ import { useAppSelector } from "@app/redux/store";
 
 import { UserDef } from "../../../../types/user.types";
 
-type UsersTableProps = TableViewProps<UserDef>;
+interface UsersTableProps extends TableViewProps<UserDef> {
+  onAdd?: () => void;
+}
 
 export enum UsersActionMenuEnum {
   DUPLICATE = "duplicate",
 }
 
-const UsersTable = (props: UsersTableProps) => {
+const UsersTable = ({ onAdd, ...props }: UsersTableProps) => {
   const { t } = useTranslation();
   const { users, loading, pagination } = useAppSelector(state => ({
     users: state.users.users,
@@ -48,6 +51,11 @@ const UsersTable = (props: UsersTableProps) => {
         showSizeChanger: true,
         pageSizeOptions: ["6", "8", "10", "15", "25"],
       }}
+      title={() => (
+        <Button type="primary" onClick={onAdd}>
+          {t("settingsUsers.buttonAddUser")}
+        </Button>
+      )}
       {...props}
     >
       <Table.Column

@@ -1,7 +1,11 @@
 @import "styles/variables";
 
-.buttonContainer {
-  display: flex;
-  justify-content: flex-end;
-  margin: $spacing-4;
+.table {
+  :global {
+    .ant-table-title {
+      text-align: right;
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
 }

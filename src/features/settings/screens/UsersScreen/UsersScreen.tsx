@@ -78,13 +78,8 @@ const UsersScreen = () => {
       header={{ title: t("settingsUsers.title") }}
       filters={<UsersFilter />}
     >
-      <div className={styles.buttonContainer}>
-        <Button type="primary" size="large" onClick={handleAdd}>
-          {t("settingsUsers.buttonAddUser")}
-        </Button>
-      </div>
-
       <UsersTable
+        className={styles.table}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
@@ -99,6 +94,7 @@ const UsersScreen = () => {
           </Button>,
         ]}
         onActionMenu={handleActionMenu}
+        onAdd={handleAdd}
       />
 
       {/* Modal to Create / Edit User */}
