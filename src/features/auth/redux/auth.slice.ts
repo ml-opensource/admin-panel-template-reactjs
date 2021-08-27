@@ -1,19 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { LoginRequestDef } from "@app/features/auth/auth";
+import { LoginRequestDef, AUTH_FEATURE_KEY } from "@app/features/auth/auth";
 
 import { authGetMe, authLogin } from "../api/auth.api";
-import { saveTokens, clearTokens } from "../helpers/auth.helpers";
-import { UserDef } from "../types/auth.types";
-
-export const AUTH_FEATURE_KEY = "auth";
-
-interface InitialStateDef {
-  user: UserDef | null;
-  isAuthenticated: boolean;
-  error: boolean;
-  loading: boolean;
-}
+import {
+  saveTokens,
+  clearTokens,
+  authErrorHelper,
+} from "../helpers/auth.helpers";
+import { UserDef, InitialStateDef, UserResponseDef } from "../types/auth.types";
 
 const initialState: InitialStateDef = {
   user: null,
@@ -65,28 +60,16 @@ const authSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      /*
-       * expected options from real api
-       * const { IdToken, RefreshToken, ExpiresIn, ...user } = action.payload;
-       *
-       *  limited response from demo api:
-       */
       const { token } = action.payload;
-
       state.loading = false;
-      // state.user = null; // user; not implemented
       state.isAuthenticated = true;
 
-      /* expected condition when real api: if (IdToken && RefreshToken && ExpiresIn) { */
       if (token) {
         saveTokens({ token });
       }
     });
     builder.addCase(login.rejected, state => {
-      state.error = true;
-      state.user = null;
-      state.isAuthenticated = false;
-      state.loading = false;
+      authErrorHelper(state);
       clearTokens();
     });
     /**
@@ -97,22 +80,23 @@ const authSlice = createSlice({
       state.error = false;
       state.loading = true;
     });
-    builder.addCase(getMe.fulfilled, (state, action) => {
-      const { data } = action.payload;
-      const user: UserDef = {
-        email: data.email,
-        name: `${data.first_name} ${data.last_name}`,
-        avatar: data.avatar,
-      };
-      state.loading = false;
-      state.user = user;
-      state.isAuthenticated = true;
-    });
+    builder.addCase(
+      getMe.fulfilled,
+      (state, action: PayloadAction<UserResponseDef>) => {
+        const { data } = action.payload;
+        const name = `${data.first_name} ${data.last_name}`;
+
+        const user: UserDef = {
+          ...data,
+          name: name ?? "John Doe", // <= fallback name, TODO: remove
+        };
+        state.loading = false;
+        state.user = user;
+        state.isAuthenticated = true;
+      }
+    );
     builder.addCase(getMe.rejected, state => {
-      state.error = true;
-      state.user = null;
-      state.isAuthenticated = false;
-      state.loading = false;
+      authErrorHelper(state);
       clearTokens();
     });
   },

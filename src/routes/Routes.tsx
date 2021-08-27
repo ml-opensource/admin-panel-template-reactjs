@@ -24,7 +24,9 @@ import { PRIVATE_LIST, PUBLIC_LIST } from "./routes.config";
 const DefaultLayout = HeaderLayout;
 
 const Routes = () => {
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+  const { isAuthenticated } = useAppSelector(state => ({
+    isAuthenticated: state.auth?.isAuthenticated,
+  }));
 
   const routeWrapper = (
     { id, path, layout, component, permissions }: RouteItemDef,

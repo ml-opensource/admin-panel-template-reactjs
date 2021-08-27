@@ -2,7 +2,7 @@ import moment from "moment";
 import cookie from "react-cookies";
 
 import { AUTH_ACCESS_TOKEN } from "../constants/auth.keys";
-import { TokenDef, ApiResponseDef } from "../types/auth.types";
+import { TokenDef, ApiResponseDef, InitialStateDef } from "../types/auth.types";
 
 /**
  * Loads token from session cookie
@@ -13,7 +13,6 @@ export const getTokens = () => {
   return {
     accessToken: cookieToken?.accessToken,
     refreshToken: cookieToken?.refreshToken,
-    tokenType: cookieToken?.tokenType,
     expiresAt: cookieToken?.expiresAt,
   } as TokenDef;
 };
@@ -35,4 +34,14 @@ export const saveTokens = ({ expiresIn = "3600", token }: ApiResponseDef) => {
  */
 export const clearTokens = () => {
   return cookie.remove(AUTH_ACCESS_TOKEN, { path: "/" });
+};
+
+/**
+ * simplify code in slice with helper
+ */
+export const authErrorHelper = (state: InitialStateDef) => {
+  state.user = null;
+  state.isAuthenticated = false;
+  state.error = true;
+  state.loading = false;
 };

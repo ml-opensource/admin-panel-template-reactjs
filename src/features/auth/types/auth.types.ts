@@ -29,3 +29,24 @@ export type UserDef = {
   name: string;
   avatar: string;
 };
+
+/**
+ * For redux slice and helper function
+ */
+export interface InitialStateDef {
+  user: UserDef | null;
+  isAuthenticated: boolean;
+  error: boolean;
+  loading: boolean;
+}
+
+/* eslint-disable camelcase */
+export type UserResponseDef = {
+  data: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    avatar: string;
+    email: string;
+  };
+};

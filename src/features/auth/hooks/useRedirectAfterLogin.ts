@@ -10,7 +10,9 @@ function useRedirectAfterLogin() {
   const history = useHistory();
   const location = useLocation<RedirectDef>();
   const { redirect } = qs.parse(location.search);
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+  const { isAuthenticated } = useAppSelector(state => ({
+    isAuthenticated: state.auth?.isAuthenticated,
+  }));
 
   useEffect(() => {
     if (isAuthenticated) {
