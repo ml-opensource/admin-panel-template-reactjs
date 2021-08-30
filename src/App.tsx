@@ -20,8 +20,9 @@ const App = () => {
   const { loadingTranslation } = useLocalization({ shouldCall: true });
   const { accessToken } = getTokens();
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector(state => ({
+  const { loadingUser } = useAppSelector(state => ({
     isAuthenticated: state.auth.isAuthenticated,
+    loadingUser: state.auth.loading,
   }));
 
   useMount(() => {
@@ -45,7 +46,7 @@ const App = () => {
 
   const loading = <LoadingSpinner isFullscreen text="Loading Admin Panel" />;
 
-  if ((accessToken && !isAuthenticated) || loadingTranslation) return loading;
+  if (loadingUser || loadingTranslation) return loading;
 
   return (
     <Suspense fallback={loading}>

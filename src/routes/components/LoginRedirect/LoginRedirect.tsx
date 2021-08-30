@@ -10,7 +10,9 @@ const LoginRedirect = () => {
     <Redirect
       to={{
         pathname: AuthPathsEnum.LOGIN,
-        search: qs.stringify({ redirect: location.pathname }),
+        search: qs.stringify({
+          redirect: location.pathname + location.search,
+        }),
       }}
     />
   );
