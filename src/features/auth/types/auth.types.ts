@@ -3,6 +3,7 @@
  */
 
 export type TokenDef = {
+  /* TODO: check if TYPE needs changing when AUTH method is changed ? */
   /* login system is for demo use (regres.in) */
   accessToken?: string;
   refreshToken?: string;

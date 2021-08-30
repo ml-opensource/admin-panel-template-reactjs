@@ -16,6 +16,7 @@ const NavRightContent = memo(() => {
   const { user } = useAppSelector(state => ({
     user: state.auth.user,
   }));
+  // TODO: update this when AUTH method/api changes
   const name = user?.name ?? "John Doe";
   const userInitials = getInitials(name, 3);
 

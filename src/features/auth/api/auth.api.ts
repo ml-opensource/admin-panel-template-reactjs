@@ -10,6 +10,7 @@ export const authLogin = (data: LoginRequestDef): Promise<AxiosResponse> => {
 };
 
 export const authGetMe = (): Promise<AxiosResponse> => {
+  // TODO: change when AUTH method is changed =>
   // Using a fixed user to emulate a get current user call
   return api.get(`${AuthEndpointsEnum.USERS}/2`);
 };
