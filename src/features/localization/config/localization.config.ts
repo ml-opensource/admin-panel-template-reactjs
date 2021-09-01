@@ -56,6 +56,13 @@ i18next.use(initReactI18next).init({
           unsavedChangesCancelTitle: "Keep editing",
           unsavedChangesConfirmTitle: "Leave",
         },
+        auth: {
+          loginTitle: "Sign in",
+          inputEmailLabel: "Email",
+          inputPasswordLabel: "Password",
+          loginButton: "Sign in",
+          logout: "Log out",
+        },
         home: {
           navigationTitle: "Home",
           title: "Home",

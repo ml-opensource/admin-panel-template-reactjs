@@ -41,3 +41,11 @@ export type RouteItemDef = {
   /** The required permissions to view this route (optional) */
   permissions?: PermissionEnum[];
 };
+
+export type RouteWrapperConfigDef = {
+  isProtectedRoute?: boolean;
+};
+
+export type RedirectDef = {
+  redirect: string;
+};
