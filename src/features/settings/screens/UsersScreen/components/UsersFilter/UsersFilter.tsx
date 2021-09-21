@@ -35,7 +35,7 @@ const UsersFilter = () => {
       parseNumbers={["name"]}
     >
       <FilterItem label={t("settingsUsers.filterSearchLabel")} name="search">
-        {/* Remove `showSubmitButton` to see the difference */}
+        {/* Remove `showSubmitButton` and add `submitOnChange` to see the difference */}
         <DebouncedInput wait={500} />
       </FilterItem>
       <FilterItem label={t("settingsUsers.filterDatesLabel")} name="dates">

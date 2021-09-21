@@ -34,6 +34,11 @@ const UsersScreen = () => {
     fetchData();
   }, [fetchData]);
 
+  const handleView = (user: UserDef) => {
+    // eslint-disable-next-line no-console
+    console.log("View user", user);
+  };
+
   const handleEdit = (user: UserDef) =>
     updateSearchParams(modalAction.edit({ id: user.id.toString() }));
 
@@ -78,6 +83,7 @@ const UsersScreen = () => {
       filters={<UsersFilter />}
     >
       <UsersTable
+        onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDuplicate={handleDuplicate}
