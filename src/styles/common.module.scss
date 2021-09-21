@@ -1,0 +1,136 @@
+@import "variables";
+@import "colors";
+
+/* Font Sizes */
+$font-size-list: 10, 12, 14, 16, 16, 20, 24, 32, 40;
+@each $size in $font-size-list {
+  .font#{$size} {
+    font-size: #{$size}px;
+    line-height: #{$size}px;
+  }
+}
+
+// Text Aligns
+.textCenter {
+  text-align: center;
+}
+.textRight {
+  text-align: right;
+}
+
+/* Borders */
+.noBorder {
+  border: none;
+}
+
+/*  Spaces */
+$spaces: (
+  "0": $spacing-0,
+  "1": $spacing-1,
+  "2": $spacing-2,
+  "3": $spacing-3,
+  "4": $spacing-4,
+  "5": $spacing-5,
+  "6": $spacing-6,
+  "7": $spacing-7,
+  "8": $spacing-8,
+  "9": $spacing-9,
+);
+
+// Margins
+@each $key, $value in $spaces {
+  .m#{$key} {
+    margin: #{$value};
+  }
+
+  .mt#{$key} {
+    margin-top: #{$value};
+  }
+
+  .mr#{$key} {
+    margin-right: #{$value};
+  }
+
+  .mb#{$key} {
+    margin-bottom: #{$value};
+  }
+
+  .ml#{$key} {
+    margin-left: #{$value};
+  }
+
+  .mv#{$key} {
+    margin-top: #{$value};
+    margin-bottom: #{$value};
+  }
+
+  .mh#{$key} {
+    margin-left: #{$value};
+    margin-right: #{$value};
+  }
+}
+
+// Paddings
+@each $key, $value in $spaces {
+  .p#{$key} {
+    padding: #{$value};
+  }
+
+  .pt#{$key} {
+    padding-top: #{$value};
+  }
+
+  .pr#{$key} {
+    padding-right: #{$value};
+  }
+
+  .pb#{$key} {
+    padding-bottom: #{$value};
+  }
+
+  .pl#{$key} {
+    padding-left: #{$value};
+  }
+
+  .pv#{$key} {
+    padding-top: #{$value};
+    padding-bottom: #{$value};
+  }
+
+  .ph#{$key} {
+    padding-left: #{$value};
+    padding-right: #{$value};
+  }
+}
+
+/* Colors */
+$colors: (
+  "Gray1": $gray-1,
+  "Gray2": $gray-2,
+  "Gray3": $gray-3,
+  "Gray4": $gray-4,
+  "Gray5": $gray-5,
+  "Gray6": $gray-6,
+  "Gray7": $gray-7,
+  "Gray8": $gray-8,
+  "Gray9": $gray-9,
+  "Gray10": $gray-10,
+  "Gray11": $gray-11,
+  "Gray12": $gray-12,
+  "Gray14": $gray-13,
+  "White": white,
+);
+
+// Background
+@each $key, $value in $colors {
+  .bg#{$key} {
+    background-color: #{$value};
+  }
+}
+
+// Text colors
+@each $key, $value in $colors {
+  .text#{$key} {
+    color: #{$value};
+  }
+}
