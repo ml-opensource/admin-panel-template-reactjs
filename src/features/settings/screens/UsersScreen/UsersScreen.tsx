@@ -27,7 +27,7 @@ const UsersScreen = () => {
   const dispatch = useAppDispatch();
 
   const fetchData = useCallback(() => {
-    dispatch(getUsers({ page: search?.page, per_page: search?.pageSize }));
+    dispatch(getUsers({ page: search?.page, perPage: search?.pageSize }));
   }, [dispatch, search?.page, search?.pageSize]);
 
   useEffect(() => {

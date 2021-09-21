@@ -84,7 +84,7 @@ const authSlice = createSlice({
       getMe.fulfilled,
       (state, action: PayloadAction<UserResponseDef>) => {
         const { data } = action.payload;
-        const name = `${data.first_name} ${data.last_name}`;
+        const name = `${data.firstName} ${data.lastName}`;
 
         const user: UserDef = {
           ...data,

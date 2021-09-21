@@ -1,10 +1,9 @@
 import { ResponsePaginationDef } from "@app/types/pagination.types";
 
-/* eslint-disable camelcase */
 export type UserDef = {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type GetUsersResponseDef = {
@@ -13,7 +12,7 @@ export type GetUsersResponseDef = {
 
 export type GetUsersParamDef = {
   page?: ResponsePaginationDef["page"];
-  per_page?: ResponsePaginationDef["per_page"];
+  perPage?: ResponsePaginationDef["perPage"];
 };
 
 export type GetUserByIdResponseDef = {

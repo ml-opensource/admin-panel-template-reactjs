@@ -49,7 +49,7 @@ const UsersFilter = () => {
         >
           {users.map(user => (
             <Option key={user.id} value={user.id}>
-              {user.first_name}
+              {user.firstName}
             </Option>
           ))}
         </Select>

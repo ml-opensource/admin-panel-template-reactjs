@@ -60,19 +60,19 @@ const UsersTable = ({ onAdd, ...props }: UsersTableProps) => {
     >
       <Table.Column
         title={t("settingsUsers.columnName")}
-        key="first_name"
-        dataIndex="first_name"
-        render={(firstName: UserDef["first_name"]) => firstName}
+        key="firstName"
+        dataIndex="firstName"
+        render={(firstName: UserDef["firstName"]) => firstName}
         sorter
         sortOrder={getOrderByDirection("name")}
       />
       <Table.Column
         title={t("settingsUsers.columnLastName")}
-        key="last_name"
-        dataIndex="last_name"
-        render={(lastName: UserDef["last_name"]) => lastName}
+        key="lastName"
+        dataIndex="lastName"
+        render={(lastName: UserDef["lastName"]) => lastName}
         sorter
-        sortOrder={getOrderByDirection("last_name")}
+        sortOrder={getOrderByDirection("lastName")}
       />
     </TableView>
   );

@@ -44,7 +44,7 @@ export const mapPagination = (
 ): TablePaginationDef => {
   return {
     current: pagination?.page ?? undefined,
-    pageSize: pagination?.per_page ?? undefined,
+    pageSize: pagination?.perPage ?? undefined,
     total: pagination?.total ?? undefined,
   };
 };
