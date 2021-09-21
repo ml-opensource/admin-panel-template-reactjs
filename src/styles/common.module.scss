@@ -2,11 +2,10 @@
 @import "colors";
 
 /* Font Sizes */
-$font-size-list: 10, 12, 14, 16, 16, 20, 24, 32, 40;
+$font-size-list: 10, 12, 14, 16, 18, 20, 24, 32, 40;
 @each $size in $font-size-list {
   .font#{$size} {
     font-size: #{$size}px;
-    line-height: #{$size}px;
   }
 }
 
@@ -117,7 +116,7 @@ $colors: (
   "Gray10": $gray-10,
   "Gray11": $gray-11,
   "Gray12": $gray-12,
-  "Gray14": $gray-13,
+  "Gray13": $gray-13,
   "White": white,
 );
 
