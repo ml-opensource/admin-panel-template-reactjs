@@ -35,5 +35,5 @@ This template follows **syntax**, **semantics**, and **folder structure** define
 
 ## Logins
 
-email: george.bluth@reqres.in
-password: Password is anything you like, for example Test1234 it works
+- email: george.bluth@reqres.in
+- password: Password is anything you like, for example Test1234 it works
