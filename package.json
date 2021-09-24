@@ -40,7 +40,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "format": "prettier 'src/**/(*.ts|.tsx|.json|.scss|.css)' --write",
+    "format": "prettier src/**/*.{ts,tsx,json,scss,css} --write",
     "lint": "eslint src/**/*.{ts,tsx} --fix --quiet",
     "analyze": "ENABLE_ANALYZER=true yarn build",
     "prepare": "husky install"
