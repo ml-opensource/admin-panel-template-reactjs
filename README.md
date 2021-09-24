@@ -32,3 +32,8 @@ The roadmap in the [project tab](https://github.com/monstar-lab-group/admin-pane
 ## How We Work
 
 This template follows **syntax**, **semantics**, and **folder structure** defined in the [web-frontend repo](https://github.com/monstar-lab-group/web-frontend).
+
+## Logins
+
+email: george.bluth@reqres.in
+password: Password is anything you like, for example Test1234 it works
