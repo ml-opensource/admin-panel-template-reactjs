@@ -6,11 +6,8 @@ export const updateLocalization = async () => {
     return false;
   }
 
-  const {
-    translation,
-    translationMeta,
-    availableLanguages,
-  } = await nstackClient.appOpen();
+  const { translation, translationMeta, availableLanguages } =
+    await nstackClient.appOpen();
 
   if (translation && translationMeta) {
     i18next.addResourceBundle(
