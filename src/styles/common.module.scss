@@ -2,10 +2,19 @@
 @import "colors";
 
 /* Font Sizes */
-$font-size-list: 10, 12, 14, 16, 18, 20, 24, 32, 40;
-@each $size in $font-size-list {
-  .font#{$size} {
-    font-size: #{$size}px;
+$font-sizes: (
+  "1": $font-size-1,
+  "2": $font-size-2,
+  "3": $font-size-3,
+  "4": $font-size-4,
+  "5": $font-size-5,
+  "6": $font-size-6,
+  "7": $font-size-7,
+  "8": $font-size-8,
+);
+@each $key, $value in $font-sizes {
+  .font#{$key} {
+    font-size: #{$value};
   }
 }
 
