@@ -68,7 +68,7 @@ const PageFilter = <T extends {}>({
   columns = 4,
   showResetButton,
   showSubmitButton,
-  submitOnChange,
+  submitOnChange = true,
   onReset,
   onSubmit,
   parseDates,

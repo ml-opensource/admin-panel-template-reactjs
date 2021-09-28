@@ -33,7 +33,7 @@ export const changeLanguage = (locale: string) => {
 };
 
 export const getCurrentLanguage = () => {
-  return i18next.languages[0];
+  return i18next.language;
 };
 
 export const getCountries = async () => {

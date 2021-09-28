@@ -2,6 +2,8 @@ import { memo, useState, useEffect, FC } from "react";
 
 import notFoundImage from "@app/assets/images/no-image.png";
 
+import SpinWrapper from "../SpinWrapper/SpinWrapper";
+
 interface ImageProps
   extends React.DetailedHTMLProps<
     React.ImgHTMLAttributes<HTMLImageElement>,
@@ -16,18 +18,31 @@ const Image: FC<ImageProps> = ({
   ...rest
 }) => {
   const [url, setUrl] = useState(src);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setUrl(src);
   }, [src]);
 
+  const handleError = () => {
+    setUrl(defaultImg ?? notFoundImage);
+    setIsLoading(false);
+  };
+
+  const handleLoaded = () => {
+    setIsLoading(false);
+  };
+
   return (
-    <img
-      {...rest}
-      src={url}
-      alt={rest.alt}
-      onError={() => setUrl(defaultImg ?? notFoundImage)}
-    />
+    <SpinWrapper loading={isLoading}>
+      <img
+        {...rest}
+        src={url}
+        alt={rest.alt}
+        onError={handleError}
+        onLoad={handleLoaded}
+      />
+    </SpinWrapper>
   );
 };
 
