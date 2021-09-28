@@ -38,13 +38,12 @@ const DebouncedInput = ({
     wait
   );
 
-  const persistedOnChange = (persistOnChange?: React.ChangeEventHandler) => (
-    e: React.ChangeEvent
-  ) => {
-    // persist event as it will be resolved after debounce
-    e.persist();
-    persistOnChange && debouncedOnChange(e, persistOnChange);
-  };
+  const persistedOnChange =
+    (persistOnChange?: React.ChangeEventHandler) => (e: React.ChangeEvent) => {
+      // persist event as it will be resolved after debounce
+      e.persist();
+      persistOnChange && debouncedOnChange(e, persistOnChange);
+    };
 
   return (
     <Input
