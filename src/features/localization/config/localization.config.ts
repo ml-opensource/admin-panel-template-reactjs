@@ -55,6 +55,7 @@ i18next.use(initReactI18next).init({
             "You have unsaved changes in the form, if you close it the changes will be discarded.",
           unsavedChangesCancelTitle: "Keep editing",
           unsavedChangesConfirmTitle: "Leave",
+          inputErrorRequired: "Required field",
         },
         auth: {
           loginTitle: "Sign in",
@@ -62,6 +63,7 @@ i18next.use(initReactI18next).init({
           inputPasswordLabel: "Password",
           loginButton: "Sign in",
           logout: "Log out",
+          messageSuccess: "Sign in success",
         },
         home: {
           navigationTitle: "Home",

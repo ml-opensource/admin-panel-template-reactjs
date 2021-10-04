@@ -6,6 +6,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   MenuOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import { Table, Space, Popconfirm, Tooltip, Menu, Dropdown } from "antd";
 import { TablePaginationConfig, TableProps } from "antd/lib/table";
@@ -30,6 +31,7 @@ export type ActionMenuDef = { key: string; label: string }[];
 
 export interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
   actionTitle?: string;
+  onView?: (record: T) => void;
   onEdit?: (record: T) => void;
   onDelete?: (record: T) => void;
   onDuplicate?: (record: T) => void;
@@ -43,6 +45,7 @@ export interface TableViewProps<T = {}> extends Omit<TableProps<T>, "columns"> {
 
 const TableView = <T extends {}>({
   actionTitle,
+  onView,
   onEdit,
   onDelete,
   onDuplicate,
@@ -118,6 +121,15 @@ const TableView = <T extends {}>({
           className={styles.actions}
           render={(_, record) => (
             <Space size="middle">
+              {!!onView && (
+                <Tooltip title={t("default.viewTitle")}>
+                  <Button
+                    onClick={() => onView(record)}
+                    shape="circle"
+                    icon={<EyeOutlined />}
+                  />
+                </Tooltip>
+              )}
               {!!onEdit && (
                 <Tooltip title={t("default.editTitle")}>
                   <Button

@@ -39,6 +39,11 @@ interface PageFilterProps<T = {}> extends FormProps, ParseFiltersProps<T> {
    */
   showSubmitButton?: boolean;
   /**
+   * Submit the form when form fields are changed.
+   * When `showSubmitButton = false`, the form will be submitted by pressing `Enter` key
+   */
+  submitOnChange?: boolean;
+  /**
    * Function to call when all filters have been reset by a reset button.
    */
   onReset?: () => void;
@@ -63,6 +68,7 @@ const PageFilter = <T extends {}>({
   columns = 4,
   showResetButton,
   showSubmitButton,
+  submitOnChange = true,
   onReset,
   onSubmit,
   parseDates,
@@ -108,7 +114,9 @@ const PageFilter = <T extends {}>({
     changedValues: Record<string, unknown>,
     allValues: Record<string, unknown>
   ) => {
-    handleSubmit({ ...allValues });
+    if (submitOnChange) {
+      handleSubmit({ ...allValues });
+    }
   };
 
   // Reset filters, and clear search params.

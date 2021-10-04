@@ -29,6 +29,10 @@ export const changeLanguage = (locale: string) => {
   updateLocalization();
 };
 
+export const getCurrentLanguage = () => {
+  return i18next.language;
+};
+
 export const getCountries = async () => {
   const { countries = [] } =
     (await nstackClient?.getGeographyCountries()) ?? {};
