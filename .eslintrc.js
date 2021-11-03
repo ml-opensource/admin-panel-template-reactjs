@@ -20,6 +20,7 @@ module.exports = {
         jsxBracketSameLine: false,
         tabWidth: 2,
         semi: true,
+        endOfLine: "auto",
       },
     ],
     "react/jsx-filename-extension": [
