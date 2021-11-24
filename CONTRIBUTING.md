@@ -12,9 +12,9 @@
 
    - in case we are doing tag based release, `main` can be used as stable bleeding edge releasable code.
 
-2. `{type}/{GithubIssueNo}-issue-one-liner` should be the format for branch naming
+1. `{type}/{GithubIssueNo}-issue-one-liner` should be the format for branch naming
    1. See [Type](#Type) section for branch `{type}`.
-   2. Find `{GithubIssueNo}` in Github.
+   1. Find `{GithubIssueNo}` in Github.
 
 ### Pull requests
 
