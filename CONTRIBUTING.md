@@ -40,3 +40,7 @@ Must be one of the following:
 - **build**: Changes that affect the build system, CI configuration or external dependencies (example scopes: gulp, broccoli, npm)
 - **ci**: Any changes to our CI configuration files and scripts (Travis, Circle CI, BrowserStack, SauceLabs, AWS CodeBuild)
 - **chore**: Other changes that don't modify `src` or `test` files
+
+### Commit Message Guidelines
+
+Commit messages should follow the [Conventional Commits](https://www.conventionalcommits.org/) rule followed by [Commit lint config conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional).

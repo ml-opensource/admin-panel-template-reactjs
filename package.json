@@ -72,6 +72,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.170",

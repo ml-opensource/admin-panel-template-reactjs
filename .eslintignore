@@ -1,3 +1,4 @@
 craco.config.js
 .eslintrc.js
 tsconfig.json
+commitlint.config.js
