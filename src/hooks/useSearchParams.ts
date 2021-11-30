@@ -42,10 +42,10 @@ const useSearchParams = <T = {}>() => {
   const history = useHistory();
 
   const getCurrentSearch = useCallback(() => {
-    const currentSearch = qs.parse(
+    const currentSearch = (qs.parse(
       location.search,
       PARSE_OPTIONS
-    ) as SearchParamDef as SearchParamDef<T>;
+    ) as SearchParamDef) as SearchParamDef<T>;
     currentSearch.orderByExtracted = getOrderByExtraction(
       (currentSearch.orderBy as string) || ""
     );
