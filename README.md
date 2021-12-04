@@ -8,7 +8,7 @@ You can check out a running demo of the site here: [https://ml-admin-panel-templ
 
 ## Live Playground
 
-**You’ll need to have Node 10.x or Node 12.x on your local development machine**. You can use [nvm](https://github.com/nvm-sh/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
+**You’ll need to have Node v16.x on your local development machine**. You can use [nvm](https://github.com/nvm-sh/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
 
 - Clone this repository
 - `yarn install`
