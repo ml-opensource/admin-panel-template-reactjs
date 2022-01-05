@@ -6,7 +6,7 @@ mergeable:
         must_exclude:
           regex: ^WIP
         must_include:
-          regex: ^((feature|chore|fix)(\(.{1,15}\))?|()\-[0-9]{1,5})\:.+$
+          regex: ^((feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.{1,15}\))?|()\-[0-9]{1,5})\:.+$
           message: "Invalid PR title format."
       - do: label
         must_exclude:
