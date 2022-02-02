@@ -1,10 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { mapPagination } from "@app/helpers/table.helper";
 import { TablePaginationDef } from "@app/types/pagination.types";
 
 import * as userApi from "../api/users.api";
-import { GetUsersParamDef, UserDef } from "../types/user.types";
+import {
+  GetUserByIdResponseDef,
+  GetUsersParamDef,
+  GetUsersResponseDef,
+  UserDef,
+} from "../types/user.types";
 
 export const USERS_FEATURE_KEY = "users";
 
@@ -28,9 +33,9 @@ const initialState: SliceState = {
   error: null,
 };
 
-export const getUsers = createAsyncThunk(
+export const getUsers = createAsyncThunk<GetUsersResponseDef, GetUsersParamDef>(
   "users/getUsers",
-  async (params: GetUsersParamDef, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
       const response = await userApi.getUsers(params);
       return response.data;
@@ -40,17 +45,17 @@ export const getUsers = createAsyncThunk(
   }
 );
 
-export const getUserById = createAsyncThunk(
-  "users/getUserById",
-  async (userId: UserDef["id"], { rejectWithValue }) => {
-    try {
-      const response = await userApi.getUserById(userId);
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
+export const getUserById = createAsyncThunk<
+  GetUserByIdResponseDef,
+  UserDef["id"]
+>("users/getUserById", async (userId, { rejectWithValue }) => {
+  try {
+    const response = await userApi.getUserById(userId);
+    return response.data;
+  } catch (err) {
+    return rejectWithValue(err.response.data);
   }
-);
+});
 
 const usersSlice = createSlice({
   name: USERS_FEATURE_KEY,
@@ -67,11 +72,14 @@ const usersSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(getUsers.fulfilled, (state, action) => {
-      state.loading = false;
-      state.users = action.payload.data;
-      state.pagination = mapPagination(action.payload);
-    });
+    builder.addCase(
+      getUsers.fulfilled,
+      (state, action: PayloadAction<GetUsersResponseDef>) => {
+        state.loading = false;
+        state.users = action.payload.data;
+        state.pagination = mapPagination(action.payload);
+      }
+    );
     builder.addCase(getUsers.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
@@ -81,10 +89,13 @@ const usersSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(getUserById.fulfilled, (state, action) => {
-      state.loading = false;
-      state.user = action.payload.data;
-    });
+    builder.addCase(
+      getUserById.fulfilled,
+      (state, action: PayloadAction<GetUserByIdResponseDef>) => {
+        state.loading = false;
+        state.user = action.payload.data;
+      }
+    );
     builder.addCase(getUserById.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;

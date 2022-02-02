@@ -25,7 +25,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noUnusedLocals": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "useUnknownInCatchVariables": false
   },
   "include": [
     "src"
