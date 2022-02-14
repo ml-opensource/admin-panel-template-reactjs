@@ -67,9 +67,6 @@ const usersSlice = createSlice({
         state.pagination = mapPagination(action.payload);
       }
     );
-    builder.addCase(getUsers.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
     /** GET USER */
     builder.addCase(
       getUserById.fulfilled,
