@@ -29,6 +29,13 @@ As this repo will be used for different clients, we need to be able to easily th
 
 The roadmap in the [project tab](https://github.com/monstar-lab-oss/admin-panel-template-reactjs/projects/1) will contain all the features that we need to implement, so you can pick up a task from there.
 
+## Features
+
+- [Authentication](src/features/auth/auth.md)
+- [Localization](src/features//localization/) (No documentation yet)
+- [Page filter](src/components/molecules/PageFilter/page-filter.md)
+- [Permissions](src/features/permissions/permissions.md)
+
 ## How We Work
 
 This template follows **syntax**, **semantics**, and **folder structure** defined in the [web-frontend-readme repo](https://github.com/monstar-lab-oss/web-frontend-readme).
