@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 
-export function createApiAsyncThunk<Returned, Arg>(
+export function createApiAsyncThunk<Result, Arg>(
   key: string,
-  action: (arg: Arg) => Promise<AxiosResponse<Returned>>
+  action: (arg: Arg) => Promise<AxiosResponse<Result>>
 ) {
-  return createAsyncThunk<Returned, Arg>(
+  return createAsyncThunk<Result, Arg>(
     key,
     async (arg, { rejectWithValue }) => {
       try {
