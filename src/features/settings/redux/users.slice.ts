@@ -1,6 +1,14 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  isFulfilled,
+  isPending,
+  isRejected,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 import { mapPagination } from "@app/helpers/table.helper";
+import { createApiAsyncThunk } from "@app/redux/api.thunk";
+import { ErrorState, LoadingState } from "@app/types/api.types";
 import { TablePaginationDef } from "@app/types/pagination.types";
 
 import * as userApi from "../api/users.api";
@@ -13,12 +21,10 @@ import {
 
 export const USERS_FEATURE_KEY = "users";
 
-interface SliceState {
+interface SliceState extends LoadingState, ErrorState {
   users: UserDef[];
   user: UserDef | null;
   pagination: TablePaginationDef;
-  loading: boolean;
-  error: string | undefined | null;
 }
 
 const initialState: SliceState = {
@@ -33,29 +39,15 @@ const initialState: SliceState = {
   error: null,
 };
 
-export const getUsers = createAsyncThunk<GetUsersResponseDef, GetUsersParamDef>(
-  "users/getUsers",
-  async (params, { rejectWithValue }) => {
-    try {
-      const response = await userApi.getUsers(params);
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
+export const getUsers = createApiAsyncThunk<
+  GetUsersResponseDef,
+  GetUsersParamDef
+>("users/getUsers", userApi.getUsers);
 
-export const getUserById = createAsyncThunk<
+export const getUserById = createApiAsyncThunk<
   GetUserByIdResponseDef,
   UserDef["id"]
->("users/getUserById", async (userId, { rejectWithValue }) => {
-  try {
-    const response = await userApi.getUserById(userId);
-    return response.data;
-  } catch (err) {
-    return rejectWithValue(err.response.data);
-  }
-});
+>("users/getUserById", userApi.getUserById);
 
 const usersSlice = createSlice({
   name: USERS_FEATURE_KEY,
@@ -68,35 +60,31 @@ const usersSlice = createSlice({
   },
   extraReducers: builder => {
     /** GET USERS */
-    builder.addCase(getUsers.pending, state => {
-      state.loading = true;
-      state.error = null;
-    });
     builder.addCase(
       getUsers.fulfilled,
       (state, action: PayloadAction<GetUsersResponseDef>) => {
-        state.loading = false;
         state.users = action.payload.data;
         state.pagination = mapPagination(action.payload);
       }
     );
     builder.addCase(getUsers.rejected, (state, action) => {
-      state.loading = false;
       state.error = action.error.message;
     });
     /** GET USER */
-    builder.addCase(getUserById.pending, state => {
-      state.loading = true;
-      state.error = null;
-    });
     builder.addCase(
       getUserById.fulfilled,
       (state, action: PayloadAction<GetUserByIdResponseDef>) => {
-        state.loading = false;
         state.user = action.payload.data;
       }
     );
-    builder.addCase(getUserById.rejected, (state, action) => {
+    builder.addMatcher(isPending, state => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addMatcher(isFulfilled, state => {
+      state.loading = false;
+    });
+    builder.addMatcher(isRejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     });
