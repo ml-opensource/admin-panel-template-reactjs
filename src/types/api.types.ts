@@ -1,7 +1,7 @@
-export interface LoadingState {
+export type LoadingState = {
   loading: boolean;
-}
+};
 
-export interface ErrorState {
+export type ErrorState = {
   error: string | undefined | null;
-}
+};
