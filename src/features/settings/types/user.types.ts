@@ -1,20 +1,24 @@
+import { CamelToSnake } from "@app/helpers/type.helper";
 import { ResponsePaginationDef } from "@app/types/pagination.types";
 
-/* eslint-disable camelcase */
-export type UserDef = {
+type User = {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
 };
+
+export type UserDef = CamelToSnake<User>;
 
 export type GetUsersResponseDef = {
   data: UserDef[];
 } & ResponsePaginationDef;
 
-export type GetUsersParamDef = {
+type GetUsersParam = {
   page?: ResponsePaginationDef["page"];
-  per_page?: ResponsePaginationDef["per_page"];
+  perPage?: ResponsePaginationDef["per_page"];
 };
+
+export type GetUsersParamDef = CamelToSnake<GetUsersParam>;
 
 export type GetUserByIdResponseDef = {
   data: UserDef;

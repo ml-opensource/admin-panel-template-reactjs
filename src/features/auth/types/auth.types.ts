@@ -2,6 +2,8 @@
  * Types are specific for regres login =>
  */
 
+import { CamelToSnake } from "@app/helpers/type.helper";
+
 export type TokenDef = {
   /* TODO: check if TYPE needs changing when AUTH method is changed ? */
   /* login system is for demo use (regres.in) */
@@ -41,13 +43,14 @@ export interface InitialStateDef {
   loading: boolean;
 }
 
-/* eslint-disable camelcase */
-export type UserResponseDef = {
+type UserResponse = {
   data: {
     id: number;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     avatar: string;
     email: string;
   };
 };
+
+export type UserResponseDef = CamelToSnake<UserResponse>;

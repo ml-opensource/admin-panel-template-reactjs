@@ -1,12 +1,15 @@
-/* eslint-disable camelcase */
 import { PaginationProps } from "antd";
 
-export type ResponsePaginationDef = {
+import { CamelToSnake } from "@app/helpers/type.helper";
+
+type ResponsePagination = {
   page: number;
-  per_page: number;
+  perPage: number;
   total: number;
-  total_pages: number;
+  totalPages: number;
 };
+
+export type ResponsePaginationDef = CamelToSnake<ResponsePagination>;
 
 export type TablePaginationDef = Pick<
   PaginationProps,
