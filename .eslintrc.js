@@ -10,17 +10,6 @@ module.exports = {
   },
   plugins: ["filenames"],
   rules: {
-    "prettier/prettier": [
-      "error",
-      {
-        trailingComma: "es5",
-        singleQuote: false,
-        printWidth: 80,
-        bracketSpacing: true,
-        tabWidth: 2,
-        semi: true,
-      },
-    ],
     "react/jsx-filename-extension": [
       1,
       {
