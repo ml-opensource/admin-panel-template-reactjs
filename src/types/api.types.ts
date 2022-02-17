@@ -1,7 +1,7 @@
-export type LoadingState = {
+export type LoadingStateDef = {
   loading: boolean;
 };
 
-export type ErrorState = {
+export type ErrorStateDef = {
   error: string | undefined | null;
 };

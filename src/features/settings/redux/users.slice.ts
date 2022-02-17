@@ -8,7 +8,7 @@ import {
 
 import { mapPagination } from "@app/helpers/table.helper";
 import { createApiAsyncThunk } from "@app/redux/api.thunk";
-import { ErrorState, LoadingState } from "@app/types/api.types";
+import { ErrorStateDef, LoadingStateDef } from "@app/types/api.types";
 import { TablePaginationDef } from "@app/types/pagination.types";
 
 import * as userApi from "../api/users.api";
@@ -21,7 +21,7 @@ import {
 
 export const USERS_FEATURE_KEY = "users";
 
-interface SliceState extends LoadingState, ErrorState {
+interface SliceState extends LoadingStateDef, ErrorStateDef {
   users: UserDef[];
   user: UserDef | null;
   pagination: TablePaginationDef;
