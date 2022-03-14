@@ -15,6 +15,14 @@ You can check out a running demo of the site here: [https://ml-admin-panel-templ
 - `yarn start`
 - Visit http://localhost:3000/
 
+**OR**
+**if you have [Docker](https://www.docker.com/) installed in your machine**, You can use following commands
+
+- `yarn docker-dev-up` and Visit http://localhost:3000/
+- `yarn docker-dev-down`
+- `yarn docker-prod-up` and Visit http://localhost:8080/
+- `yarn docker-prod-down`
+
 ## Mission
 
 The purpose of this repo is to create a React JS template so we can standardize how we implement Admin Panels with the basic things such as auth, navigation, tables, forms, etc.

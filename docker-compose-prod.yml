@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  react-admin-app-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8080:80"

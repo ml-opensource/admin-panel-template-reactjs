@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  react-admin-app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - ./.env
