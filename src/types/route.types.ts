@@ -1,8 +1,9 @@
-import { ComponentType, ReactNode } from "react";
+import { ComponentType } from "react";
 
 import { RouteComponentProps } from "react-router-dom";
 
 import { PermissionEnum } from "@app/features/permissions/permissions";
+import { LayoutsEnum } from "@app/routes/constants/route.layouts";
 
 export type RouteGroupDef = {
   id: string;
@@ -33,7 +34,7 @@ export type RouteItemDef = {
    */
   component: RouteComponentDef;
   /** Layout used for this route */
-  layout?: ReactNode;
+  layout?: LayoutsEnum;
   /** Nested Routes either by array of routes or group of routes */
   nestedRoutes?: Array<RouteItemDef | RouteGroupDef>;
   /** Flag for hide/show in navigation bar */
