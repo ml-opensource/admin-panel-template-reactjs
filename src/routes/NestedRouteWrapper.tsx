@@ -4,6 +4,8 @@ import { Permission } from "@app/features/permissions/permissions";
 import RestrictAccess from "@app/routes/components/RestrictAccess/RestrictAccess";
 import { RouteComponentDef, RouteItemDef } from "@app/types/route.types";
 
+import NotFound from "./components/NotFound/NotFound";
+
 interface NestedRouteWrapperProps {
   routesWithComponents: RouteItemDef[];
 }
@@ -33,6 +35,7 @@ const NestedRouteWrapper = ({
           }}
         />
       ))}
+      <Route path="*" render={() => <NotFound />} />
     </Switch>
   );
 };
