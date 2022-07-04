@@ -30,7 +30,8 @@
     "redux": "^4.1.0",
     "sass": "^1.49.0",
     "typescript": "^4.5.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yo": "^4.3.0"
   },
   "engines": {
     "npm": "please use yarn",
@@ -43,7 +44,8 @@
     "format": "prettier \"src/**/*.{ts,tsx,json,scss,css}\" --write",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --quiet",
     "analyze": "ENABLE_ANALYZER=true yarn build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generator": "yo structure"
   },
   "eslintConfig": {
     "extends": [
