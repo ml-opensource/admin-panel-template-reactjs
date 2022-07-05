@@ -2,14 +2,10 @@ import { memo } from "react";
 
 import { Button as AntdButton } from "antd";
 import { ButtonProps as AntdButtonProps } from "antd/es/button";
-import classnames from "classnames/bind";
+import cx from "classnames";
 import { Link, LinkProps } from "react-router-dom";
 
 import { isURL } from "@app/helpers/util.helper";
-
-import styles from "./Button.module.scss";
-
-const cx = classnames.bind(styles);
 
 interface ButtonProps extends Omit<AntdButtonProps, "href"> {
   /**
@@ -27,8 +23,8 @@ const Button = memo(({ to, className, noPadding, ...rest }: ButtonProps) => {
 
   const buttonContent = (
     <AntdButton
-      className={cx(styles.button, className, {
-        noPadding,
+      className={cx(className, {
+        "p-0": noPadding,
       })}
       {...(isExternalLink && {
         href: to as string,

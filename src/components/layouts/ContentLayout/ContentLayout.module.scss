@@ -1,17 +1,12 @@
 @import "styles/colors";
 @import "styles/variables";
 
-.container {
-  height: 100%;
-}
-
 .content {
-  background: $bg-white;
-  padding: $spacing-6;
-  margin: 0 $spacing-6 $spacing-6;
+  @apply bg-white p-6 mt-0 mx-6 mb-6;
 }
 
 .pageHeader {
+  margin-bottom: theme("spacing.6"); // @apply mb-6; // valid as well
   :global {
     .ant-page-header-footer .ant-tabs .ant-tabs-tab {
       font-size: $font-size-14;
@@ -27,9 +22,4 @@
       margin-left: auto;
     }
   }
-}
-
-.pageHeader,
-.filters {
-  margin-bottom: $spacing-6;
 }
