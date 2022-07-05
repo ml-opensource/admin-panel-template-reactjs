@@ -33,7 +33,7 @@ const ContentLayout = memo(
     };
 
     return (
-      <Layout className={styles.container}>
+      <Layout className="h-full">
         <PageHeader
           ghost={false}
           {...header}
@@ -43,9 +43,7 @@ const ContentLayout = memo(
           }}
           className={cx(styles.pageHeader, header.className)}
         />
-        {filters && (
-          <div className={cx(styles.filters, styles.content)}>{filters}</div>
-        )}
+        {filters && <div className={cx("mb-6", styles.content)}>{filters}</div>}
         <Content className={cx({ [styles.content]: !noContentStyle })}>
           {children}
         </Content>
